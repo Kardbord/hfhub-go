@@ -1,6 +1,6 @@
 module github.com/Kardbord/hfhub-go
 
-go 1.25
+go 1.25.0
 
 tool github.com/ogen-go/ogen/cmd/ogen
 
