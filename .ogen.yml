@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ogen-go/ogen/main/schemas/ogen.jsonschema.json
+# Parser configuration options.
+parser:
+  # Maximum depth of schema generation. Default is 1000.
+  depth_limit: 1000
+# Generator configuration options.
+generator:
+  features:
+    # Start from an empty feature set instead of default features. Default is false.
+    disable_all: true
+    enable:
+      # Generate client code for API paths.
+      - 'paths/client'
+      # Generate client code for webhooks.
+      - 'webhooks/client'
+      # Allow security source implementations to receive and use the generated client.
+      - 'client/security/reentrant'
+      # Generate per-request option functions for client requests.
+      - 'client/request/options'
+      # Enable client request validation before sending.
+      - 'client/request/validation'
+      # Generate client request editor option functions.
+      - 'client/editors'
+      # Generate debug example tests.
+      - 'debug/example_tests'
+  # Not implemented functions to skip during generation. "all" means skip all not-implemented generation errors. Default is empty list.
+  ignore_not_implemented: ["all"]
