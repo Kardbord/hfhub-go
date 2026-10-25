@@ -16,8 +16,8 @@
 #   8. verifies nothing unsupported remains, then runs ogen.
 #
 # Requirements:
-#   - Go 1.24+
-#   - go.mod with: go get -tool github.com/ogen-go/ogen@v1.24.0
+#   - Go 1.25+
+#   - go.mod with: go get -tool github.com/ogen-go/ogen@latest
 #   - jq 1.5+ (module support via include/-L)
 #
 # jq filters live in ./jq/ as a module:
