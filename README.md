@@ -1,5 +1,8 @@
 # hfhub-go
 
+[![Build](https://github.com/Kardbord/hfhub-go/actions/workflows/build.yml/badge.svg)](https://github.com/Kardbord/hfhub-go/actions/workflows/build.yml)
+[![Tests](https://github.com/Kardbord/hfhub-go/actions/workflows/test.yml/badge.svg)](https://github.com/Kardbord/hfhub-go/actions/workflows/test.yml)
+
 An unofficial, auto-generated Go client for the [Hugging Face Hub API](https://huggingface.co/docs/hub/api).
 
 > ⚠️ **Status: experimental, minimally vetted**
@@ -49,7 +52,7 @@ The client is **never edited by hand**. To regenerate from the current
 upstream spec:
 
 ```sh
-./tools/generate-client.sh
+./tools/regenerate-client.sh
 ```
 
 The script:

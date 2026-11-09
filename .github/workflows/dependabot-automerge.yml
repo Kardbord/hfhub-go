@@ -1,0 +1,26 @@
+name: Dependabot auto-merge
+
+# Arms auto-merge on every Dependabot PR. Merging still only happens when the
+# branch-protection required checks pass, on this push and every later push to
+# the branch. Per https://docs.github.com/code-security/tutorials/secure-your-dependencies/automate-dependabot-with-actions
+on:
+  pull_request:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  automerge:
+    name: Enable auto-merge
+    runs-on: ubuntu-latest
+    if: >-
+      github.event.pull_request.user.login == 'dependabot[bot]' &&
+      github.repository == 'Kardbord/hfhub-go'
+    steps:
+      - name: Enable auto-merge
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }} # no checkout needed; gh resolves via GH_REPO
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: gh pr merge --auto --squash "$PR_URL"

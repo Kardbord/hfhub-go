@@ -1,0 +1,29 @@
+version: 2
+updates:
+  # Bumps all go.mod requirements, including the ogen tool version (pinned via
+  # its direct `require` line; native `tool`-directive support is still pending
+  # in Dependabot — verify the first ogen PR actually bumps it).
+  - package-ecosystem: gomod
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    groups:
+      gomod-minor-patch:
+        patterns:
+          - '*'
+        update-types:
+          - minor
+          - patch
+    commit-message:
+      prefix: deps
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    commit-message:
+      prefix: ci

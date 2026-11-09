@@ -1,0 +1,70 @@
+name: Release
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: release
+  cancel-in-progress: false
+jobs:
+  release:
+    name: Tag and release
+    runs-on: ubuntu-latest
+    steps:
+      # persist-credentials stays on: the tag step pushes via git credentials.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0 # full history + tags, needed for the version diff
+      - name: Determine next version
+        id: ver
+        run: |
+          set -euo pipefail
+
+          # Stay on v0 forever: minor bumps signal potentially breaking changes
+          # (spec regens and ogen bumps both qualify per the README caveats).
+          last_tag=$(git tag --list 'v0.*' --sort=-v:refname | head -n1)
+
+          if [ -z "$last_tag" ]; then
+            first_commit=$(git rev-list --max-parents=0 HEAD | tail -n1)
+            changed=$(git diff --name-only "$first_commit" HEAD)
+            next_tag=v0.1.0
+          else
+            changed=$(git diff --name-only "$last_tag" HEAD)
+            minor=${last_tag#v0.}; minor=${minor%%.*}
+            next_tag="v0.$((minor + 1)).0"
+          fi
+
+          code_changed=false
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            case "$f" in
+              go.mod|go.sum|openapi.processed.json|SPEC_DEVIATIONS.md|*.go)
+                code_changed=true
+                break
+                ;;
+            esac
+          done <<< "$changed"
+
+          if [ "$code_changed" = false ]; then
+            echo "No library-code changes since ${last_tag:-the initial commit}; skipping release."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+          echo "tag=$next_tag" >> "$GITHUB_OUTPUT"
+          echo "==> Releasing $next_tag (previous: ${last_tag:-none}); changed files:"
+          echo "$changed"
+      - name: Tag and release
+        if: steps.ver.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NEW_TAG: ${{ steps.ver.outputs.tag }} # env indirection, not template interpolation
+        run: |
+          git tag "$NEW_TAG"
+          git push origin "$NEW_TAG"
+          gh release create "$NEW_TAG" \
+            --generate-notes \
+            --title "$NEW_TAG"
