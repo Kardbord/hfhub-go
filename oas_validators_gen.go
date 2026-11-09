@@ -6867,6 +6867,143 @@ func (s APIContainersNamespaceRepoPostReqVisibility) Validate() error {
 	}
 }
 
+func (s *APIContainersNamespaceRepoResourceGroupGetOK) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
+	var failures []validate.FieldError
+	if err := func() error {
+		if err := (validate.String{
+			MinLength:     24,
+			MinLengthSet:  true,
+			MaxLength:     24,
+			MaxLengthSet:  true,
+			Email:         false,
+			Hostname:      false,
+			Regex:         regexMap["^[0-9a-f]{24}$"],
+			MinNumeric:    0,
+			MinNumericSet: false,
+			MaxNumeric:    0,
+			MaxNumericSet: false,
+		}).Validate(string(s.ID)); err != nil {
+			return errors.Wrap(err, "string")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "id",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		if value, ok := s.NumUsers.Get(); ok {
+			if err := func() error {
+				if err := (validate.Float{}).Validate(float64(value)); err != nil {
+					return errors.Wrap(err, "float")
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "numUsers",
+			Error: err,
+		})
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
+func (s *APIContainersNamespaceRepoResourceGroupPostOK) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
+	var failures []validate.FieldError
+	if err := func() error {
+		if err := s.Type.Validate(); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "type",
+			Error: err,
+		})
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
+func (s APIContainersNamespaceRepoResourceGroupPostOKType) Validate() error {
+	switch s {
+	case "dataset":
+		return nil
+	case "model":
+		return nil
+	case "space":
+		return nil
+	case "bucket":
+		return nil
+	case "kernel":
+		return nil
+	case "container":
+		return nil
+	default:
+		return errors.Errorf("invalid value: %v", s)
+	}
+}
+
+func (s *APIContainersNamespaceRepoResourceGroupPostReq) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
+	var failures []validate.FieldError
+	if err := func() error {
+		if value, ok := s.ResourceGroupId.Get(); ok {
+			if err := func() error {
+				if err := (validate.String{
+					MinLength:     24,
+					MinLengthSet:  true,
+					MaxLength:     24,
+					MaxLengthSet:  true,
+					Email:         false,
+					Hostname:      false,
+					Regex:         regexMap["^[0-9a-fA-F]{24}$"],
+					MinNumeric:    0,
+					MinNumericSet: false,
+					MaxNumeric:    0,
+					MaxNumericSet: false,
+				}).Validate(string(value)); err != nil {
+					return errors.Wrap(err, "string")
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "resourceGroupId",
+			Error: err,
+		})
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
 func (s *APIContainersNamespaceRepoSettingsPutOK) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
@@ -17829,6 +17966,10 @@ func (s APIOrganizationsNameAuditLogExportGetOKItemType) Validate() error {
 		return nil
 	case "org.sso_join":
 		return nil
+	case "org.sso_credential.authorize":
+		return nil
+	case "org.sso_credential.deauthorize":
+		return nil
 	case "org.update_join_settings":
 		return nil
 	case "org.update_settings":
@@ -18006,6 +18147,20 @@ func (s APIOrganizationsNameAuditLogExportGetOKItemType) Validate() error {
 	case "org.service_account.token.s3_credential.delete":
 		return nil
 	case "oauth.token":
+		return nil
+	case "oauth.app.create":
+		return nil
+	case "oauth.app.update":
+		return nil
+	case "oauth.app.secret.rotate":
+		return nil
+	case "oauth.app.secret.delete":
+		return nil
+	case "oauth.app.secret.expire":
+		return nil
+	case "oauth.app.delete":
+		return nil
+	case "oauth.app.move":
 		return nil
 	default:
 		return errors.Errorf("invalid value: %v", s)
@@ -22634,7 +22789,7 @@ func (s *APIOrganizationsNameScimProvisioningV2UsersPostReqEmailsItem) Validate(
 			MaxLengthSet:  false,
 			Email:         true,
 			Hostname:      false,
-			Regex:         regexMap["^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"],
+			Regex:         regexMap["^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"],
 			MinNumeric:    0,
 			MinNumericSet: false,
 			MaxNumeric:    0,
@@ -24835,7 +24990,7 @@ func (s *APIOrganizationsNameScimV2UsersPostReqEmailsItem) Validate() error {
 			MaxLengthSet:  false,
 			Email:         true,
 			Hostname:      false,
-			Regex:         regexMap["^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"],
+			Regex:         regexMap["^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"],
 			MinNumeric:    0,
 			MinNumericSet: false,
 			MaxNumeric:    0,
@@ -25638,7 +25793,7 @@ func (s *APIOrganizationsNameScimV2UsersUserIdPutReqEmailsItem) Validate() error
 			MaxLengthSet:  false,
 			Email:         true,
 			Hostname:      false,
-			Regex:         regexMap["^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"],
+			Regex:         regexMap["^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"],
 			MinNumeric:    0,
 			MinNumericSet: false,
 			MaxNumeric:    0,
@@ -30734,6 +30889,8 @@ func (s APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItem) 
 	case "nemo-gym":
 		return nil
 	case "agentenv":
+		return nil
+	case "lerobot":
 		return nil
 	default:
 		return errors.Errorf("invalid value: %v", s)
@@ -46035,6 +46192,17 @@ func (s *OAuthUserinfoGetOK) Validate() error {
 		})
 	}
 	if err := func() error {
+		if s.Groups == nil {
+			return errors.New("nil is invalid value")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "groups",
+			Error: err,
+		})
+	}
+	if err := func() error {
 		if s.Orgs == nil {
 			return errors.New("nil is invalid value")
 		}
@@ -46394,6 +46562,17 @@ func (s *OAuthUserinfoPostOK) Validate() error {
 	}(); err != nil {
 		failures = append(failures, validate.FieldError{
 			Name:  "billingMode",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		if s.Groups == nil {
+			return errors.New("nil is invalid value")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "groups",
 			Error: err,
 		})
 	}
