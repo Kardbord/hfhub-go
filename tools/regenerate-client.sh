@@ -185,10 +185,14 @@ the drift check. They are rewritten to the fixed epoch sentinel
 `1970-01-01T00:00:00.000Z`. The sentinel is not a meaningful value; callers
 of these endpoints pass explicit dates.
 
-| Location | Original default |
-| --- | --- |
+Only locations are listed: the original values change on every upstream
+rebuild, so recording them here would re-introduce the churn this
+normalization exists to prevent.
+
+| Location |
+| --- |
 EOF
-  awk -F'\t' '{ printf "| `%s` | `%s` |\n", $1, $2 }' \
+  awk -F'\t' '{ printf "| `%s` |\n", $1 }' \
     "$WORKDIR/normalized-defaults.tsv" >>"$DOC_TMP"
 fi
 
