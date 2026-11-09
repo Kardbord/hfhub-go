@@ -46,6 +46,8 @@ var operationRolesBearerAuth = map[string][]string{
 	APIContainersNamespaceRepoGetOperation:                                              []string{},
 	APIContainersNamespaceRepoPathsInfoPostOperation:                                    []string{},
 	APIContainersNamespaceRepoPostOperation:                                             []string{},
+	APIContainersNamespaceRepoResourceGroupGetOperation:                                 []string{},
+	APIContainersNamespaceRepoResourceGroupPostOperation:                                []string{},
 	APIContainersNamespaceRepoSettingsPutOperation:                                      []string{},
 	APIContainersNamespaceRepoTreePathGetOperation:                                      []string{},
 	APIContainersNamespaceRepoXetReadTokenGetOperation:                                  []string{},

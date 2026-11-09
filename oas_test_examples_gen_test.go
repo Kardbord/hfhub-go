@@ -2487,6 +2487,54 @@ func TestAPIContainersNamespaceRepoPostReqVisibility_EncodeDecode(t *testing.T) 
 	var typ2 APIContainersNamespaceRepoPostReqVisibility
 	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
 }
+func TestAPIContainersNamespaceRepoResourceGroupGetOK_EncodeDecode(t *testing.T) {
+	var typ APIContainersNamespaceRepoResourceGroupGetOK
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APIContainersNamespaceRepoResourceGroupGetOK
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
+func TestAPIContainersNamespaceRepoResourceGroupPostOK_EncodeDecode(t *testing.T) {
+	var typ APIContainersNamespaceRepoResourceGroupPostOK
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APIContainersNamespaceRepoResourceGroupPostOK
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
+func TestAPIContainersNamespaceRepoResourceGroupPostOKType_EncodeDecode(t *testing.T) {
+	var typ APIContainersNamespaceRepoResourceGroupPostOKType
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APIContainersNamespaceRepoResourceGroupPostOKType
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
+func TestAPIContainersNamespaceRepoResourceGroupPostReq_EncodeDecode(t *testing.T) {
+	var typ APIContainersNamespaceRepoResourceGroupPostReq
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APIContainersNamespaceRepoResourceGroupPostReq
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
 func TestAPIContainersNamespaceRepoSettingsPutOK_EncodeDecode(t *testing.T) {
 	var typ APIContainersNamespaceRepoSettingsPutOK
 	typ.SetFake()
