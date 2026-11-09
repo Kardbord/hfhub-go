@@ -296,6 +296,18 @@ type Invoker interface {
 	//
 	// POST /api/containers/{namespace}/{repo}
 	APIContainersNamespaceRepoPost(ctx context.Context, request OptAPIContainersNamespaceRepoPostReq, params APIContainersNamespaceRepoPostParams, options ...RequestOption) (APIContainersNamespaceRepoPostRes, error)
+	// APIContainersNamespaceRepoResourceGroupGet invokes GET /api/containers/{namespace}/{repo}/resource-group operation.
+	//
+	// Get resource group.
+	//
+	// GET /api/containers/{namespace}/{repo}/resource-group
+	APIContainersNamespaceRepoResourceGroupGet(ctx context.Context, params APIContainersNamespaceRepoResourceGroupGetParams, options ...RequestOption) (*APIContainersNamespaceRepoResourceGroupGetOK, error)
+	// APIContainersNamespaceRepoResourceGroupPost invokes POST /api/containers/{namespace}/{repo}/resource-group operation.
+	//
+	// Add the repository to a resource group.
+	//
+	// POST /api/containers/{namespace}/{repo}/resource-group
+	APIContainersNamespaceRepoResourceGroupPost(ctx context.Context, request OptAPIContainersNamespaceRepoResourceGroupPostReq, params APIContainersNamespaceRepoResourceGroupPostParams, options ...RequestOption) (*APIContainersNamespaceRepoResourceGroupPostOK, error)
 	// APIContainersNamespaceRepoSettingsPut invokes PUT /api/containers/{namespace}/{repo}/settings operation.
 	//
 	// Update bucket settings.
@@ -4443,6 +4455,23 @@ func (c *Client) sendAPIBucketsNamespaceRepoTreePathGet(ctx context.Context, par
 		}
 	}
 	{
+		// Encode "startAfter" parameter.
+		cfg := uri.QueryParameterEncodingConfig{
+			Name:    "startAfter",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
+			if val, ok := params.StartAfter.Get(); ok {
+				return e.EncodeValue(conv.StringToString(val))
+			}
+			return nil
+		}); err != nil {
+			return res, errors.Wrap(err, "encode query")
+		}
+	}
+	{
 		// Encode "recursive" parameter.
 		cfg := uri.QueryParameterEncodingConfig{
 			Name:    "recursive",
@@ -6231,6 +6260,305 @@ func (c *Client) sendAPIContainersNamespaceRepoPost(ctx context.Context, request
 	return result, nil
 }
 
+// APIContainersNamespaceRepoResourceGroupGet invokes GET /api/containers/{namespace}/{repo}/resource-group operation.
+//
+// Get resource group.
+//
+// GET /api/containers/{namespace}/{repo}/resource-group
+func (c *Client) APIContainersNamespaceRepoResourceGroupGet(ctx context.Context, params APIContainersNamespaceRepoResourceGroupGetParams, options ...RequestOption) (*APIContainersNamespaceRepoResourceGroupGetOK, error) {
+	res, err := c.sendAPIContainersNamespaceRepoResourceGroupGet(ctx, params, options...)
+	return res, err
+}
+
+func (c *Client) sendAPIContainersNamespaceRepoResourceGroupGet(ctx context.Context, params APIContainersNamespaceRepoResourceGroupGetParams, requestOptions ...RequestOption) (res *APIContainersNamespaceRepoResourceGroupGetOK, err error) {
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [5]string
+	pathParts[0] = "/api/containers/"
+	{
+		// Encode "namespace" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "namespace",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.StringToString(params.Namespace))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/"
+	{
+		// Encode "repo" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "repo",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.StringToString(params.Repo))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[3] = encoded
+	}
+	pathParts[4] = "/resource-group"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	r, err := ht.NewRequest(ctx, "GET", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+
+			switch err := c.securityBearerAuth(ctx, APIContainersNamespaceRepoResourceGroupGetOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"BearerAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer func() {
+		// Drain the body to EOF before closing, so the underlying
+		// connection can be reused by the Transport regardless of the
+		// response status code. See https://github.com/ogen-go/ogen/issues/1670.
+		_, _ = io.Copy(io.Discard, body)
+		_ = body.Close()
+	}()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	result, err := decodeAPIContainersNamespaceRepoResourceGroupGetResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// APIContainersNamespaceRepoResourceGroupPost invokes POST /api/containers/{namespace}/{repo}/resource-group operation.
+//
+// Add the repository to a resource group.
+//
+// POST /api/containers/{namespace}/{repo}/resource-group
+func (c *Client) APIContainersNamespaceRepoResourceGroupPost(ctx context.Context, request OptAPIContainersNamespaceRepoResourceGroupPostReq, params APIContainersNamespaceRepoResourceGroupPostParams, options ...RequestOption) (*APIContainersNamespaceRepoResourceGroupPostOK, error) {
+	res, err := c.sendAPIContainersNamespaceRepoResourceGroupPost(ctx, request, params, options...)
+	return res, err
+}
+
+func (c *Client) sendAPIContainersNamespaceRepoResourceGroupPost(ctx context.Context, request OptAPIContainersNamespaceRepoResourceGroupPostReq, params APIContainersNamespaceRepoResourceGroupPostParams, requestOptions ...RequestOption) (res *APIContainersNamespaceRepoResourceGroupPostOK, err error) {
+	// Validate request before sending.
+	if err := func() error {
+		if value, ok := request.Get(); ok {
+			if err := func() error {
+				if err := value.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return res, errors.Wrap(err, "validate")
+	}
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [5]string
+	pathParts[0] = "/api/containers/"
+	{
+		// Encode "namespace" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "namespace",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.StringToString(params.Namespace))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/"
+	{
+		// Encode "repo" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "repo",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.StringToString(params.Repo))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[3] = encoded
+	}
+	pathParts[4] = "/resource-group"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	r, err := ht.NewRequest(ctx, "POST", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+	if err := encodeAPIContainersNamespaceRepoResourceGroupPostRequest(request, r); err != nil {
+		return res, errors.Wrap(err, "encode request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+
+			switch err := c.securityBearerAuth(ctx, APIContainersNamespaceRepoResourceGroupPostOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"BearerAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer func() {
+		// Drain the body to EOF before closing, so the underlying
+		// connection can be reused by the Transport regardless of the
+		// response status code. See https://github.com/ogen-go/ogen/issues/1670.
+		_, _ = io.Copy(io.Discard, body)
+		_ = body.Close()
+	}()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	result, err := decodeAPIContainersNamespaceRepoResourceGroupPostResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
 // APIContainersNamespaceRepoSettingsPut invokes PUT /api/containers/{namespace}/{repo}/settings operation.
 //
 // Update bucket settings.
@@ -6501,6 +6829,23 @@ func (c *Client) sendAPIContainersNamespaceRepoTreePathGet(ctx context.Context, 
 
 		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
 			if val, ok := params.Cursor.Get(); ok {
+				return e.EncodeValue(conv.StringToString(val))
+			}
+			return nil
+		}); err != nil {
+			return res, errors.Wrap(err, "encode query")
+		}
+	}
+	{
+		// Encode "startAfter" parameter.
+		cfg := uri.QueryParameterEncodingConfig{
+			Name:    "startAfter",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
+			if val, ok := params.StartAfter.Get(); ok {
 				return e.EncodeValue(conv.StringToString(val))
 			}
 			return nil

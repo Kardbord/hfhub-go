@@ -12643,6 +12643,175 @@ func (s *APIContainersNamespaceRepoPostReqVisibility) UnmarshalText(data []byte)
 	}
 }
 
+type APIContainersNamespaceRepoResourceGroupGetOK struct {
+	// A hex string of 24 characters representing an ObjectId.
+	ID       string     `json:"id"`
+	Name     string     `json:"name"`
+	NumUsers OptFloat64 `json:"numUsers"`
+}
+
+// GetID returns the value of ID.
+func (s *APIContainersNamespaceRepoResourceGroupGetOK) GetID() string {
+	return s.ID
+}
+
+// GetName returns the value of Name.
+func (s *APIContainersNamespaceRepoResourceGroupGetOK) GetName() string {
+	return s.Name
+}
+
+// GetNumUsers returns the value of NumUsers.
+func (s *APIContainersNamespaceRepoResourceGroupGetOK) GetNumUsers() OptFloat64 {
+	return s.NumUsers
+}
+
+// SetID sets the value of ID.
+func (s *APIContainersNamespaceRepoResourceGroupGetOK) SetID(val string) {
+	s.ID = val
+}
+
+// SetName sets the value of Name.
+func (s *APIContainersNamespaceRepoResourceGroupGetOK) SetName(val string) {
+	s.Name = val
+}
+
+// SetNumUsers sets the value of NumUsers.
+func (s *APIContainersNamespaceRepoResourceGroupGetOK) SetNumUsers(val OptFloat64) {
+	s.NumUsers = val
+}
+
+type APIContainersNamespaceRepoResourceGroupPostOK struct {
+	Name    string                                            `json:"name"`
+	Type    APIContainersNamespaceRepoResourceGroupPostOKType `json:"type"`
+	Private bool                                              `json:"private"`
+	AddedBy string                                            `json:"addedBy"`
+}
+
+// GetName returns the value of Name.
+func (s *APIContainersNamespaceRepoResourceGroupPostOK) GetName() string {
+	return s.Name
+}
+
+// GetType returns the value of Type.
+func (s *APIContainersNamespaceRepoResourceGroupPostOK) GetType() APIContainersNamespaceRepoResourceGroupPostOKType {
+	return s.Type
+}
+
+// GetPrivate returns the value of Private.
+func (s *APIContainersNamespaceRepoResourceGroupPostOK) GetPrivate() bool {
+	return s.Private
+}
+
+// GetAddedBy returns the value of AddedBy.
+func (s *APIContainersNamespaceRepoResourceGroupPostOK) GetAddedBy() string {
+	return s.AddedBy
+}
+
+// SetName sets the value of Name.
+func (s *APIContainersNamespaceRepoResourceGroupPostOK) SetName(val string) {
+	s.Name = val
+}
+
+// SetType sets the value of Type.
+func (s *APIContainersNamespaceRepoResourceGroupPostOK) SetType(val APIContainersNamespaceRepoResourceGroupPostOKType) {
+	s.Type = val
+}
+
+// SetPrivate sets the value of Private.
+func (s *APIContainersNamespaceRepoResourceGroupPostOK) SetPrivate(val bool) {
+	s.Private = val
+}
+
+// SetAddedBy sets the value of AddedBy.
+func (s *APIContainersNamespaceRepoResourceGroupPostOK) SetAddedBy(val string) {
+	s.AddedBy = val
+}
+
+type APIContainersNamespaceRepoResourceGroupPostOKType string
+
+const (
+	APIContainersNamespaceRepoResourceGroupPostOKTypeDataset   APIContainersNamespaceRepoResourceGroupPostOKType = "dataset"
+	APIContainersNamespaceRepoResourceGroupPostOKTypeModel     APIContainersNamespaceRepoResourceGroupPostOKType = "model"
+	APIContainersNamespaceRepoResourceGroupPostOKTypeSpace     APIContainersNamespaceRepoResourceGroupPostOKType = "space"
+	APIContainersNamespaceRepoResourceGroupPostOKTypeBucket    APIContainersNamespaceRepoResourceGroupPostOKType = "bucket"
+	APIContainersNamespaceRepoResourceGroupPostOKTypeKernel    APIContainersNamespaceRepoResourceGroupPostOKType = "kernel"
+	APIContainersNamespaceRepoResourceGroupPostOKTypeContainer APIContainersNamespaceRepoResourceGroupPostOKType = "container"
+)
+
+// AllValues returns all APIContainersNamespaceRepoResourceGroupPostOKType values.
+func (APIContainersNamespaceRepoResourceGroupPostOKType) AllValues() []APIContainersNamespaceRepoResourceGroupPostOKType {
+	return []APIContainersNamespaceRepoResourceGroupPostOKType{
+		APIContainersNamespaceRepoResourceGroupPostOKTypeDataset,
+		APIContainersNamespaceRepoResourceGroupPostOKTypeModel,
+		APIContainersNamespaceRepoResourceGroupPostOKTypeSpace,
+		APIContainersNamespaceRepoResourceGroupPostOKTypeBucket,
+		APIContainersNamespaceRepoResourceGroupPostOKTypeKernel,
+		APIContainersNamespaceRepoResourceGroupPostOKTypeContainer,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s APIContainersNamespaceRepoResourceGroupPostOKType) MarshalText() ([]byte, error) {
+	switch s {
+	case APIContainersNamespaceRepoResourceGroupPostOKTypeDataset:
+		return []byte(s), nil
+	case APIContainersNamespaceRepoResourceGroupPostOKTypeModel:
+		return []byte(s), nil
+	case APIContainersNamespaceRepoResourceGroupPostOKTypeSpace:
+		return []byte(s), nil
+	case APIContainersNamespaceRepoResourceGroupPostOKTypeBucket:
+		return []byte(s), nil
+	case APIContainersNamespaceRepoResourceGroupPostOKTypeKernel:
+		return []byte(s), nil
+	case APIContainersNamespaceRepoResourceGroupPostOKTypeContainer:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *APIContainersNamespaceRepoResourceGroupPostOKType) UnmarshalText(data []byte) error {
+	switch APIContainersNamespaceRepoResourceGroupPostOKType(data) {
+	case APIContainersNamespaceRepoResourceGroupPostOKTypeDataset:
+		*s = APIContainersNamespaceRepoResourceGroupPostOKTypeDataset
+		return nil
+	case APIContainersNamespaceRepoResourceGroupPostOKTypeModel:
+		*s = APIContainersNamespaceRepoResourceGroupPostOKTypeModel
+		return nil
+	case APIContainersNamespaceRepoResourceGroupPostOKTypeSpace:
+		*s = APIContainersNamespaceRepoResourceGroupPostOKTypeSpace
+		return nil
+	case APIContainersNamespaceRepoResourceGroupPostOKTypeBucket:
+		*s = APIContainersNamespaceRepoResourceGroupPostOKTypeBucket
+		return nil
+	case APIContainersNamespaceRepoResourceGroupPostOKTypeKernel:
+		*s = APIContainersNamespaceRepoResourceGroupPostOKTypeKernel
+		return nil
+	case APIContainersNamespaceRepoResourceGroupPostOKTypeContainer:
+		*s = APIContainersNamespaceRepoResourceGroupPostOKTypeContainer
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
+type APIContainersNamespaceRepoResourceGroupPostReq struct {
+	// The resource group to add the repository to, if null, the repository will be removed from the
+	// resource group.
+	ResourceGroupId NilString `json:"resourceGroupId"`
+}
+
+// GetResourceGroupId returns the value of ResourceGroupId.
+func (s *APIContainersNamespaceRepoResourceGroupPostReq) GetResourceGroupId() NilString {
+	return s.ResourceGroupId
+}
+
+// SetResourceGroupId sets the value of ResourceGroupId.
+func (s *APIContainersNamespaceRepoResourceGroupPostReq) SetResourceGroupId(val NilString) {
+	s.ResourceGroupId = val
+}
+
 type APIContainersNamespaceRepoSettingsPutOK struct {
 	Private    OptBool                                                 `json:"private"`
 	CdnRegions []APIContainersNamespaceRepoSettingsPutOKCdnRegionsItem `json:"cdnRegions"`
@@ -33527,6 +33696,8 @@ const (
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgRotateToken                                 APIOrganizationsNameAuditLogExportGetOKItemType = "org.rotate_token"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOLogin                                    APIOrganizationsNameAuditLogExportGetOKItemType = "org.sso_login"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOJoin                                     APIOrganizationsNameAuditLogExportGetOKItemType = "org.sso_join"
+	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOCredentialAuthorize                      APIOrganizationsNameAuditLogExportGetOKItemType = "org.sso_credential.authorize"
+	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOCredentialDeauthorize                    APIOrganizationsNameAuditLogExportGetOKItemType = "org.sso_credential.deauthorize"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgUpdateJoinSettings                          APIOrganizationsNameAuditLogExportGetOKItemType = "org.update_join_settings"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgUpdateSettings                              APIOrganizationsNameAuditLogExportGetOKItemType = "org.update_settings"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSettingsRegions                             APIOrganizationsNameAuditLogExportGetOKItemType = "org.settings.regions"
@@ -33616,6 +33787,13 @@ const (
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenS3CredentialCreate       APIOrganizationsNameAuditLogExportGetOKItemType = "org.service_account.token.s3_credential.create"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenS3CredentialDelete       APIOrganizationsNameAuditLogExportGetOKItemType = "org.service_account.token.s3_credential.delete"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthToken                                     APIOrganizationsNameAuditLogExportGetOKItemType = "oauth.token"
+	APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppCreate                                 APIOrganizationsNameAuditLogExportGetOKItemType = "oauth.app.create"
+	APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppUpdate                                 APIOrganizationsNameAuditLogExportGetOKItemType = "oauth.app.update"
+	APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretRotate                           APIOrganizationsNameAuditLogExportGetOKItemType = "oauth.app.secret.rotate"
+	APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretDelete                           APIOrganizationsNameAuditLogExportGetOKItemType = "oauth.app.secret.delete"
+	APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretExpire                           APIOrganizationsNameAuditLogExportGetOKItemType = "oauth.app.secret.expire"
+	APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppDelete                                 APIOrganizationsNameAuditLogExportGetOKItemType = "oauth.app.delete"
+	APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppMove                                   APIOrganizationsNameAuditLogExportGetOKItemType = "oauth.app.move"
 )
 
 // AllValues returns all APIOrganizationsNameAuditLogExportGetOKItemType values.
@@ -33655,6 +33833,8 @@ func (APIOrganizationsNameAuditLogExportGetOKItemType) AllValues() []APIOrganiza
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgRotateToken,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOLogin,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOJoin,
+		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOCredentialAuthorize,
+		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOCredentialDeauthorize,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgUpdateJoinSettings,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgUpdateSettings,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSettingsRegions,
@@ -33744,6 +33924,13 @@ func (APIOrganizationsNameAuditLogExportGetOKItemType) AllValues() []APIOrganiza
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenS3CredentialCreate,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenS3CredentialDelete,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthToken,
+		APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppCreate,
+		APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppUpdate,
+		APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretRotate,
+		APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretDelete,
+		APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretExpire,
+		APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppDelete,
+		APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppMove,
 	}
 }
 
@@ -33817,6 +34004,10 @@ func (s APIOrganizationsNameAuditLogExportGetOKItemType) MarshalText() ([]byte, 
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOLogin:
 		return []byte(s), nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOJoin:
+		return []byte(s), nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOCredentialAuthorize:
+		return []byte(s), nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOCredentialDeauthorize:
 		return []byte(s), nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgUpdateJoinSettings:
 		return []byte(s), nil
@@ -33996,6 +34187,20 @@ func (s APIOrganizationsNameAuditLogExportGetOKItemType) MarshalText() ([]byte, 
 		return []byte(s), nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthToken:
 		return []byte(s), nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppCreate:
+		return []byte(s), nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppUpdate:
+		return []byte(s), nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretRotate:
+		return []byte(s), nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretDelete:
+		return []byte(s), nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretExpire:
+		return []byte(s), nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppDelete:
+		return []byte(s), nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppMove:
+		return []byte(s), nil
 	default:
 		return nil, errors.Errorf("invalid value: %q", s)
 	}
@@ -34105,6 +34310,12 @@ func (s *APIOrganizationsNameAuditLogExportGetOKItemType) UnmarshalText(data []b
 		return nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOJoin:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOJoin
+		return nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOCredentialAuthorize:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOCredentialAuthorize
+		return nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOCredentialDeauthorize:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOCredentialDeauthorize
 		return nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgUpdateJoinSettings:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgUpdateJoinSettings
@@ -34372,6 +34583,27 @@ func (s *APIOrganizationsNameAuditLogExportGetOKItemType) UnmarshalText(data []b
 		return nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthToken:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthToken
+		return nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppCreate:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppCreate
+		return nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppUpdate:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppUpdate
+		return nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretRotate:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretRotate
+		return nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretDelete:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretDelete
+		return nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretExpire:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretExpire
+		return nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppDelete:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppDelete
+		return nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppMove:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppMove
 		return nil
 	default:
 		return errors.Errorf("invalid value: %q", data)
@@ -55106,6 +55338,7 @@ const (
 	APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemOpenenv      APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItem = "openenv"
 	APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemNemoGym      APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItem = "nemo-gym"
 	APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemAgentenv     APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItem = "agentenv"
+	APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemLerobot      APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItem = "lerobot"
 )
 
 // AllValues returns all APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItem values.
@@ -55128,6 +55361,7 @@ func (APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItem) Al
 		APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemOpenenv,
 		APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemNemoGym,
 		APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemAgentenv,
+		APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemLerobot,
 	}
 }
 
@@ -55167,6 +55401,8 @@ func (s APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItem) 
 	case APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemNemoGym:
 		return []byte(s), nil
 	case APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemAgentenv:
+		return []byte(s), nil
+	case APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemLerobot:
 		return []byte(s), nil
 	default:
 		return nil, errors.Errorf("invalid value: %q", s)
@@ -55226,6 +55462,9 @@ func (s *APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItem)
 		return nil
 	case APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemAgentenv:
 		*s = APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemAgentenv
+		return nil
+	case APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemLerobot:
+		*s = APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemLerobot
 		return nil
 	default:
 		return errors.Errorf("invalid value: %q", data)
@@ -84482,7 +84721,10 @@ type OAuthUserinfoGetOK struct {
 	CanPay OptBool `json:"canPay"`
 	// Whether the user is on prepaid or postpaid billing.
 	BillingMode OptOAuthUserinfoGetOKBillingMode `json:"billingMode"`
-	Orgs        []OAuthUserinfoGetOKOrgsItem     `json:"orgs"`
+	// Names of the organizations the user belongs to, as a list of strings for OIDC clients syncing groups
+	// from a claim.
+	Groups []string                     `json:"groups"`
+	Orgs   []OAuthUserinfoGetOKOrgsItem `json:"orgs"`
 }
 
 // GetSub returns the value of Sub.
@@ -84543,6 +84785,11 @@ func (s *OAuthUserinfoGetOK) GetCanPay() OptBool {
 // GetBillingMode returns the value of BillingMode.
 func (s *OAuthUserinfoGetOK) GetBillingMode() OptOAuthUserinfoGetOKBillingMode {
 	return s.BillingMode
+}
+
+// GetGroups returns the value of Groups.
+func (s *OAuthUserinfoGetOK) GetGroups() []string {
+	return s.Groups
 }
 
 // GetOrgs returns the value of Orgs.
@@ -84608,6 +84855,11 @@ func (s *OAuthUserinfoGetOK) SetCanPay(val OptBool) {
 // SetBillingMode sets the value of BillingMode.
 func (s *OAuthUserinfoGetOK) SetBillingMode(val OptOAuthUserinfoGetOKBillingMode) {
 	s.BillingMode = val
+}
+
+// SetGroups sets the value of Groups.
+func (s *OAuthUserinfoGetOK) SetGroups(val []string) {
+	s.Groups = val
 }
 
 // SetOrgs sets the value of Orgs.
@@ -85170,7 +85422,10 @@ type OAuthUserinfoPostOK struct {
 	CanPay OptBool `json:"canPay"`
 	// Whether the user is on prepaid or postpaid billing.
 	BillingMode OptOAuthUserinfoPostOKBillingMode `json:"billingMode"`
-	Orgs        []OAuthUserinfoPostOKOrgsItem     `json:"orgs"`
+	// Names of the organizations the user belongs to, as a list of strings for OIDC clients syncing groups
+	// from a claim.
+	Groups []string                      `json:"groups"`
+	Orgs   []OAuthUserinfoPostOKOrgsItem `json:"orgs"`
 }
 
 // GetSub returns the value of Sub.
@@ -85231,6 +85486,11 @@ func (s *OAuthUserinfoPostOK) GetCanPay() OptBool {
 // GetBillingMode returns the value of BillingMode.
 func (s *OAuthUserinfoPostOK) GetBillingMode() OptOAuthUserinfoPostOKBillingMode {
 	return s.BillingMode
+}
+
+// GetGroups returns the value of Groups.
+func (s *OAuthUserinfoPostOK) GetGroups() []string {
+	return s.Groups
 }
 
 // GetOrgs returns the value of Orgs.
@@ -85296,6 +85556,11 @@ func (s *OAuthUserinfoPostOK) SetCanPay(val OptBool) {
 // SetBillingMode sets the value of BillingMode.
 func (s *OAuthUserinfoPostOK) SetBillingMode(val OptOAuthUserinfoPostOKBillingMode) {
 	s.BillingMode = val
+}
+
+// SetGroups sets the value of Groups.
+func (s *OAuthUserinfoPostOK) SetGroups(val []string) {
+	s.Groups = val
 }
 
 // SetOrgs sets the value of Orgs.
@@ -90206,6 +90471,52 @@ func (o OptAPIContainersNamespaceRepoPostReqVisibility) Get() (v APIContainersNa
 
 // Or returns value if set, or given parameter if does not.
 func (o OptAPIContainersNamespaceRepoPostReqVisibility) Or(d APIContainersNamespaceRepoPostReqVisibility) APIContainersNamespaceRepoPostReqVisibility {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptAPIContainersNamespaceRepoResourceGroupPostReq returns new OptAPIContainersNamespaceRepoResourceGroupPostReq with value set to v.
+func NewOptAPIContainersNamespaceRepoResourceGroupPostReq(v APIContainersNamespaceRepoResourceGroupPostReq) OptAPIContainersNamespaceRepoResourceGroupPostReq {
+	return OptAPIContainersNamespaceRepoResourceGroupPostReq{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptAPIContainersNamespaceRepoResourceGroupPostReq is optional APIContainersNamespaceRepoResourceGroupPostReq.
+type OptAPIContainersNamespaceRepoResourceGroupPostReq struct {
+	Value APIContainersNamespaceRepoResourceGroupPostReq
+	Set   bool
+}
+
+// IsSet returns true if OptAPIContainersNamespaceRepoResourceGroupPostReq was set.
+func (o OptAPIContainersNamespaceRepoResourceGroupPostReq) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptAPIContainersNamespaceRepoResourceGroupPostReq) Reset() {
+	var v APIContainersNamespaceRepoResourceGroupPostReq
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptAPIContainersNamespaceRepoResourceGroupPostReq) SetTo(v APIContainersNamespaceRepoResourceGroupPostReq) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptAPIContainersNamespaceRepoResourceGroupPostReq) Get() (v APIContainersNamespaceRepoResourceGroupPostReq, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptAPIContainersNamespaceRepoResourceGroupPostReq) Or(d APIContainersNamespaceRepoResourceGroupPostReq) APIContainersNamespaceRepoResourceGroupPostReq {
 	if v, ok := o.Get(); ok {
 		return v
 	}

@@ -1634,6 +1634,7 @@
                                 },
                                 "mountPath": {
                                   "type": "string",
+                                  "format": "starts_with",
                                   "pattern": "^\\/.*",
                                   "description": "Mount path inside the container, e.g. '/data'"
                                 },
@@ -1883,6 +1884,7 @@
                                 },
                                 "mountPath": {
                                   "type": "string",
+                                  "format": "starts_with",
                                   "pattern": "^\\/.*",
                                   "description": "Mount path inside the container, e.g. '/data'"
                                 },
@@ -2939,6 +2941,7 @@
                                 },
                                 "mountPath": {
                                   "type": "string",
+                                  "format": "starts_with",
                                   "pattern": "^\\/.*",
                                   "description": "Mount path inside the container, e.g. '/data'"
                                 },
@@ -3188,6 +3191,7 @@
                                 },
                                 "mountPath": {
                                   "type": "string",
+                                  "format": "starts_with",
                                   "pattern": "^\\/.*",
                                   "description": "Mount path inside the container, e.g. '/data'"
                                 },
@@ -5023,6 +5027,8 @@
                           "org.rotate_token",
                           "org.sso_login",
                           "org.sso_join",
+                          "org.sso_credential.authorize",
+                          "org.sso_credential.deauthorize",
                           "org.update_join_settings",
                           "org.update_settings",
                           "org.settings.regions",
@@ -5111,7 +5117,14 @@
                           "org.service_account.token.update",
                           "org.service_account.token.s3_credential.create",
                           "org.service_account.token.s3_credential.delete",
-                          "oauth.token"
+                          "oauth.token",
+                          "oauth.app.create",
+                          "oauth.app.update",
+                          "oauth.app.secret.rotate",
+                          "oauth.app.secret.delete",
+                          "oauth.app.secret.expire",
+                          "oauth.app.delete",
+                          "oauth.app.move"
                         ]
                       },
                       "data": {},
@@ -10738,6 +10751,13 @@
                     "areCidrRangesApproved": {
                       "type": "boolean",
                       "description": "Whether the declared ipRanges match the admin-validated CIDR ranges"
+                    },
+                    "validatedIpRanges": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "The admin-validated CIDR ranges"
                     }
                   },
                   "required": [
@@ -10748,7 +10768,8 @@
                     "blockedContents",
                     "allowedContents",
                     "keepReposMetadataVisible",
-                    "areCidrRangesApproved"
+                    "areCidrRangesApproved",
+                    "validatedIpRanges"
                   ],
                   "additionalProperties": false
                 }
@@ -11958,7 +11979,7 @@
             "schema": {
               "type": "string",
               "format": "email",
-              "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+              "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
             },
             "required": false
           },
@@ -12777,7 +12798,7 @@
                         "value": {
                           "type": "string",
                           "format": "email",
-                          "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                          "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
                         }
                       },
                       "required": [
@@ -13527,7 +13548,7 @@
                         "value": {
                           "type": "string",
                           "format": "email",
-                          "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                          "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
                         }
                       },
                       "required": [
@@ -15171,7 +15192,7 @@
                         "value": {
                           "type": "string",
                           "format": "email",
-                          "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                          "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
                         }
                       },
                       "required": [
@@ -17582,6 +17603,13 @@
                         "postpaid"
                       ]
                     },
+                    "groups": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Names of the organizations the user belongs to, as a list of strings for OIDC clients syncing groups from a claim"
+                    },
                     "orgs": {
                       "type": "array",
                       "items": {
@@ -17691,6 +17719,7 @@
                   "required": [
                     "sub",
                     "isPro",
+                    "groups",
                     "orgs"
                   ],
                   "additionalProperties": false
@@ -17811,6 +17840,13 @@
                         "postpaid"
                       ]
                     },
+                    "groups": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Names of the organizations the user belongs to, as a list of strings for OIDC clients syncing groups from a claim"
+                    },
                     "orgs": {
                       "type": "array",
                       "items": {
@@ -17920,6 +17956,7 @@
                   "required": [
                     "sub",
                     "isPro",
+                    "groups",
                     "orgs"
                   ],
                   "additionalProperties": false
@@ -21765,7 +21802,7 @@
             "name": "startDate",
             "in": "query",
             "schema": {
-              "default": "2026-10-01T00:00:00.000Z",
+              "default": "1970-01-01T00:00:00.000Z",
               "type": "string",
               "format": "date-time",
               "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
@@ -21776,7 +21813,7 @@
             "name": "endDate",
             "in": "query",
             "schema": {
-              "default": "2026-11-06T16:57:39.044Z",
+              "default": "1970-01-01T00:00:00.000Z",
               "type": "string",
               "format": "date-time",
               "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
@@ -21870,7 +21907,7 @@
             "name": "startDate",
             "in": "query",
             "schema": {
-              "default": "2026-10-01T00:00:00.000Z",
+              "default": "1970-01-01T00:00:00.000Z",
               "type": "string",
               "format": "date-time",
               "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
@@ -21881,7 +21918,7 @@
             "name": "endDate",
             "in": "query",
             "schema": {
-              "default": "2026-11-06T16:57:39.044Z",
+              "default": "1970-01-01T00:00:00.000Z",
               "type": "string",
               "format": "date-time",
               "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
@@ -21997,7 +22034,7 @@
             "name": "startDate",
             "in": "query",
             "schema": {
-              "default": "2026-10-01T00:00:00.000Z",
+              "default": "1970-01-01T00:00:00.000Z",
               "type": "string",
               "format": "date-time",
               "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
@@ -22008,7 +22045,7 @@
             "name": "endDate",
             "in": "query",
             "schema": {
-              "default": "2026-11-06T16:57:39.045Z",
+              "default": "1970-01-01T00:00:00.000Z",
               "type": "string",
               "format": "date-time",
               "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
@@ -22120,7 +22157,7 @@
             "name": "startDate",
             "in": "query",
             "schema": {
-              "default": "2026-10-01T00:00:00.000Z",
+              "default": "1970-01-01T00:00:00.000Z",
               "type": "string",
               "format": "date-time",
               "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
@@ -22131,7 +22168,7 @@
             "name": "endDate",
             "in": "query",
             "schema": {
-              "default": "2026-11-06T16:57:39.044Z",
+              "default": "1970-01-01T00:00:00.000Z",
               "type": "string",
               "format": "date-time",
               "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
@@ -30900,6 +30937,161 @@
         ]
       }
     },
+    "/api/containers/{namespace}/{repo}/resource-group": {
+      "post": {
+        "description": "Add the repository to a resource group",
+        "summary": "Add resource group",
+        "tags": [
+          "containers"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {
+                  "resourceGroupId": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 24,
+                        "maxLength": 24,
+                        "pattern": "^[0-9a-fA-F]{24}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "description": "The resource group to add the repository to, if null, the repository will be removed from the resource group"
+                  }
+                },
+                "required": [
+                  "resourceGroupId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "dataset",
+                        "model",
+                        "space",
+                        "bucket",
+                        "kernel",
+                        "container"
+                      ]
+                    },
+                    "private": {
+                      "type": "boolean"
+                    },
+                    "addedBy": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "type",
+                    "private",
+                    "addedBy"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "description": "Minimal information about the repository"
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "repo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "get": {
+        "summary": "Get resource group",
+        "tags": [
+          "containers"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 24,
+                      "maxLength": 24,
+                      "pattern": "^[0-9a-f]{24}$",
+                      "description": "A hex string of 24 characters representing an ObjectId."
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "numUsers": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "description": "The resource group of the repository"
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "repo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
     "/api/models/{namespace}/{repo}/super-squash/{rev}": {
       "post": {
         "description": "Squash all commits in the current ref into a single commit with the given message. Action is irreversible.",
@@ -31219,7 +31411,7 @@
                   "gatedNotificationsEmail": {
                     "type": "string",
                     "format": "email",
-                    "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                    "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
                   },
                   "gatedNotificationsMode": {
                     "type": "string",
@@ -31326,7 +31518,7 @@
                     "gatedNotificationsEmail": {
                       "type": "string",
                       "format": "email",
-                      "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                      "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
                     },
                     "gatedNotificationsMode": {
                       "type": "string",
@@ -31460,7 +31652,7 @@
                   "gatedNotificationsEmail": {
                     "type": "string",
                     "format": "email",
-                    "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                    "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
                   },
                   "gatedNotificationsMode": {
                     "type": "string",
@@ -31567,7 +31759,7 @@
                     "gatedNotificationsEmail": {
                       "type": "string",
                       "format": "email",
-                      "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                      "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
                     },
                     "gatedNotificationsMode": {
                       "type": "string",
@@ -31701,7 +31893,7 @@
                   "gatedNotificationsEmail": {
                     "type": "string",
                     "format": "email",
-                    "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                    "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
                   },
                   "gatedNotificationsMode": {
                     "type": "string",
@@ -31808,7 +32000,7 @@
                     "gatedNotificationsEmail": {
                       "type": "string",
                       "format": "email",
-                      "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                      "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
                     },
                     "gatedNotificationsMode": {
                       "type": "string",
@@ -34334,7 +34526,7 @@
             "schema": {
               "default": 0,
               "type": "integer",
-              "minimum": -9007199254740991,
+              "minimum": 0,
               "maximum": 9007199254740991
             },
             "required": false
@@ -44807,9 +44999,8 @@
             "schema": {
               "description": "Requested lifetime in seconds, capped at the default (600s with write, 86400s for spaces, 3600s otherwise)",
               "type": "integer",
-              "exclusiveMinimum": true,
-              "maximum": 86400,
-              "minimum": 0
+              "minimum": 60,
+              "maximum": 86400
             },
             "required": false
           },
@@ -44953,9 +45144,8 @@
             "schema": {
               "description": "Requested lifetime in seconds, capped at the default (600s with write, 86400s for spaces, 3600s otherwise)",
               "type": "integer",
-              "exclusiveMinimum": true,
-              "maximum": 86400,
-              "minimum": 0
+              "minimum": 60,
+              "maximum": 86400
             },
             "required": false
           },
@@ -45099,9 +45289,8 @@
             "schema": {
               "description": "Requested lifetime in seconds, capped at the default (600s with write, 86400s for spaces, 3600s otherwise)",
               "type": "integer",
-              "exclusiveMinimum": true,
-              "maximum": 86400,
-              "minimum": 0
+              "minimum": 60,
+              "maximum": 86400
             },
             "required": false
           },
@@ -45528,7 +45717,8 @@
                                             "verifiers",
                                             "openenv",
                                             "nemo-gym",
-                                            "agentenv"
+                                            "agentenv",
+                                            "lerobot"
                                           ]
                                         }
                                       },
@@ -47454,6 +47644,7 @@
                         },
                         "mountPath": {
                           "type": "string",
+                          "format": "starts_with",
                           "pattern": "^\\/.*",
                           "description": "Mount path inside the container, e.g. '/data'"
                         },
@@ -48519,6 +48710,7 @@
                             },
                             "mountPath": {
                               "type": "string",
+                              "format": "starts_with",
                               "pattern": "^\\/.*",
                               "description": "Mount path inside the container, e.g. '/data'"
                             },
@@ -52652,7 +52844,8 @@
                                     "verifiers",
                                     "openenv",
                                     "nemo-gym",
-                                    "agentenv"
+                                    "agentenv",
+                                    "lerobot"
                                   ]
                                 }
                               },
@@ -56822,7 +57015,8 @@
                                         "verifiers",
                                         "openenv",
                                         "nemo-gym",
-                                        "agentenv"
+                                        "agentenv",
+                                        "lerobot"
                                       ]
                                     }
                                   },
@@ -59393,7 +59587,8 @@
                                             "verifiers",
                                             "openenv",
                                             "nemo-gym",
-                                            "agentenv"
+                                            "agentenv",
+                                            "lerobot"
                                           ]
                                         }
                                       },
@@ -61803,7 +61998,8 @@
                                         "verifiers",
                                         "openenv",
                                         "nemo-gym",
-                                        "agentenv"
+                                        "agentenv",
+                                        "lerobot"
                                       ]
                                     }
                                   },
@@ -64366,7 +64562,8 @@
                                             "verifiers",
                                             "openenv",
                                             "nemo-gym",
-                                            "agentenv"
+                                            "agentenv",
+                                            "lerobot"
                                           ]
                                         }
                                       },
@@ -66811,7 +67008,8 @@
                                         "verifiers",
                                         "openenv",
                                         "nemo-gym",
-                                        "agentenv"
+                                        "agentenv",
+                                        "lerobot"
                                       ]
                                     }
                                   },
@@ -69257,7 +69455,8 @@
                                         "verifiers",
                                         "openenv",
                                         "nemo-gym",
-                                        "agentenv"
+                                        "agentenv",
+                                        "lerobot"
                                       ]
                                     }
                                   },
@@ -71714,7 +71913,8 @@
                                         "verifiers",
                                         "openenv",
                                         "nemo-gym",
-                                        "agentenv"
+                                        "agentenv",
+                                        "lerobot"
                                       ]
                                     }
                                   },
@@ -74110,7 +74310,8 @@
                                               "verifiers",
                                               "openenv",
                                               "nemo-gym",
-                                              "agentenv"
+                                              "agentenv",
+                                              "lerobot"
                                             ]
                                           }
                                         },
@@ -78459,6 +78660,15 @@
             "required": false
           },
           {
+            "name": "startAfter",
+            "in": "query",
+            "schema": {
+              "description": "Start the listing right after this path, in the requested `sort` and `direction` (exclusive). With `sort=path` it does not need to exist; with `sort=uploadedAt` it must be an existing entry of the listed folder. Cannot be combined with `cursor`.",
+              "type": "string"
+            },
+            "required": false
+          },
+          {
             "name": "recursive",
             "in": "query",
             "schema": {
@@ -78619,6 +78829,15 @@
               "type": "string",
               "contentEncoding": "base64",
               "contentMediaType": "application/json"
+            },
+            "required": false
+          },
+          {
+            "name": "startAfter",
+            "in": "query",
+            "schema": {
+              "description": "Start the listing right after this path, in the requested `sort` and `direction` (exclusive). With `sort=path` it does not need to exist; with `sort=uploadedAt` it must be an existing entry of the listed folder. Cannot be combined with `cursor`.",
+              "type": "string"
             },
             "required": false
           },
@@ -79821,6 +80040,7 @@
                             },
                             "mountPath": {
                               "type": "string",
+                              "format": "starts_with",
                               "pattern": "^\\/.*",
                               "description": "Mount path inside the container, e.g. '/data'"
                             },
@@ -80070,6 +80290,7 @@
                             },
                             "mountPath": {
                               "type": "string",
+                              "format": "starts_with",
                               "pattern": "^\\/.*",
                               "description": "Mount path inside the container, e.g. '/data'"
                             },
@@ -83574,6 +83795,7 @@
                                 },
                                 "mountPath": {
                                   "type": "string",
+                                  "format": "starts_with",
                                   "pattern": "^\\/.*",
                                   "description": "Mount path inside the container, e.g. '/data'"
                                 },
@@ -83823,6 +84045,7 @@
                                 },
                                 "mountPath": {
                                   "type": "string",
+                                  "format": "starts_with",
                                   "pattern": "^\\/.*",
                                   "description": "Mount path inside the container, e.g. '/data'"
                                 },
