@@ -19,11 +19,13 @@
 #      collision group is kept — the non-underscore-prefixed,
 #      lexicographically-smallest name wins. Recorded by
 #      report-collisions.jq.
-#   5. For .paths, drop operations that:
 #      - lack a `responses` object (invalid OpenAPI, rejected by ogen), or
 #      - still contain bad schemas after property pruning.
 #      Preserve non-method path-item keys like shared `parameters` or `summary`.
 #      A path item left with no operations at all is removed entirely.
+#   6. Rewrite volatile ISO-8601 date-time `default` values (spec-build-time
+#      "now"-style values that change on every upstream rebuild) to a fixed
+#      epoch sentinel. Recorded by report-defaults.jq.
 
 include "bad";
 
@@ -66,8 +68,16 @@ def prune_collisions:
     else . end
   );
 
+def normalize_volatile_defaults:
+  walk(
+    if volatile_datetime_default then
+      .default = "1970-01-01T00:00:00.000Z"
+    else . end
+  );
+
 normalize_scalar_items
 | normalize_numeric_bounds
+| normalize_volatile_defaults
 | walk(
     if type == "object" and ((.properties? | type) == "object") then
       .properties |= with_entries(select(.value | bad | not))

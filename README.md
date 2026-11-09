@@ -62,16 +62,19 @@ The script:
    requires a schema object there.
 3. Rewrites OpenAPI 3.1 numeric `exclusiveMinimum`/`exclusiveMaximum` to the
    OpenAPI 3.0 boolean form (semantics-preserving).
-4. Removes properties whose schemas use constructs ogen cannot represent
+4. Normalizes volatile ISO-8601 date-time `default` values (the spec
+   generator bakes "now"-style values in at spec build time) to a fixed
+   epoch sentinel, keeping regeneration deterministic.
+5. Removes properties whose schemas use constructs ogen cannot represent
    (e.g. `type: [string, boolean]` unions).
-5. Removes properties that collide after ogen's Go name mangling (e.g. `id`
+6. Removes properties that collide after ogen's Go name mangling (e.g. `id`
    vs. `_id`), keeping the non-underscore-prefixed name.
-6. Removes operations that lack a `responses` object (invalid OpenAPI —
+7. Removes operations that lack a `responses` object (invalid OpenAPI —
    typically redirect/media endpoints such as avatars) or that still contain
    unsupported constructs.
-7. Verifies nothing unsupported remains, failing loudly with locations if it
+8. Verifies nothing unsupported remains, failing loudly with locations if it
    does.
-8. Runs ogen and rewrites `openapi.processed.json` and `SPEC_DEVIATIONS.md`.
+9. Runs ogen and rewrites `openapi.processed.json` and `SPEC_DEVIATIONS.md`.
 
 Review the resulting diffs (`openapi.processed.json`, `SPEC_DEVIATIONS.md`,
 and the generated `.go` files) before merging.
@@ -90,6 +93,10 @@ In practice this means:
 - Some array elements decode as generic values (`[]interface{}`) rather than
   typed structs, where the upstream spec declares `items: false`.
 - A handful of endpoints (e.g. avatar redirects) are absent entirely.
+- Some billing/usage endpoints have epoch-sentinel (`1970-01-01T00:00:00.000Z`)
+  defaults for their date-window query parameters — upstream bakes "now"
+  values into the spec at build time, which would make regeneration
+  nondeterministic. Pass explicit dates when calling these endpoints.
 - If a removed field belongs to a **request** body, the client cannot send it.
 
 ## Repository layout

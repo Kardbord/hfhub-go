@@ -9,6 +9,7 @@
 #   - contains_bad    — true if the input value contains bad schemas anywhere within
 #   - scalar_items    — true if . has an `items` that is neither object nor array
 #   - numeric_exclusive_bounds — true if . uses numeric exclusiveMinimum/Maximum
+#   - volatile_datetime_default — true if . has an ISO-8601 date-time `default`
 #   - norm_key        — approximate ogen Go-name normalization of a property name
 #   - colliding_groups — property-name collision groups of this schema
 #   - has_collisions  — true if this schema has colliding sibling properties
@@ -55,6 +56,19 @@ def scalar_items:
 def numeric_exclusive_bounds:
   ((.exclusiveMinimum? | type) == "number")
   or ((.exclusiveMaximum? | type) == "number");
+
+# True if . is a schema object whose `default` is a full ISO-8601 date-time
+# timestamp (e.g. "2026-11-06T16:57:39.044Z"). The Hub spec generator bakes
+# "now"-style values (spec build time, month boundaries) into query-parameter
+# defaults, so they change on every upstream spec rebuild and would make
+# regenerated artifacts nondeterministic. Such defaults are rewritten to a
+# fixed epoch sentinel by prune.jq and recorded by report-defaults.jq.
+# Value-shape based (no `format` requirement) so a dropped `format` key
+# cannot reintroduce churn.
+def volatile_datetime_default:
+  type == "object"
+  and (.default? | type) == "string"
+  and (.default | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?Z$"));
 
 # Approximation of ogen's Go field-name mangling: lowercase, drop everything
 # that is not alphanumeric. Two properties whose normalized names are equal
