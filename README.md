@@ -2,6 +2,7 @@
 
 [![Build](https://github.com/Kardbord/hfhub-go/actions/workflows/build.yml/badge.svg)](https://github.com/Kardbord/hfhub-go/actions/workflows/build.yml)
 [![Tests](https://github.com/Kardbord/hfhub-go/actions/workflows/test.yml/badge.svg)](https://github.com/Kardbord/hfhub-go/actions/workflows/test.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/Kardbord/hfhub-go.svg)](https://pkg.go.dev/github.com/Kardbord/hfhub-go)
 
 An unofficial, auto-generated Go client for the [Hugging Face Hub API](https://huggingface.co/docs/hub/api).
 
