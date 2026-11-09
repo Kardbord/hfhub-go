@@ -26,6 +26,11 @@ jobs:
         id: pr
         uses: peter-evans/create-pull-request@15733dbdfeedb4f7fdb73d13c6f5ac83b710fab8 # v8.1.2
         with:
+          # PAT, not GITHUB_TOKEN: token-created PRs don't trigger pull_request
+          # workflows (GitHub recursion rule) and github-actions[bot] is blocked
+          # by the org Actions policy. The PAT owner is an org member, so the
+          # PR's CI runs and its merges fire push events (release.yml).
+          token: ${{ secrets.PR_TOKEN }}
           branch: chore/regenerate-client
           delete-branch: true
           commit-message: 'regen: refresh client from upstream spec'
@@ -41,7 +46,10 @@ jobs:
       - name: Enable auto-merge
         if: steps.pr.outputs.pull-request-url != ''
         env:
-          GH_TOKEN: ${{ github.token }}
+          # PAT: a GITHUB_TOKEN-armed auto-merge performs the merge as
+          # github-actions[bot], whose resulting push would NOT trigger
+          # release.yml (recursion rule).
+          GH_TOKEN: ${{ secrets.PR_TOKEN }}
           PR_URL: ${{ steps.pr.outputs.pull-request-url }}
         run: |
           # Squash keeps main linear; --auto waits for required checks on every
