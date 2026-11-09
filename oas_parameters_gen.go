@@ -102,14 +102,15 @@ type APIBucketsNamespaceRepoSettingsPutParams struct {
 
 // APIBucketsNamespaceRepoTreePathGetParams is parameters of GET /api/buckets/{namespace}/{repo}/tree/{path} operation.
 type APIBucketsNamespaceRepoTreePathGetParams struct {
-	Namespace string
-	Repo      string
-	Path      string
-	Limit     OptInt                                         `json:",omitempty,omitzero"`
-	Cursor    OptString                                      `json:",omitempty,omitzero"`
-	Recursive OptString                                      `json:",omitempty,omitzero"`
-	Sort      OptAPIBucketsNamespaceRepoTreePathGetSort      `json:",omitempty,omitzero"`
-	Direction OptAPIBucketsNamespaceRepoTreePathGetDirection `json:",omitempty,omitzero"`
+	Namespace  string
+	Repo       string
+	Path       string
+	Limit      OptInt                                         `json:",omitempty,omitzero"`
+	Cursor     OptString                                      `json:",omitempty,omitzero"`
+	StartAfter OptString                                      `json:",omitempty,omitzero"`
+	Recursive  OptString                                      `json:",omitempty,omitzero"`
+	Sort       OptAPIBucketsNamespaceRepoTreePathGetSort      `json:",omitempty,omitzero"`
+	Direction  OptAPIBucketsNamespaceRepoTreePathGetDirection `json:",omitempty,omitzero"`
 }
 
 // APIBucketsNamespaceRepoXetReadTokenGetParams is parameters of GET /api/buckets/{namespace}/{repo}/xet-read-token operation.
@@ -180,6 +181,18 @@ type APIContainersNamespaceRepoPostParams struct {
 	Repo      string
 }
 
+// APIContainersNamespaceRepoResourceGroupGetParams is parameters of GET /api/containers/{namespace}/{repo}/resource-group operation.
+type APIContainersNamespaceRepoResourceGroupGetParams struct {
+	Namespace string
+	Repo      string
+}
+
+// APIContainersNamespaceRepoResourceGroupPostParams is parameters of POST /api/containers/{namespace}/{repo}/resource-group operation.
+type APIContainersNamespaceRepoResourceGroupPostParams struct {
+	Namespace string
+	Repo      string
+}
+
 // APIContainersNamespaceRepoSettingsPutParams is parameters of PUT /api/containers/{namespace}/{repo}/settings operation.
 type APIContainersNamespaceRepoSettingsPutParams struct {
 	Namespace string
@@ -188,14 +201,15 @@ type APIContainersNamespaceRepoSettingsPutParams struct {
 
 // APIContainersNamespaceRepoTreePathGetParams is parameters of GET /api/containers/{namespace}/{repo}/tree/{path} operation.
 type APIContainersNamespaceRepoTreePathGetParams struct {
-	Namespace string
-	Repo      string
-	Path      string
-	Limit     OptInt                                            `json:",omitempty,omitzero"`
-	Cursor    OptString                                         `json:",omitempty,omitzero"`
-	Recursive OptString                                         `json:",omitempty,omitzero"`
-	Sort      OptAPIContainersNamespaceRepoTreePathGetSort      `json:",omitempty,omitzero"`
-	Direction OptAPIContainersNamespaceRepoTreePathGetDirection `json:",omitempty,omitzero"`
+	Namespace  string
+	Repo       string
+	Path       string
+	Limit      OptInt                                            `json:",omitempty,omitzero"`
+	Cursor     OptString                                         `json:",omitempty,omitzero"`
+	StartAfter OptString                                         `json:",omitempty,omitzero"`
+	Recursive  OptString                                         `json:",omitempty,omitzero"`
+	Sort       OptAPIContainersNamespaceRepoTreePathGetSort      `json:",omitempty,omitzero"`
+	Direction  OptAPIContainersNamespaceRepoTreePathGetDirection `json:",omitempty,omitzero"`
 }
 
 // APIContainersNamespaceRepoXetReadTokenGetParams is parameters of GET /api/containers/{namespace}/{repo}/xet-read-token operation.

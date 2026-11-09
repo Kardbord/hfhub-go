@@ -4796,6 +4796,63 @@ func (s *APIContainersNamespaceRepoPostReqVisibility) SetFake() {
 }
 
 // SetFake set fake values.
+func (s *APIContainersNamespaceRepoResourceGroupGetOK) SetFake() {
+	{
+		{
+			s.ID = "string"
+		}
+	}
+	{
+		{
+			s.Name = "string"
+		}
+	}
+	{
+		{
+			s.NumUsers.SetFake()
+		}
+	}
+}
+
+// SetFake set fake values.
+func (s *APIContainersNamespaceRepoResourceGroupPostOK) SetFake() {
+	{
+		{
+			s.Name = "string"
+		}
+	}
+	{
+		{
+			s.Type.SetFake()
+		}
+	}
+	{
+		{
+			s.Private = true
+		}
+	}
+	{
+		{
+			s.AddedBy = "string"
+		}
+	}
+}
+
+// SetFake set fake values.
+func (s *APIContainersNamespaceRepoResourceGroupPostOKType) SetFake() {
+	*s = APIContainersNamespaceRepoResourceGroupPostOKTypeDataset
+}
+
+// SetFake set fake values.
+func (s *APIContainersNamespaceRepoResourceGroupPostReq) SetFake() {
+	{
+		{
+			s.ResourceGroupId.SetFake()
+		}
+	}
+}
+
+// SetFake set fake values.
 func (s *APIContainersNamespaceRepoSettingsPutOK) SetFake() {
 	{
 		{
@@ -30987,6 +31044,18 @@ func (s *OAuthUserinfoGetOK) SetFake() {
 	}
 	{
 		{
+			s.Groups = nil
+			for i := 0; i < 0; i++ {
+				var elem string
+				{
+					elem = "string"
+				}
+				s.Groups = append(s.Groups, elem)
+			}
+		}
+	}
+	{
+		{
 			s.Orgs = nil
 			for i := 0; i < 0; i++ {
 				var elem OAuthUserinfoGetOKOrgsItem
@@ -31214,6 +31283,18 @@ func (s *OAuthUserinfoPostOK) SetFake() {
 	{
 		{
 			s.BillingMode.SetFake()
+		}
+	}
+	{
+		{
+			s.Groups = nil
+			for i := 0; i < 0; i++ {
+				var elem string
+				{
+					elem = "string"
+				}
+				s.Groups = append(s.Groups, elem)
+			}
 		}
 	}
 	{
@@ -32191,6 +32272,15 @@ func (s *OptAPIContainersNamespaceRepoPostReqRegion) SetFake() {
 // SetFake set fake values.
 func (s *OptAPIContainersNamespaceRepoPostReqVisibility) SetFake() {
 	var elem APIContainersNamespaceRepoPostReqVisibility
+	{
+		elem.SetFake()
+	}
+	s.SetTo(elem)
+}
+
+// SetFake set fake values.
+func (s *OptAPIContainersNamespaceRepoResourceGroupPostReq) SetFake() {
+	var elem APIContainersNamespaceRepoResourceGroupPostReq
 	{
 		elem.SetFake()
 	}
