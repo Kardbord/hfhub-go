@@ -33,9 +33,6 @@ translation — the validated value space is unchanged.
 | `paths./api/organizations/{name}/billing/usage-v2.get.parameters.2.schema` | `0` | `null` |
 | `paths./api/settings/billing/usage-v2.get.parameters.0.schema` | `0` | `null` |
 | `paths./api/settings/billing/usage-v2.get.parameters.1.schema` | `0` | `null` |
-| `paths./api/models/{namespace}/{repo}/jwt.get.parameters.4.schema` | `0` | `null` |
-| `paths./api/spaces/{namespace}/{repo}/jwt.get.parameters.4.schema` | `0` | `null` |
-| `paths./api/datasets/{namespace}/{repo}/jwt.get.parameters.4.schema` | `0` | `null` |
 | `paths./api/{repoType}/{namespace}/{repo}/duplicate.post.requestBody.content.application/json.schema.properties.sleepTimeSeconds.anyOf.0` | `0` | `null` |
 | `paths./api/repos/create.post.requestBody.content.application/json.schema.oneOf.3.properties.sleepTimeSeconds.anyOf.0` | `0` | `null` |
 | `paths./api/spaces/{namespace}/{repo}/hardware.post.requestBody.content.application/json.schema.properties.sleepTimeSeconds.anyOf.0` | `0` | `null` |
@@ -71,6 +68,27 @@ values rather than typed fields.
 | `paths./api/collections/{namespace}/{slug}/items.post.responses.200.content.application/json.schema.properties.items.items.anyOf.2.properties.runtime.properties.hotReloading.properties.replicaStatuses.items.items` | `false` |
 | `paths./api/collections.post.responses.200.content.application/json.schema.properties.items.items.anyOf.2.properties.runtime.properties.hotReloading.properties.replicaStatuses.items.items` | `false` |
 | `paths./api/collections.get.responses.200.content.application/json.schema.anyOf.0.items.properties.items.items.anyOf.2.properties.runtime.properties.hotReloading.properties.replicaStatuses.items.items` | `false` |
+
+## Normalized volatile date-time defaults
+
+These schemas declare a `default` that is a full ISO-8601 date-time
+timestamp. The Hub spec generator bakes "now"-style values into these
+(spec build time, month boundaries), so they change on every upstream spec
+rebuild — which would make regenerated artifacts nondeterministic and churn
+the drift check. They are rewritten to the fixed epoch sentinel
+`1970-01-01T00:00:00.000Z`. The sentinel is not a meaningful value; callers
+of these endpoints pass explicit dates.
+
+| Location | Original default |
+| --- | --- |
+| `paths./api/organizations/{name}/billing/usage-by-resource-group.get.parameters.1.schema.default` | `2026-11-01T00:00:00.000Z` |
+| `paths./api/organizations/{name}/billing/usage-by-resource-group.get.parameters.2.schema.default` | `2026-11-09T11:06:36.369Z` |
+| `paths./api/organizations/{name}/billing/usage-by-inference-session.get.parameters.1.schema.default` | `2026-11-01T00:00:00.000Z` |
+| `paths./api/organizations/{name}/billing/usage-by-inference-session.get.parameters.2.schema.default` | `2026-11-09T11:06:36.370Z` |
+| `paths./api/organizations/{name}/billing/usage/inference.get.parameters.1.schema.default` | `2026-11-01T00:00:00.000Z` |
+| `paths./api/organizations/{name}/billing/usage/inference.get.parameters.2.schema.default` | `2026-11-09T11:06:36.370Z` |
+| `paths./api/settings/billing/usage-by-inference-session.get.parameters.0.schema.default` | `2026-11-01T00:00:00.000Z` |
+| `paths./api/settings/billing/usage-by-inference-session.get.parameters.1.schema.default` | `2026-11-09T11:06:36.370Z` |
 
 ## Resolved property-name collisions
 
