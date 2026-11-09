@@ -35,6 +35,8 @@ const (
 	APIContainersNamespaceRepoGetOperation                                              OperationName = "APIContainersNamespaceRepoGet"
 	APIContainersNamespaceRepoPathsInfoPostOperation                                    OperationName = "APIContainersNamespaceRepoPathsInfoPost"
 	APIContainersNamespaceRepoPostOperation                                             OperationName = "APIContainersNamespaceRepoPost"
+	APIContainersNamespaceRepoResourceGroupGetOperation                                 OperationName = "APIContainersNamespaceRepoResourceGroupGet"
+	APIContainersNamespaceRepoResourceGroupPostOperation                                OperationName = "APIContainersNamespaceRepoResourceGroupPost"
 	APIContainersNamespaceRepoSettingsPutOperation                                      OperationName = "APIContainersNamespaceRepoSettingsPut"
 	APIContainersNamespaceRepoTreePathGetOperation                                      OperationName = "APIContainersNamespaceRepoTreePathGet"
 	APIContainersNamespaceRepoXetReadTokenGetOperation                                  OperationName = "APIContainersNamespaceRepoXetReadTokenGet"

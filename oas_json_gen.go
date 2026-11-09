@@ -26610,6 +26610,423 @@ func (s *APIContainersNamespaceRepoPostReqVisibility) UnmarshalJSON(data []byte)
 }
 
 // Encode implements json.Marshaler.
+func (s *APIContainersNamespaceRepoResourceGroupGetOK) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIContainersNamespaceRepoResourceGroupGetOK) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("id")
+		e.Str(s.ID)
+	}
+	{
+		e.FieldStart("name")
+		e.Str(s.Name)
+	}
+	{
+		if s.NumUsers.Set {
+			e.FieldStart("numUsers")
+			s.NumUsers.Encode(e)
+		}
+	}
+}
+
+var jsonFieldsNameOfAPIContainersNamespaceRepoResourceGroupGetOK = [3]string{
+	0: "id",
+	1: "name",
+	2: "numUsers",
+}
+
+// Decode decodes APIContainersNamespaceRepoResourceGroupGetOK from json.
+func (s *APIContainersNamespaceRepoResourceGroupGetOK) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIContainersNamespaceRepoResourceGroupGetOK to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "id":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.Str()
+				s.ID = string(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"id\"")
+			}
+		case "name":
+			requiredBitSet[0] |= 1 << 1
+			if err := func() error {
+				v, err := d.Str()
+				s.Name = string(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"name\"")
+			}
+		case "numUsers":
+			if err := func() error {
+				s.NumUsers.Reset()
+				if err := s.NumUsers.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"numUsers\"")
+			}
+		default:
+			return errors.Errorf("unexpected field %q", k)
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIContainersNamespaceRepoResourceGroupGetOK")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000011,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIContainersNamespaceRepoResourceGroupGetOK) {
+					name = jsonFieldsNameOfAPIContainersNamespaceRepoResourceGroupGetOK[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIContainersNamespaceRepoResourceGroupGetOK) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIContainersNamespaceRepoResourceGroupGetOK) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIContainersNamespaceRepoResourceGroupPostOK) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIContainersNamespaceRepoResourceGroupPostOK) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("name")
+		e.Str(s.Name)
+	}
+	{
+		e.FieldStart("type")
+		s.Type.Encode(e)
+	}
+	{
+		e.FieldStart("private")
+		e.Bool(s.Private)
+	}
+	{
+		e.FieldStart("addedBy")
+		e.Str(s.AddedBy)
+	}
+}
+
+var jsonFieldsNameOfAPIContainersNamespaceRepoResourceGroupPostOK = [4]string{
+	0: "name",
+	1: "type",
+	2: "private",
+	3: "addedBy",
+}
+
+// Decode decodes APIContainersNamespaceRepoResourceGroupPostOK from json.
+func (s *APIContainersNamespaceRepoResourceGroupPostOK) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIContainersNamespaceRepoResourceGroupPostOK to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "name":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.Str()
+				s.Name = string(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"name\"")
+			}
+		case "type":
+			requiredBitSet[0] |= 1 << 1
+			if err := func() error {
+				if err := s.Type.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"type\"")
+			}
+		case "private":
+			requiredBitSet[0] |= 1 << 2
+			if err := func() error {
+				v, err := d.Bool()
+				s.Private = bool(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"private\"")
+			}
+		case "addedBy":
+			requiredBitSet[0] |= 1 << 3
+			if err := func() error {
+				v, err := d.Str()
+				s.AddedBy = string(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"addedBy\"")
+			}
+		default:
+			return errors.Errorf("unexpected field %q", k)
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIContainersNamespaceRepoResourceGroupPostOK")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00001111,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIContainersNamespaceRepoResourceGroupPostOK) {
+					name = jsonFieldsNameOfAPIContainersNamespaceRepoResourceGroupPostOK[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIContainersNamespaceRepoResourceGroupPostOK) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIContainersNamespaceRepoResourceGroupPostOK) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes APIContainersNamespaceRepoResourceGroupPostOKType as json.
+func (s APIContainersNamespaceRepoResourceGroupPostOKType) Encode(e *jx.Encoder) {
+	e.Str(string(s))
+}
+
+// Decode decodes APIContainersNamespaceRepoResourceGroupPostOKType from json.
+func (s *APIContainersNamespaceRepoResourceGroupPostOKType) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIContainersNamespaceRepoResourceGroupPostOKType to nil")
+	}
+	v, err := d.StrBytes()
+	if err != nil {
+		return err
+	}
+	// Try to use constant string.
+	switch APIContainersNamespaceRepoResourceGroupPostOKType(v) {
+	case APIContainersNamespaceRepoResourceGroupPostOKTypeDataset:
+		*s = APIContainersNamespaceRepoResourceGroupPostOKTypeDataset
+	case APIContainersNamespaceRepoResourceGroupPostOKTypeModel:
+		*s = APIContainersNamespaceRepoResourceGroupPostOKTypeModel
+	case APIContainersNamespaceRepoResourceGroupPostOKTypeSpace:
+		*s = APIContainersNamespaceRepoResourceGroupPostOKTypeSpace
+	case APIContainersNamespaceRepoResourceGroupPostOKTypeBucket:
+		*s = APIContainersNamespaceRepoResourceGroupPostOKTypeBucket
+	case APIContainersNamespaceRepoResourceGroupPostOKTypeKernel:
+		*s = APIContainersNamespaceRepoResourceGroupPostOKTypeKernel
+	case APIContainersNamespaceRepoResourceGroupPostOKTypeContainer:
+		*s = APIContainersNamespaceRepoResourceGroupPostOKTypeContainer
+	default:
+		*s = APIContainersNamespaceRepoResourceGroupPostOKType(v)
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s APIContainersNamespaceRepoResourceGroupPostOKType) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIContainersNamespaceRepoResourceGroupPostOKType) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIContainersNamespaceRepoResourceGroupPostReq) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIContainersNamespaceRepoResourceGroupPostReq) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("resourceGroupId")
+		s.ResourceGroupId.Encode(e)
+	}
+}
+
+var jsonFieldsNameOfAPIContainersNamespaceRepoResourceGroupPostReq = [1]string{
+	0: "resourceGroupId",
+}
+
+// Decode decodes APIContainersNamespaceRepoResourceGroupPostReq from json.
+func (s *APIContainersNamespaceRepoResourceGroupPostReq) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIContainersNamespaceRepoResourceGroupPostReq to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "resourceGroupId":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				if err := s.ResourceGroupId.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"resourceGroupId\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIContainersNamespaceRepoResourceGroupPostReq")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIContainersNamespaceRepoResourceGroupPostReq) {
+					name = jsonFieldsNameOfAPIContainersNamespaceRepoResourceGroupPostReq[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIContainersNamespaceRepoResourceGroupPostReq) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIContainersNamespaceRepoResourceGroupPostReq) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
 func (s *APIContainersNamespaceRepoSettingsPutOK) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
@@ -67952,6 +68369,10 @@ func (s *APIOrganizationsNameAuditLogExportGetOKItemType) Decode(d *jx.Decoder) 
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOLogin
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOJoin:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOJoin
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOCredentialAuthorize:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOCredentialAuthorize
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOCredentialDeauthorize:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgSSOCredentialDeauthorize
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgUpdateJoinSettings:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgUpdateJoinSettings
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgUpdateSettings:
@@ -68130,6 +68551,20 @@ func (s *APIOrganizationsNameAuditLogExportGetOKItemType) Decode(d *jx.Decoder) 
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenS3CredentialDelete
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthToken:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthToken
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppCreate:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppCreate
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppUpdate:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppUpdate
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretRotate:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretRotate
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretDelete:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretDelete
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretExpire:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppSecretExpire
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppDelete:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppDelete
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppMove:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppMove
 	default:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemType(v)
 	}
@@ -113594,6 +114029,8 @@ func (s *APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItem)
 		*s = APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemNemoGym
 	case APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemAgentenv:
 		*s = APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemAgentenv
+	case APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemLerobot:
+		*s = APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItemLerobot
 	default:
 		*s = APIPapersPaperIdGetOKLinkedDatasetsItemDatasetsServerInfoLibrariesItem(v)
 	}
@@ -171602,6 +172039,14 @@ func (s *OAuthUserinfoGetOK) encodeFields(e *jx.Encoder) {
 		}
 	}
 	{
+		e.FieldStart("groups")
+		e.ArrStart()
+		for _, elem := range s.Groups {
+			e.Str(elem)
+		}
+		e.ArrEnd()
+	}
+	{
 		e.FieldStart("orgs")
 		e.ArrStart()
 		for _, elem := range s.Orgs {
@@ -171611,7 +172056,7 @@ func (s *OAuthUserinfoGetOK) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfOAuthUserinfoGetOK = [13]string{
+var jsonFieldsNameOfOAuthUserinfoGetOK = [14]string{
 	0:  "sub",
 	1:  "name",
 	2:  "preferred_username",
@@ -171624,7 +172069,8 @@ var jsonFieldsNameOfOAuthUserinfoGetOK = [13]string{
 	9:  "isPro",
 	10: "canPay",
 	11: "billingMode",
-	12: "orgs",
+	12: "groups",
+	13: "orgs",
 }
 
 // Decode decodes OAuthUserinfoGetOK from json.
@@ -171767,8 +172213,28 @@ func (s *OAuthUserinfoGetOK) Decode(d *jx.Decoder) error {
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"billingMode\"")
 			}
-		case "orgs":
+		case "groups":
 			requiredBitSet[1] |= 1 << 4
+			if err := func() error {
+				s.Groups = make([]string, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem string
+					v, err := d.Str()
+					elem = string(v)
+					if err != nil {
+						return err
+					}
+					s.Groups = append(s.Groups, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"groups\"")
+			}
+		case "orgs":
+			requiredBitSet[1] |= 1 << 5
 			if err := func() error {
 				s.Orgs = make([]OAuthUserinfoGetOKOrgsItem, 0)
 				if err := d.Arr(func(d *jx.Decoder) error {
@@ -171796,7 +172262,7 @@ func (s *OAuthUserinfoGetOK) Decode(d *jx.Decoder) error {
 	var failures []validate.FieldError
 	for i, mask := range [2]uint8{
 		0b00000001,
-		0b00010010,
+		0b00110010,
 	} {
 		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
 			// Mask only required fields and check equality to mask using XOR.
@@ -172745,6 +173211,14 @@ func (s *OAuthUserinfoPostOK) encodeFields(e *jx.Encoder) {
 		}
 	}
 	{
+		e.FieldStart("groups")
+		e.ArrStart()
+		for _, elem := range s.Groups {
+			e.Str(elem)
+		}
+		e.ArrEnd()
+	}
+	{
 		e.FieldStart("orgs")
 		e.ArrStart()
 		for _, elem := range s.Orgs {
@@ -172754,7 +173228,7 @@ func (s *OAuthUserinfoPostOK) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfOAuthUserinfoPostOK = [13]string{
+var jsonFieldsNameOfOAuthUserinfoPostOK = [14]string{
 	0:  "sub",
 	1:  "name",
 	2:  "preferred_username",
@@ -172767,7 +173241,8 @@ var jsonFieldsNameOfOAuthUserinfoPostOK = [13]string{
 	9:  "isPro",
 	10: "canPay",
 	11: "billingMode",
-	12: "orgs",
+	12: "groups",
+	13: "orgs",
 }
 
 // Decode decodes OAuthUserinfoPostOK from json.
@@ -172910,8 +173385,28 @@ func (s *OAuthUserinfoPostOK) Decode(d *jx.Decoder) error {
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"billingMode\"")
 			}
-		case "orgs":
+		case "groups":
 			requiredBitSet[1] |= 1 << 4
+			if err := func() error {
+				s.Groups = make([]string, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem string
+					v, err := d.Str()
+					elem = string(v)
+					if err != nil {
+						return err
+					}
+					s.Groups = append(s.Groups, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"groups\"")
+			}
+		case "orgs":
+			requiredBitSet[1] |= 1 << 5
 			if err := func() error {
 				s.Orgs = make([]OAuthUserinfoPostOKOrgsItem, 0)
 				if err := d.Arr(func(d *jx.Decoder) error {
@@ -172939,7 +173434,7 @@ func (s *OAuthUserinfoPostOK) Decode(d *jx.Decoder) error {
 	var failures []validate.FieldError
 	for i, mask := range [2]uint8{
 		0b00000001,
-		0b00010010,
+		0b00110010,
 	} {
 		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
 			// Mask only required fields and check equality to mask using XOR.
@@ -176806,6 +177301,39 @@ func (s OptAPIContainersNamespaceRepoPostReqVisibility) MarshalJSON() ([]byte, e
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *OptAPIContainersNamespaceRepoPostReqVisibility) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes APIContainersNamespaceRepoResourceGroupPostReq as json.
+func (o OptAPIContainersNamespaceRepoResourceGroupPostReq) Encode(e *jx.Encoder) {
+	if !o.Set {
+		return
+	}
+	o.Value.Encode(e)
+}
+
+// Decode decodes APIContainersNamespaceRepoResourceGroupPostReq from json.
+func (o *OptAPIContainersNamespaceRepoResourceGroupPostReq) Decode(d *jx.Decoder) error {
+	if o == nil {
+		return errors.New("invalid: unable to decode OptAPIContainersNamespaceRepoResourceGroupPostReq to nil")
+	}
+	o.Set = true
+	if err := o.Value.Decode(d); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s OptAPIContainersNamespaceRepoResourceGroupPostReq) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *OptAPIContainersNamespaceRepoResourceGroupPostReq) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
