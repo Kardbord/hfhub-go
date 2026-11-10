@@ -16998,6 +16998,18 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 	}
 	{
 		{
+			s.UserPermissions = nil
+			for i := 0; i < 0; i++ {
+				var elem APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItem
+				{
+					elem.SetFake()
+				}
+				s.UserPermissions = append(s.UserPermissions, elem)
+			}
+		}
+	}
+	{
+		{
 			s.EndpointPatterns = nil
 			for i := 0; i < 0; i++ {
 				var elem string
@@ -17020,6 +17032,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 	}
 	{
 		{
+			s.CanReadGatedRepos.SetFake()
+		}
+	}
+	{
+		{
 			s.S3AccessKey.SetFake()
 		}
 	}
@@ -17038,6 +17055,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 // SetFake set fake values.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemRole) SetFake() {
 	*s = APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemRoleRead
+}
+
+// SetFake set fake values.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItem) SetFake() {
+	*s = APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItemUserGatedReposRequestsWrite
 }
 
 // SetFake set fake values.
@@ -17109,6 +17131,18 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTok
 	}
 	{
 		{
+			s.UserPermissions = nil
+			for i := 0; i < 0; i++ {
+				var elem string
+				{
+					elem = "string"
+				}
+				s.UserPermissions = append(s.UserPermissions, elem)
+			}
+		}
+	}
+	{
+		{
 			s.EndpointPatterns = nil
 			for i := 0; i < 0; i++ {
 				var elem string
@@ -17122,6 +17156,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTok
 	{
 		{
 			s.SkipNetworkSecurity = true
+		}
+	}
+	{
+		{
+			s.CanReadGatedRepos = true
 		}
 	}
 }
@@ -17171,6 +17210,18 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) SetFa
 	}
 	{
 		{
+			s.UserPermissions = nil
+			for i := 0; i < 0; i++ {
+				var elem APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem
+				{
+					elem.SetFake()
+				}
+				s.UserPermissions = append(s.UserPermissions, elem)
+			}
+		}
+	}
+	{
+		{
 			s.EndpointPatterns = nil
 			for i := 0; i < 0; i++ {
 				var elem string
@@ -17186,6 +17237,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) SetFa
 			s.SkipNetworkSecurity.SetFake()
 		}
 	}
+	{
+		{
+			s.CanReadGatedRepos.SetFake()
+		}
+	}
 }
 
 // SetFake set fake values.
@@ -17196,6 +17252,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqPermiss
 // SetFake set fake values.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqRepoPermissionsItem) SetFake() {
 	*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqRepoPermissionsItemRepoContentRead
+}
+
+// SetFake set fake values.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem) SetFake() {
+	*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItemUserGatedReposRequestsWrite
 }
 
 // SetFake set fake values.
@@ -17248,6 +17309,18 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK
 	}
 	{
 		{
+			s.UserPermissions = nil
+			for i := 0; i < 0; i++ {
+				var elem string
+				{
+					elem = "string"
+				}
+				s.UserPermissions = append(s.UserPermissions, elem)
+			}
+		}
+	}
+	{
+		{
 			s.EndpointPatterns = nil
 			for i := 0; i < 0; i++ {
 				var elem string
@@ -17261,6 +17334,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK
 	{
 		{
 			s.SkipNetworkSecurity = true
+		}
+	}
+	{
+		{
+			s.CanReadGatedRepos = true
 		}
 	}
 }
@@ -17310,6 +17388,18 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchRe
 	}
 	{
 		{
+			s.UserPermissions = nil
+			for i := 0; i < 0; i++ {
+				var elem APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItem
+				{
+					elem.SetFake()
+				}
+				s.UserPermissions = append(s.UserPermissions, elem)
+			}
+		}
+	}
+	{
+		{
 			s.EndpointPatterns = nil
 			for i := 0; i < 0; i++ {
 				var elem string
@@ -17325,6 +17415,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchRe
 			s.SkipNetworkSecurity.SetFake()
 		}
 	}
+	{
+		{
+			s.CanReadGatedRepos.SetFake()
+		}
+	}
 }
 
 // SetFake set fake values.
@@ -17335,6 +17430,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchRe
 // SetFake set fake values.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqRepoPermissionsItem) SetFake() {
 	*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqRepoPermissionsItemRepoContentRead
+}
+
+// SetFake set fake values.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItem) SetFake() {
+	*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItemUserGatedReposRequestsWrite
 }
 
 // SetFake set fake values.

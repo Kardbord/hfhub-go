@@ -65,12 +65,20 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) setDe
 		s.RepoPermissions = defaultVal0
 	}
 	{
+		var defaultVal0 []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem
+		s.UserPermissions = defaultVal0
+	}
+	{
 		var defaultVal0 []string
 		s.EndpointPatterns = defaultVal0
 	}
 	{
 		val := bool(false)
 		s.SkipNetworkSecurity.SetTo(val)
+	}
+	{
+		val := bool(false)
+		s.CanReadGatedRepos.SetTo(val)
 	}
 }
 
