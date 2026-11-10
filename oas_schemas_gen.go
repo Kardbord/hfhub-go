@@ -45222,9 +45222,11 @@ type APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem st
 	Permissions         []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemPermissionsItem     `json:"permissions"`
 	RepoIds             []string                                                                                      `json:"repoIds"`
 	RepoPermissions     []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemRepoPermissionsItem `json:"repoPermissions"`
+	UserPermissions     []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItem `json:"userPermissions"`
 	EndpointPatterns    []string                                                                                      `json:"endpointPatterns"`
 	Last4               OptString                                                                                     `json:"last4"`
 	SkipNetworkSecurity OptBool                                                                                       `json:"skipNetworkSecurity"`
+	CanReadGatedRepos   OptBool                                                                                       `json:"canReadGatedRepos"`
 	S3AccessKey         OptString                                                                                     `json:"s3AccessKey"`
 }
 
@@ -45273,6 +45275,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 	return s.RepoPermissions
 }
 
+// GetUserPermissions returns the value of UserPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem) GetUserPermissions() []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItem {
+	return s.UserPermissions
+}
+
 // GetEndpointPatterns returns the value of EndpointPatterns.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem) GetEndpointPatterns() []string {
 	return s.EndpointPatterns
@@ -45286,6 +45293,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 // GetSkipNetworkSecurity returns the value of SkipNetworkSecurity.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem) GetSkipNetworkSecurity() OptBool {
 	return s.SkipNetworkSecurity
+}
+
+// GetCanReadGatedRepos returns the value of CanReadGatedRepos.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem) GetCanReadGatedRepos() OptBool {
+	return s.CanReadGatedRepos
 }
 
 // GetS3AccessKey returns the value of S3AccessKey.
@@ -45338,6 +45350,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 	s.RepoPermissions = val
 }
 
+// SetUserPermissions sets the value of UserPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem) SetUserPermissions(val []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItem) {
+	s.UserPermissions = val
+}
+
 // SetEndpointPatterns sets the value of EndpointPatterns.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem) SetEndpointPatterns(val []string) {
 	s.EndpointPatterns = val
@@ -45351,6 +45368,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 // SetSkipNetworkSecurity sets the value of SkipNetworkSecurity.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem) SetSkipNetworkSecurity(val OptBool) {
 	s.SkipNetworkSecurity = val
+}
+
+// SetCanReadGatedRepos sets the value of CanReadGatedRepos.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem) SetCanReadGatedRepos(val OptBool) {
+	s.CanReadGatedRepos = val
 }
 
 // SetS3AccessKey sets the value of S3AccessKey.
@@ -45579,6 +45601,40 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 	}
 }
 
+type APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItem string
+
+const (
+	APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItemUserGatedReposRequestsWrite APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItem = "user.gated-repos-requests.write"
+)
+
+// AllValues returns all APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItem values.
+func (APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItem) AllValues() []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItem {
+	return []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItem{
+		APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItemUserGatedReposRequestsWrite,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItem) MarshalText() ([]byte, error) {
+	switch s {
+	case APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItemUserGatedReposRequestsWrite:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItem) UnmarshalText(data []byte) error {
+	switch APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItem(data) {
+	case APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItemUserGatedReposRequestsWrite:
+		*s = APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItemUserGatedReposRequestsWrite
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
 type APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreated struct {
 	// The access token - store this securely, it cannot be retrieved later.
 	Token     string                                                                        `json:"token"`
@@ -45612,8 +45668,10 @@ type APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenIn
 	Permissions         []string `json:"permissions"`
 	RepoIds             []string `json:"repoIds"`
 	RepoPermissions     []string `json:"repoPermissions"`
+	UserPermissions     []string `json:"userPermissions"`
 	EndpointPatterns    []string `json:"endpointPatterns"`
 	SkipNetworkSecurity bool     `json:"skipNetworkSecurity"`
+	CanReadGatedRepos   bool     `json:"canReadGatedRepos"`
 }
 
 // GetID returns the value of ID.
@@ -45646,6 +45704,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTok
 	return s.RepoPermissions
 }
 
+// GetUserPermissions returns the value of UserPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenInfo) GetUserPermissions() []string {
+	return s.UserPermissions
+}
+
 // GetEndpointPatterns returns the value of EndpointPatterns.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenInfo) GetEndpointPatterns() []string {
 	return s.EndpointPatterns
@@ -45654,6 +45717,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTok
 // GetSkipNetworkSecurity returns the value of SkipNetworkSecurity.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenInfo) GetSkipNetworkSecurity() bool {
 	return s.SkipNetworkSecurity
+}
+
+// GetCanReadGatedRepos returns the value of CanReadGatedRepos.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenInfo) GetCanReadGatedRepos() bool {
+	return s.CanReadGatedRepos
 }
 
 // SetID sets the value of ID.
@@ -45686,6 +45754,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTok
 	s.RepoPermissions = val
 }
 
+// SetUserPermissions sets the value of UserPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenInfo) SetUserPermissions(val []string) {
+	s.UserPermissions = val
+}
+
 // SetEndpointPatterns sets the value of EndpointPatterns.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenInfo) SetEndpointPatterns(val []string) {
 	s.EndpointPatterns = val
@@ -45694,6 +45767,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTok
 // SetSkipNetworkSecurity sets the value of SkipNetworkSecurity.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenInfo) SetSkipNetworkSecurity(val bool) {
 	s.SkipNetworkSecurity = val
+}
+
+// SetCanReadGatedRepos sets the value of CanReadGatedRepos.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenInfo) SetCanReadGatedRepos(val bool) {
+	s.CanReadGatedRepos = val
 }
 
 type APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq struct {
@@ -45706,12 +45784,16 @@ type APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq struct {
 	RepoIds []string `json:"repoIds"`
 	// Permissions granted on the selected `repoIds`.
 	RepoPermissions []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqRepoPermissionsItem `json:"repoPermissions"`
+	// Permissions on the service account itself.
+	UserPermissions []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem `json:"userPermissions"`
 	// Inference endpoint name patterns (wildcards allowed, e.g. `gpt2-*`) restricting the token's org-wide
 	// Inference Endpoint permissions to matching endpoints. Empty means all endpoints.
 	EndpointPatterns []string `json:"endpointPatterns"`
 	// Exempt this token from the org's Network Security enforcement (IP allowlist and content access
 	// policy). Enterprise Plus only, and requires the `org.networkSecurity.write` permission.
 	SkipNetworkSecurity OptBool `json:"skipNetworkSecurity"`
+	// Read contents of gated repos the service account has access to.
+	CanReadGatedRepos OptBool `json:"canReadGatedRepos"`
 }
 
 // GetDisplayName returns the value of DisplayName.
@@ -45734,6 +45816,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) GetRe
 	return s.RepoPermissions
 }
 
+// GetUserPermissions returns the value of UserPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) GetUserPermissions() []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem {
+	return s.UserPermissions
+}
+
 // GetEndpointPatterns returns the value of EndpointPatterns.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) GetEndpointPatterns() []string {
 	return s.EndpointPatterns
@@ -45742,6 +45829,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) GetEn
 // GetSkipNetworkSecurity returns the value of SkipNetworkSecurity.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) GetSkipNetworkSecurity() OptBool {
 	return s.SkipNetworkSecurity
+}
+
+// GetCanReadGatedRepos returns the value of CanReadGatedRepos.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) GetCanReadGatedRepos() OptBool {
+	return s.CanReadGatedRepos
 }
 
 // SetDisplayName sets the value of DisplayName.
@@ -45764,6 +45856,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) SetRe
 	s.RepoPermissions = val
 }
 
+// SetUserPermissions sets the value of UserPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) SetUserPermissions(val []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem) {
+	s.UserPermissions = val
+}
+
 // SetEndpointPatterns sets the value of EndpointPatterns.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) SetEndpointPatterns(val []string) {
 	s.EndpointPatterns = val
@@ -45772,6 +45869,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) SetEn
 // SetSkipNetworkSecurity sets the value of SkipNetworkSecurity.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) SetSkipNetworkSecurity(val OptBool) {
 	s.SkipNetworkSecurity = val
+}
+
+// SetCanReadGatedRepos sets the value of CanReadGatedRepos.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) SetCanReadGatedRepos(val OptBool) {
+	s.CanReadGatedRepos = val
 }
 
 type APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqPermissionsItem string
@@ -45947,14 +46049,50 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqRepoPer
 	}
 }
 
+type APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem string
+
+const (
+	APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItemUserGatedReposRequestsWrite APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem = "user.gated-repos-requests.write"
+)
+
+// AllValues returns all APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem values.
+func (APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem) AllValues() []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem {
+	return []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem{
+		APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItemUserGatedReposRequestsWrite,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem) MarshalText() ([]byte, error) {
+	switch s {
+	case APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItemUserGatedReposRequestsWrite:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem) UnmarshalText(data []byte) error {
+	switch APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem(data) {
+	case APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItemUserGatedReposRequestsWrite:
+		*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItemUserGatedReposRequestsWrite
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
 type APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK struct {
 	ID                  string   `json:"_id"`
 	DisplayName         string   `json:"displayName"`
 	Permissions         []string `json:"permissions"`
 	RepoIds             []string `json:"repoIds"`
 	RepoPermissions     []string `json:"repoPermissions"`
+	UserPermissions     []string `json:"userPermissions"`
 	EndpointPatterns    []string `json:"endpointPatterns"`
 	SkipNetworkSecurity bool     `json:"skipNetworkSecurity"`
+	CanReadGatedRepos   bool     `json:"canReadGatedRepos"`
 }
 
 // GetID returns the value of ID.
@@ -45982,6 +46120,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK
 	return s.RepoPermissions
 }
 
+// GetUserPermissions returns the value of UserPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK) GetUserPermissions() []string {
+	return s.UserPermissions
+}
+
 // GetEndpointPatterns returns the value of EndpointPatterns.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK) GetEndpointPatterns() []string {
 	return s.EndpointPatterns
@@ -45990,6 +46133,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK
 // GetSkipNetworkSecurity returns the value of SkipNetworkSecurity.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK) GetSkipNetworkSecurity() bool {
 	return s.SkipNetworkSecurity
+}
+
+// GetCanReadGatedRepos returns the value of CanReadGatedRepos.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK) GetCanReadGatedRepos() bool {
+	return s.CanReadGatedRepos
 }
 
 // SetID sets the value of ID.
@@ -46017,6 +46165,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK
 	s.RepoPermissions = val
 }
 
+// SetUserPermissions sets the value of UserPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK) SetUserPermissions(val []string) {
+	s.UserPermissions = val
+}
+
 // SetEndpointPatterns sets the value of EndpointPatterns.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK) SetEndpointPatterns(val []string) {
 	s.EndpointPatterns = val
@@ -46025,6 +46178,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK
 // SetSkipNetworkSecurity sets the value of SkipNetworkSecurity.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK) SetSkipNetworkSecurity(val bool) {
 	s.SkipNetworkSecurity = val
+}
+
+// SetCanReadGatedRepos sets the value of CanReadGatedRepos.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK) SetCanReadGatedRepos(val bool) {
+	s.CanReadGatedRepos = val
 }
 
 type APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq struct {
@@ -46037,12 +46195,16 @@ type APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq st
 	RepoIds []string `json:"repoIds"`
 	// Permissions granted on the selected `repoIds`.
 	RepoPermissions []APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqRepoPermissionsItem `json:"repoPermissions"`
+	// Permissions on the service account itself.
+	UserPermissions []APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItem `json:"userPermissions"`
 	// Inference endpoint name patterns (wildcards allowed, e.g. `gpt2-*`) restricting the token's org-wide
 	// Inference Endpoint permissions to matching endpoints. Empty means all endpoints.
 	EndpointPatterns []string `json:"endpointPatterns"`
 	// Exempt this token from the org's Network Security enforcement (IP allowlist and content access
 	// policy). Enterprise Plus only, and requires the `org.networkSecurity.write` permission.
 	SkipNetworkSecurity OptBool `json:"skipNetworkSecurity"`
+	// Read contents of gated repos the service account has access to.
+	CanReadGatedRepos OptBool `json:"canReadGatedRepos"`
 }
 
 // GetDisplayName returns the value of DisplayName.
@@ -46065,6 +46227,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchRe
 	return s.RepoPermissions
 }
 
+// GetUserPermissions returns the value of UserPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq) GetUserPermissions() []APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItem {
+	return s.UserPermissions
+}
+
 // GetEndpointPatterns returns the value of EndpointPatterns.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq) GetEndpointPatterns() []string {
 	return s.EndpointPatterns
@@ -46073,6 +46240,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchRe
 // GetSkipNetworkSecurity returns the value of SkipNetworkSecurity.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq) GetSkipNetworkSecurity() OptBool {
 	return s.SkipNetworkSecurity
+}
+
+// GetCanReadGatedRepos returns the value of CanReadGatedRepos.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq) GetCanReadGatedRepos() OptBool {
+	return s.CanReadGatedRepos
 }
 
 // SetDisplayName sets the value of DisplayName.
@@ -46095,6 +46267,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchRe
 	s.RepoPermissions = val
 }
 
+// SetUserPermissions sets the value of UserPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq) SetUserPermissions(val []APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItem) {
+	s.UserPermissions = val
+}
+
 // SetEndpointPatterns sets the value of EndpointPatterns.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq) SetEndpointPatterns(val []string) {
 	s.EndpointPatterns = val
@@ -46103,6 +46280,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchRe
 // SetSkipNetworkSecurity sets the value of SkipNetworkSecurity.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq) SetSkipNetworkSecurity(val OptBool) {
 	s.SkipNetworkSecurity = val
+}
+
+// SetCanReadGatedRepos sets the value of CanReadGatedRepos.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq) SetCanReadGatedRepos(val OptBool) {
+	s.CanReadGatedRepos = val
 }
 
 type APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqPermissionsItem string
@@ -46272,6 +46454,40 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchRe
 		return nil
 	case APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqRepoPermissionsItemRepoWrite:
 		*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqRepoPermissionsItemRepoWrite
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
+type APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItem string
+
+const (
+	APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItemUserGatedReposRequestsWrite APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItem = "user.gated-repos-requests.write"
+)
+
+// AllValues returns all APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItem values.
+func (APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItem) AllValues() []APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItem {
+	return []APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItem{
+		APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItemUserGatedReposRequestsWrite,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItem) MarshalText() ([]byte, error) {
+	switch s {
+	case APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItemUserGatedReposRequestsWrite:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItem) UnmarshalText(data []byte) error {
+	switch APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItem(data) {
+	case APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItemUserGatedReposRequestsWrite:
+		*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItemUserGatedReposRequestsWrite
 		return nil
 	default:
 		return errors.Errorf("invalid value: %q", data)

@@ -11101,6 +11101,15 @@
                               ]
                             }
                           },
+                          "userPermissions": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "enum": [
+                                "user.gated-repos-requests.write"
+                              ]
+                            }
+                          },
                           "endpointPatterns": {
                             "type": "array",
                             "items": {
@@ -11111,6 +11120,9 @@
                             "type": "string"
                           },
                           "skipNetworkSecurity": {
+                            "type": "boolean"
+                          },
+                          "canReadGatedRepos": {
                             "type": "boolean"
                           },
                           "s3AccessKey": {
@@ -11125,6 +11137,7 @@
                           "permissions",
                           "repoIds",
                           "repoPermissions",
+                          "userPermissions",
                           "endpointPatterns"
                         ],
                         "additionalProperties": false
@@ -11298,6 +11311,17 @@
                       ]
                     }
                   },
+                  "userPermissions": {
+                    "default": [],
+                    "description": "Permissions on the service account itself.",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "user.gated-repos-requests.write"
+                      ]
+                    }
+                  },
                   "endpointPatterns": {
                     "default": [],
                     "description": "Inference endpoint name patterns (wildcards allowed, e.g. `gpt2-*`) restricting the token's org-wide Inference Endpoint permissions to matching endpoints. Empty means all endpoints.",
@@ -11312,6 +11336,11 @@
                   "skipNetworkSecurity": {
                     "default": false,
                     "description": "Exempt this token from the org's Network Security enforcement (IP allowlist and content access policy). Enterprise Plus only, and requires the `org.networkSecurity.write` permission.",
+                    "type": "boolean"
+                  },
+                  "canReadGatedRepos": {
+                    "default": false,
+                    "description": "Read contents of gated repos the service account has access to.",
                     "type": "boolean"
                   }
                 }
@@ -11361,6 +11390,12 @@
                             "type": "string"
                           }
                         },
+                        "userPermissions": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
                         "endpointPatterns": {
                           "type": "array",
                           "items": {
@@ -11368,6 +11403,9 @@
                           }
                         },
                         "skipNetworkSecurity": {
+                          "type": "boolean"
+                        },
+                        "canReadGatedRepos": {
                           "type": "boolean"
                         }
                       },
@@ -11377,8 +11415,10 @@
                         "createdAt",
                         "repoIds",
                         "repoPermissions",
+                        "userPermissions",
                         "endpointPatterns",
-                        "skipNetworkSecurity"
+                        "skipNetworkSecurity",
+                        "canReadGatedRepos"
                       ],
                       "additionalProperties": false
                     }
@@ -11552,6 +11592,16 @@
                     },
                     "description": "Permissions granted on the selected `repoIds`."
                   },
+                  "userPermissions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "user.gated-repos-requests.write"
+                      ]
+                    },
+                    "description": "Permissions on the service account itself."
+                  },
                   "endpointPatterns": {
                     "maxItems": 20,
                     "type": "array",
@@ -11565,6 +11615,10 @@
                   "skipNetworkSecurity": {
                     "type": "boolean",
                     "description": "Exempt this token from the org's Network Security enforcement (IP allowlist and content access policy). Enterprise Plus only, and requires the `org.networkSecurity.write` permission."
+                  },
+                  "canReadGatedRepos": {
+                    "type": "boolean",
+                    "description": "Read contents of gated repos the service account has access to."
                   }
                 }
               }
@@ -11603,6 +11657,12 @@
                         "type": "string"
                       }
                     },
+                    "userPermissions": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
                     "endpointPatterns": {
                       "type": "array",
                       "items": {
@@ -11610,6 +11670,9 @@
                       }
                     },
                     "skipNetworkSecurity": {
+                      "type": "boolean"
+                    },
+                    "canReadGatedRepos": {
                       "type": "boolean"
                     }
                   },
@@ -11619,8 +11682,10 @@
                     "permissions",
                     "repoIds",
                     "repoPermissions",
+                    "userPermissions",
                     "endpointPatterns",
-                    "skipNetworkSecurity"
+                    "skipNetworkSecurity",
+                    "canReadGatedRepos"
                   ],
                   "additionalProperties": false
                 }
@@ -32018,6 +32083,744 @@
           }
         },
         "parameters": [
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "repo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/{repoType}/{namespace}/{repo}/settings/trusted-publishers": {
+      "get": {
+        "description": "List the [trusted publishers](https://huggingface.co/docs/hub/trusted-publishers) of a repo.",
+        "summary": "Repo trusted publishers",
+        "tags": [
+          "repos"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "minLength": 24,
+                        "maxLength": 24,
+                        "pattern": "^[0-9a-f]{24}$",
+                        "description": "A hex string of 24 characters representing an ObjectId."
+                      },
+                      "issuerUrl": {
+                        "type": "string"
+                      },
+                      "claims": {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string"
+                        },
+                        "additionalProperties": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "kind": {
+                                  "type": "string",
+                                  "const": "eq"
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "kind",
+                                "value"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "kind": {
+                                  "type": "string",
+                                  "const": "prefix"
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              },
+                              "required": [
+                                "kind",
+                                "value"
+                              ],
+                              "additionalProperties": false
+                            }
+                          ],
+                          "description": "The claim must equal `value` (`eq`) or start with it (`prefix`)."
+                        }
+                      },
+                      "configuredBy": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "minLength": 24,
+                                "maxLength": 24,
+                                "pattern": "^[0-9a-f]{24}$",
+                                "description": "A hex string of 24 characters representing an ObjectId."
+                              },
+                              "avatarUrl": {
+                                "type": "string"
+                              },
+                              "fullname": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "isHf": {
+                                "type": "boolean"
+                              },
+                              "isHfAdmin": {
+                                "type": "boolean"
+                              },
+                              "isMod": {
+                                "type": "boolean"
+                              },
+                              "followerCount": {
+                                "type": "number"
+                              },
+                              "type": {
+                                "type": "string",
+                                "const": "org"
+                              },
+                              "plan": {
+                                "type": "string",
+                                "enum": [
+                                  "team",
+                                  "enterprise",
+                                  "plus",
+                                  "academia"
+                                ]
+                              },
+                              "isUserFollowing": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "_id",
+                              "avatarUrl",
+                              "fullname",
+                              "name",
+                              "isHf",
+                              "isHfAdmin",
+                              "isMod",
+                              "type"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "minLength": 24,
+                                "maxLength": 24,
+                                "pattern": "^[0-9a-f]{24}$",
+                                "description": "A hex string of 24 characters representing an ObjectId."
+                              },
+                              "avatarUrl": {
+                                "type": "string"
+                              },
+                              "fullname": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "isHf": {
+                                "type": "boolean"
+                              },
+                              "isHfAdmin": {
+                                "type": "boolean"
+                              },
+                              "isMod": {
+                                "type": "boolean"
+                              },
+                              "followerCount": {
+                                "type": "number"
+                              },
+                              "type": {
+                                "type": "string",
+                                "const": "user"
+                              },
+                              "isPro": {
+                                "type": "boolean"
+                              },
+                              "isUserFollowing": {
+                                "type": "boolean"
+                              },
+                              "primaryOrg": {
+                                "type": "object",
+                                "properties": {
+                                  "avatarUrl": {
+                                    "type": "string"
+                                  },
+                                  "fullname": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "const": "org"
+                                  },
+                                  "isHf": {
+                                    "type": "boolean"
+                                  },
+                                  "isFollowing": {
+                                    "type": "boolean"
+                                  },
+                                  "plan": {
+                                    "type": "string",
+                                    "enum": [
+                                      "team",
+                                      "enterprise",
+                                      "plus",
+                                      "academia"
+                                    ]
+                                  },
+                                  "details": {
+                                    "type": "string"
+                                  },
+                                  "hasPrivateMembersList": {
+                                    "type": "boolean"
+                                  },
+                                  "userRole": {
+                                    "type": "string",
+                                    "enum": [
+                                      "admin",
+                                      "write",
+                                      "contributor",
+                                      "read",
+                                      "no_access"
+                                    ]
+                                  },
+                                  "numUsers": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "avatarUrl",
+                                  "fullname",
+                                  "name",
+                                  "type",
+                                  "isHf"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "_id",
+                              "avatarUrl",
+                              "fullname",
+                              "name",
+                              "isHf",
+                              "isHfAdmin",
+                              "isMod",
+                              "type",
+                              "isPro"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                      },
+                      "lastUsedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                      },
+                      "capabilities": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "inference-api"
+                          ]
+                        }
+                      },
+                      "permissions": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "repo.content.read",
+                            "repo.content.write"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "_id",
+                      "issuerUrl",
+                      "claims",
+                      "createdAt"
+                    ],
+                    "additionalProperties": false,
+                    "description": "Trusted publisher"
+                  }
+                }
+              }
+            },
+            "description": "Trusted publishers"
+          }
+        },
+        "parameters": [
+          {
+            "name": "repoType",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "models",
+                "spaces",
+                "datasets",
+                "kernels",
+                "buckets",
+                "containers"
+              ]
+            }
+          },
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "repo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "post": {
+        "description": "Let OIDC tokens matching the issuer and claims exchange for a short-lived token on the repo. Requires write access to the repo.",
+        "summary": "Repo trusted publisher",
+        "tags": [
+          "repos"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {
+                  "issuerUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "URL of the OIDC issuer, e.g. `https://token.actions.githubusercontent.com`."
+                  },
+                  "claims": {
+                    "type": "object",
+                    "propertyNames": {
+                      "type": "string"
+                    },
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "eq"
+                            },
+                            "value": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "value"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "prefix"
+                            },
+                            "value": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "value"
+                          ]
+                        }
+                      ],
+                      "description": "The claim must equal `value` (`eq`) or start with it (`prefix`)."
+                    },
+                    "description": "Claims the OIDC token must match, by claim name. At least one is required."
+                  },
+                  "permissions": {
+                    "description": "Permissions granted on the repo to matching tokens. Defaults to `[\"repo.content.write\"]`.",
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "repo.content.read",
+                        "repo.content.write"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "issuerUrl",
+                  "claims"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "minLength": 24,
+                      "maxLength": 24,
+                      "pattern": "^[0-9a-f]{24}$",
+                      "description": "A hex string of 24 characters representing an ObjectId."
+                    },
+                    "issuerUrl": {
+                      "type": "string"
+                    },
+                    "claims": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "const": "eq"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "value"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "const": "prefix"
+                              },
+                              "value": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "value"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ],
+                        "description": "The claim must equal `value` (`eq`) or start with it (`prefix`)."
+                      }
+                    },
+                    "configuredBy": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string",
+                              "minLength": 24,
+                              "maxLength": 24,
+                              "pattern": "^[0-9a-f]{24}$",
+                              "description": "A hex string of 24 characters representing an ObjectId."
+                            },
+                            "avatarUrl": {
+                              "type": "string"
+                            },
+                            "fullname": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "isHf": {
+                              "type": "boolean"
+                            },
+                            "isHfAdmin": {
+                              "type": "boolean"
+                            },
+                            "isMod": {
+                              "type": "boolean"
+                            },
+                            "followerCount": {
+                              "type": "number"
+                            },
+                            "type": {
+                              "type": "string",
+                              "const": "org"
+                            },
+                            "plan": {
+                              "type": "string",
+                              "enum": [
+                                "team",
+                                "enterprise",
+                                "plus",
+                                "academia"
+                              ]
+                            },
+                            "isUserFollowing": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "_id",
+                            "avatarUrl",
+                            "fullname",
+                            "name",
+                            "isHf",
+                            "isHfAdmin",
+                            "isMod",
+                            "type"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string",
+                              "minLength": 24,
+                              "maxLength": 24,
+                              "pattern": "^[0-9a-f]{24}$",
+                              "description": "A hex string of 24 characters representing an ObjectId."
+                            },
+                            "avatarUrl": {
+                              "type": "string"
+                            },
+                            "fullname": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "isHf": {
+                              "type": "boolean"
+                            },
+                            "isHfAdmin": {
+                              "type": "boolean"
+                            },
+                            "isMod": {
+                              "type": "boolean"
+                            },
+                            "followerCount": {
+                              "type": "number"
+                            },
+                            "type": {
+                              "type": "string",
+                              "const": "user"
+                            },
+                            "isPro": {
+                              "type": "boolean"
+                            },
+                            "isUserFollowing": {
+                              "type": "boolean"
+                            },
+                            "primaryOrg": {
+                              "type": "object",
+                              "properties": {
+                                "avatarUrl": {
+                                  "type": "string"
+                                },
+                                "fullname": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "const": "org"
+                                },
+                                "isHf": {
+                                  "type": "boolean"
+                                },
+                                "isFollowing": {
+                                  "type": "boolean"
+                                },
+                                "plan": {
+                                  "type": "string",
+                                  "enum": [
+                                    "team",
+                                    "enterprise",
+                                    "plus",
+                                    "academia"
+                                  ]
+                                },
+                                "details": {
+                                  "type": "string"
+                                },
+                                "hasPrivateMembersList": {
+                                  "type": "boolean"
+                                },
+                                "userRole": {
+                                  "type": "string",
+                                  "enum": [
+                                    "admin",
+                                    "write",
+                                    "contributor",
+                                    "read",
+                                    "no_access"
+                                  ]
+                                },
+                                "numUsers": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "avatarUrl",
+                                "fullname",
+                                "name",
+                                "type",
+                                "isHf"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "required": [
+                            "_id",
+                            "avatarUrl",
+                            "fullname",
+                            "name",
+                            "isHf",
+                            "isHfAdmin",
+                            "isMod",
+                            "type",
+                            "isPro"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                    },
+                    "lastUsedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                    },
+                    "capabilities": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "inference-api"
+                        ]
+                      }
+                    },
+                    "permissions": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "repo.content.read",
+                          "repo.content.write"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "_id",
+                    "issuerUrl",
+                    "claims",
+                    "createdAt"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "description": "Trusted publisher"
+          }
+        },
+        "parameters": [
+          {
+            "name": "repoType",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "models",
+                "spaces",
+                "datasets",
+                "kernels",
+                "buckets",
+                "containers"
+              ]
+            }
+          },
           {
             "name": "namespace",
             "in": "path",
