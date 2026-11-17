@@ -11998,6 +11998,84 @@ func (s *APIOrganizationsNameAvatarGetOK) SetFake() {
 }
 
 // SetFake set fake values.
+func (s *APIOrganizationsNameBillingCreditsGetOK) SetFake() {
+	{
+		{
+			s.BalanceUsd = float64(0)
+		}
+	}
+	{
+		{
+			s.BillingMode.SetFake()
+		}
+	}
+	{
+		{
+			s.Balances = nil
+			for i := 0; i < 0; i++ {
+				var elem APIOrganizationsNameBillingCreditsGetOKBalancesItem
+				{
+					elem.SetFake()
+				}
+				s.Balances = append(s.Balances, elem)
+			}
+		}
+	}
+}
+
+// SetFake set fake values.
+func (s *APIOrganizationsNameBillingCreditsGetOKBalancesItem) SetFake() {
+	{
+		{
+			s.Name.SetFake()
+		}
+	}
+	{
+		{
+			s.Type.SetFake()
+		}
+	}
+	{
+		{
+			s.BalanceUsd = float64(0)
+		}
+	}
+	{
+		{
+			s.ExpiresAt.SetFake()
+		}
+	}
+}
+
+// SetFake set fake values.
+func (s *APIOrganizationsNameBillingCreditsGetOKBalancesItemType) SetFake() {
+	*s = APIOrganizationsNameBillingCreditsGetOKBalancesItemTypeIncluded
+}
+
+// SetFake set fake values.
+func (s *APIOrganizationsNameBillingCreditsGetOKBillingMode) SetFake() {
+	*s = APIOrganizationsNameBillingCreditsGetOKBillingModePostpaid
+}
+
+// SetFake set fake values.
+func (s *APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK) SetFake() {
+	{
+		{
+			s.URL = url.URL{Scheme: "https", Host: "github.com", Path: "/ogen-go/ogen"}
+		}
+	}
+}
+
+// SetFake set fake values.
+func (s *APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) SetFake() {
+	{
+		{
+			s.AmountUsd = int(0)
+		}
+	}
+}
+
+// SetFake set fake values.
 func (s *APIOrganizationsNameBillingUsageByInferenceSessionGetOK) SetFake() {
 	{
 		{
@@ -20655,6 +20733,18 @@ func (s *APIPapersPaperIdGetOKLinkedModelsItem) SetFake() {
 	}
 	{
 		{
+			s.OpenRouterProviders = nil
+			for i := 0; i < 0; i++ {
+				var elem string
+				{
+					elem = "string"
+				}
+				s.OpenRouterProviders = append(s.OpenRouterProviders, elem)
+			}
+		}
+	}
+	{
+		{
 			s.IsLikedByUser = true
 		}
 	}
@@ -27211,6 +27301,84 @@ func (s *APIScheduledJobsNamespaceJobIdSchedulePostReq) SetFake() {
 }
 
 // SetFake set fake values.
+func (s *APISettingsBillingCreditsGetOK) SetFake() {
+	{
+		{
+			s.BalanceUsd = float64(0)
+		}
+	}
+	{
+		{
+			s.BillingMode.SetFake()
+		}
+	}
+	{
+		{
+			s.Balances = nil
+			for i := 0; i < 0; i++ {
+				var elem APISettingsBillingCreditsGetOKBalancesItem
+				{
+					elem.SetFake()
+				}
+				s.Balances = append(s.Balances, elem)
+			}
+		}
+	}
+}
+
+// SetFake set fake values.
+func (s *APISettingsBillingCreditsGetOKBalancesItem) SetFake() {
+	{
+		{
+			s.Name.SetFake()
+		}
+	}
+	{
+		{
+			s.Type.SetFake()
+		}
+	}
+	{
+		{
+			s.BalanceUsd = float64(0)
+		}
+	}
+	{
+		{
+			s.ExpiresAt.SetFake()
+		}
+	}
+}
+
+// SetFake set fake values.
+func (s *APISettingsBillingCreditsGetOKBalancesItemType) SetFake() {
+	*s = APISettingsBillingCreditsGetOKBalancesItemTypeIncluded
+}
+
+// SetFake set fake values.
+func (s *APISettingsBillingCreditsGetOKBillingMode) SetFake() {
+	*s = APISettingsBillingCreditsGetOKBillingModePostpaid
+}
+
+// SetFake set fake values.
+func (s *APISettingsBillingPrepaidCreditsPurchaseLinkPostOK) SetFake() {
+	{
+		{
+			s.URL = url.URL{Scheme: "https", Host: "github.com", Path: "/ogen-go/ogen"}
+		}
+	}
+}
+
+// SetFake set fake values.
+func (s *APISettingsBillingPrepaidCreditsPurchaseLinkPostReq) SetFake() {
+	{
+		{
+			s.AmountUsd = int(0)
+		}
+	}
+}
+
+// SetFake set fake values.
 func (s *APISettingsBillingUsageByInferenceSessionGetOK) SetFake() {
 	{
 		{
@@ -33135,6 +33303,15 @@ func (s *OptAPIOrganizationsNameAuditLogExportGetOKItemTokenRole) SetFake() {
 }
 
 // SetFake set fake values.
+func (s *OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) SetFake() {
+	var elem APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq
+	{
+		elem.SetFake()
+	}
+	s.SetTo(elem)
+}
+
+// SetFake set fake values.
 func (s *OptAPIOrganizationsNameMembersGetOKItemRole) SetFake() {
 	var elem APIOrganizationsNameMembersGetOKItemRole
 	{
@@ -35225,6 +35402,15 @@ func (s *OptAPIScheduledJobsNamespaceJobIdSchedulePostOKJobSpecResourceGroup) Se
 // SetFake set fake values.
 func (s *OptAPIScheduledJobsNamespaceJobIdSchedulePostReq) SetFake() {
 	var elem APIScheduledJobsNamespaceJobIdSchedulePostReq
+	{
+		elem.SetFake()
+	}
+	s.SetTo(elem)
+}
+
+// SetFake set fake values.
+func (s *OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq) SetFake() {
+	var elem APISettingsBillingPrepaidCreditsPurchaseLinkPostReq
 	{
 		elem.SetFake()
 	}

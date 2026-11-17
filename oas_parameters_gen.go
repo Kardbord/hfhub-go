@@ -647,6 +647,16 @@ type APIOrganizationsNameAvatarGetParams struct {
 	Redirect OptString `json:",omitempty,omitzero"`
 }
 
+// APIOrganizationsNameBillingCreditsGetParams is parameters of GET /api/organizations/{name}/billing/credits operation.
+type APIOrganizationsNameBillingCreditsGetParams struct {
+	Name string
+}
+
+// APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostParams is parameters of POST /api/organizations/{name}/billing/prepaid-credits/purchase-link operation.
+type APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostParams struct {
+	Name string
+}
+
 // APIOrganizationsNameBillingUsageByInferenceSessionGetParams is parameters of GET /api/organizations/{name}/billing/usage-by-inference-session operation.
 type APIOrganizationsNameBillingUsageByInferenceSessionGetParams struct {
 	Name      string

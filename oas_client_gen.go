@@ -821,6 +821,20 @@ type Invoker interface {
 	//
 	// GET /api/organizations/{name}/avatar
 	APIOrganizationsNameAvatarGet(ctx context.Context, params APIOrganizationsNameAvatarGetParams, options ...RequestOption) (*APIOrganizationsNameAvatarGetOK, error)
+	// APIOrganizationsNameBillingCreditsGet invokes GET /api/organizations/{name}/billing/credits operation.
+	//
+	// Get the org's credits balance, with each purchased, granted and monthly included balance and its
+	// expiry date.
+	//
+	// GET /api/organizations/{name}/billing/credits
+	APIOrganizationsNameBillingCreditsGet(ctx context.Context, params APIOrganizationsNameBillingCreditsGetParams, options ...RequestOption) (*APIOrganizationsNameBillingCreditsGetOK, error)
+	// APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPost invokes POST /api/organizations/{name}/billing/prepaid-credits/purchase-link operation.
+	//
+	// Get a link to the org billing page with a credits purchase prefilled, also sent to the requesting
+	// user by email. Nothing is charged until they confirm the purchase on that page.
+	//
+	// POST /api/organizations/{name}/billing/prepaid-credits/purchase-link
+	APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPost(ctx context.Context, request OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq, params APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostParams, options ...RequestOption) (*APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK, error)
 	// APIOrganizationsNameBillingUsageByInferenceSessionGet invokes GET /api/organizations/{name}/billing/usage-by-inference-session operation.
 	//
 	// Get org inference-provider usage broken down per session id, as a time-series of monthly periods.
@@ -1320,6 +1334,20 @@ type Invoker interface {
 	//
 	// POST /api/scheduled-jobs/{namespace}/{jobId}/schedule
 	APIScheduledJobsNamespaceJobIdSchedulePost(ctx context.Context, request OptAPIScheduledJobsNamespaceJobIdSchedulePostReq, params APIScheduledJobsNamespaceJobIdSchedulePostParams, options ...RequestOption) (*APIScheduledJobsNamespaceJobIdSchedulePostOK, error)
+	// APISettingsBillingCreditsGet invokes GET /api/settings/billing/credits operation.
+	//
+	// Get the user's credits balance, with each purchased, granted and monthly included balance and its
+	// expiry date.
+	//
+	// GET /api/settings/billing/credits
+	APISettingsBillingCreditsGet(ctx context.Context, options ...RequestOption) (*APISettingsBillingCreditsGetOK, error)
+	// APISettingsBillingPrepaidCreditsPurchaseLinkPost invokes POST /api/settings/billing/prepaid-credits/purchase-link operation.
+	//
+	// Get a link to the billing page with a credits purchase prefilled, also sent to the user by email.
+	// Nothing is charged until the user confirms the purchase on that page.
+	//
+	// POST /api/settings/billing/prepaid-credits/purchase-link
+	APISettingsBillingPrepaidCreditsPurchaseLinkPost(ctx context.Context, request OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq, options ...RequestOption) (*APISettingsBillingPrepaidCreditsPurchaseLinkPostOK, error)
 	// APISettingsBillingUsageByInferenceSessionGet invokes GET /api/settings/billing/usage-by-inference-session operation.
 	//
 	// Get user inference-provider usage broken down per session id.
@@ -17193,6 +17221,269 @@ func (c *Client) sendAPIOrganizationsNameAvatarGet(ctx context.Context, params A
 	return result, nil
 }
 
+// APIOrganizationsNameBillingCreditsGet invokes GET /api/organizations/{name}/billing/credits operation.
+//
+// Get the org's credits balance, with each purchased, granted and monthly included balance and its
+// expiry date.
+//
+// GET /api/organizations/{name}/billing/credits
+func (c *Client) APIOrganizationsNameBillingCreditsGet(ctx context.Context, params APIOrganizationsNameBillingCreditsGetParams, options ...RequestOption) (*APIOrganizationsNameBillingCreditsGetOK, error) {
+	res, err := c.sendAPIOrganizationsNameBillingCreditsGet(ctx, params, options...)
+	return res, err
+}
+
+func (c *Client) sendAPIOrganizationsNameBillingCreditsGet(ctx context.Context, params APIOrganizationsNameBillingCreditsGetParams, requestOptions ...RequestOption) (res *APIOrganizationsNameBillingCreditsGetOK, err error) {
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [3]string
+	pathParts[0] = "/api/organizations/"
+	{
+		// Encode "name" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "name",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.StringToString(params.Name))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/billing/credits"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	r, err := ht.NewRequest(ctx, "GET", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+
+			switch err := c.securityBearerAuth(ctx, APIOrganizationsNameBillingCreditsGetOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"BearerAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer func() {
+		// Drain the body to EOF before closing, so the underlying
+		// connection can be reused by the Transport regardless of the
+		// response status code. See https://github.com/ogen-go/ogen/issues/1670.
+		_, _ = io.Copy(io.Discard, body)
+		_ = body.Close()
+	}()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	result, err := decodeAPIOrganizationsNameBillingCreditsGetResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPost invokes POST /api/organizations/{name}/billing/prepaid-credits/purchase-link operation.
+//
+// Get a link to the org billing page with a credits purchase prefilled, also sent to the requesting
+// user by email. Nothing is charged until they confirm the purchase on that page.
+//
+// POST /api/organizations/{name}/billing/prepaid-credits/purchase-link
+func (c *Client) APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPost(ctx context.Context, request OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq, params APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostParams, options ...RequestOption) (*APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK, error) {
+	res, err := c.sendAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPost(ctx, request, params, options...)
+	return res, err
+}
+
+func (c *Client) sendAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPost(ctx context.Context, request OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq, params APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostParams, requestOptions ...RequestOption) (res *APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK, err error) {
+	// Validate request before sending.
+	if err := func() error {
+		if value, ok := request.Get(); ok {
+			if err := func() error {
+				if err := value.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return res, errors.Wrap(err, "validate")
+	}
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [3]string
+	pathParts[0] = "/api/organizations/"
+	{
+		// Encode "name" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "name",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.StringToString(params.Name))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/billing/prepaid-credits/purchase-link"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	r, err := ht.NewRequest(ctx, "POST", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+	if err := encodeAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostRequest(request, r); err != nil {
+		return res, errors.Wrap(err, "encode request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+
+			switch err := c.securityBearerAuth(ctx, APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"BearerAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer func() {
+		// Drain the body to EOF before closing, so the underlying
+		// connection can be reused by the Transport regardless of the
+		// response status code. See https://github.com/ogen-go/ogen/issues/1670.
+		_, _ = io.Copy(io.Discard, body)
+		_ = body.Close()
+	}()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	result, err := decodeAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
 // APIOrganizationsNameBillingUsageByInferenceSessionGet invokes GET /api/organizations/{name}/billing/usage-by-inference-session operation.
 //
 // Get org inference-provider usage broken down per session id, as a time-series of monthly periods.
@@ -29290,6 +29581,231 @@ func (c *Client) sendAPIScheduledJobsNamespaceJobIdSchedulePost(ctx context.Cont
 	}
 
 	result, err := decodeAPIScheduledJobsNamespaceJobIdSchedulePostResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// APISettingsBillingCreditsGet invokes GET /api/settings/billing/credits operation.
+//
+// Get the user's credits balance, with each purchased, granted and monthly included balance and its
+// expiry date.
+//
+// GET /api/settings/billing/credits
+func (c *Client) APISettingsBillingCreditsGet(ctx context.Context, options ...RequestOption) (*APISettingsBillingCreditsGetOK, error) {
+	res, err := c.sendAPISettingsBillingCreditsGet(ctx, options...)
+	return res, err
+}
+
+func (c *Client) sendAPISettingsBillingCreditsGet(ctx context.Context, requestOptions ...RequestOption) (res *APISettingsBillingCreditsGetOK, err error) {
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [1]string
+	pathParts[0] = "/api/settings/billing/credits"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	r, err := ht.NewRequest(ctx, "GET", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+
+			switch err := c.securityBearerAuth(ctx, APISettingsBillingCreditsGetOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"BearerAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer func() {
+		// Drain the body to EOF before closing, so the underlying
+		// connection can be reused by the Transport regardless of the
+		// response status code. See https://github.com/ogen-go/ogen/issues/1670.
+		_, _ = io.Copy(io.Discard, body)
+		_ = body.Close()
+	}()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	result, err := decodeAPISettingsBillingCreditsGetResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// APISettingsBillingPrepaidCreditsPurchaseLinkPost invokes POST /api/settings/billing/prepaid-credits/purchase-link operation.
+//
+// Get a link to the billing page with a credits purchase prefilled, also sent to the user by email.
+// Nothing is charged until the user confirms the purchase on that page.
+//
+// POST /api/settings/billing/prepaid-credits/purchase-link
+func (c *Client) APISettingsBillingPrepaidCreditsPurchaseLinkPost(ctx context.Context, request OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq, options ...RequestOption) (*APISettingsBillingPrepaidCreditsPurchaseLinkPostOK, error) {
+	res, err := c.sendAPISettingsBillingPrepaidCreditsPurchaseLinkPost(ctx, request, options...)
+	return res, err
+}
+
+func (c *Client) sendAPISettingsBillingPrepaidCreditsPurchaseLinkPost(ctx context.Context, request OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq, requestOptions ...RequestOption) (res *APISettingsBillingPrepaidCreditsPurchaseLinkPostOK, err error) {
+	// Validate request before sending.
+	if err := func() error {
+		if value, ok := request.Get(); ok {
+			if err := func() error {
+				if err := value.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return res, errors.Wrap(err, "validate")
+	}
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [1]string
+	pathParts[0] = "/api/settings/billing/prepaid-credits/purchase-link"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	r, err := ht.NewRequest(ctx, "POST", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+	if err := encodeAPISettingsBillingPrepaidCreditsPurchaseLinkPostRequest(request, r); err != nil {
+		return res, errors.Wrap(err, "encode request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+
+			switch err := c.securityBearerAuth(ctx, APISettingsBillingPrepaidCreditsPurchaseLinkPostOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"BearerAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer func() {
+		// Drain the body to EOF before closing, so the underlying
+		// connection can be reused by the Transport regardless of the
+		// response status code. See https://github.com/ogen-go/ogen/issues/1670.
+		_, _ = io.Copy(io.Discard, body)
+		_ = body.Close()
+	}()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	result, err := decodeAPISettingsBillingPrepaidCreditsPurchaseLinkPostResponse(resp)
 	if err != nil {
 		return res, errors.Wrap(err, "decode response")
 	}

@@ -68439,6 +68439,8 @@ func (s *APIOrganizationsNameAuditLogExportGetOKItemType) Decode(d *jx.Decoder) 
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgAuditLogExport
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgRepoAnalyticsExport:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgRepoAnalyticsExport
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgBlogAnalyticsExport:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgBlogAnalyticsExport
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeRepoAddSecrets:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeRepoAddSecrets
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeRepoRemoveSecrets:
@@ -68541,6 +68543,8 @@ func (s *APIOrganizationsNameAuditLogExportGetOKItemType) Decode(d *jx.Decoder) 
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenCreate
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenDelete:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenDelete
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenInvalidate:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenInvalidate
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenRotate:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenRotate
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenUpdate:
@@ -68677,6 +68681,563 @@ func (s *APIOrganizationsNameAvatarGetOK) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *APIOrganizationsNameAvatarGetOK) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIOrganizationsNameBillingCreditsGetOK) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIOrganizationsNameBillingCreditsGetOK) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("balanceUsd")
+		e.Float64(s.BalanceUsd)
+	}
+	{
+		e.FieldStart("billingMode")
+		s.BillingMode.Encode(e)
+	}
+	{
+		e.FieldStart("balances")
+		e.ArrStart()
+		for _, elem := range s.Balances {
+			elem.Encode(e)
+		}
+		e.ArrEnd()
+	}
+}
+
+var jsonFieldsNameOfAPIOrganizationsNameBillingCreditsGetOK = [3]string{
+	0: "balanceUsd",
+	1: "billingMode",
+	2: "balances",
+}
+
+// Decode decodes APIOrganizationsNameBillingCreditsGetOK from json.
+func (s *APIOrganizationsNameBillingCreditsGetOK) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIOrganizationsNameBillingCreditsGetOK to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "balanceUsd":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.Float64()
+				s.BalanceUsd = float64(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"balanceUsd\"")
+			}
+		case "billingMode":
+			requiredBitSet[0] |= 1 << 1
+			if err := func() error {
+				if err := s.BillingMode.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"billingMode\"")
+			}
+		case "balances":
+			requiredBitSet[0] |= 1 << 2
+			if err := func() error {
+				s.Balances = make([]APIOrganizationsNameBillingCreditsGetOKBalancesItem, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem APIOrganizationsNameBillingCreditsGetOKBalancesItem
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.Balances = append(s.Balances, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"balances\"")
+			}
+		default:
+			return errors.Errorf("unexpected field %q", k)
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIOrganizationsNameBillingCreditsGetOK")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000111,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIOrganizationsNameBillingCreditsGetOK) {
+					name = jsonFieldsNameOfAPIOrganizationsNameBillingCreditsGetOK[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIOrganizationsNameBillingCreditsGetOK) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIOrganizationsNameBillingCreditsGetOK) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIOrganizationsNameBillingCreditsGetOKBalancesItem) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIOrganizationsNameBillingCreditsGetOKBalancesItem) encodeFields(e *jx.Encoder) {
+	{
+		if s.Name.Set {
+			e.FieldStart("name")
+			s.Name.Encode(e)
+		}
+	}
+	{
+		e.FieldStart("type")
+		s.Type.Encode(e)
+	}
+	{
+		e.FieldStart("balanceUsd")
+		e.Float64(s.BalanceUsd)
+	}
+	{
+		if s.ExpiresAt.Set {
+			e.FieldStart("expiresAt")
+			s.ExpiresAt.Encode(e, json.EncodeDateTime)
+		}
+	}
+}
+
+var jsonFieldsNameOfAPIOrganizationsNameBillingCreditsGetOKBalancesItem = [4]string{
+	0: "name",
+	1: "type",
+	2: "balanceUsd",
+	3: "expiresAt",
+}
+
+// Decode decodes APIOrganizationsNameBillingCreditsGetOKBalancesItem from json.
+func (s *APIOrganizationsNameBillingCreditsGetOKBalancesItem) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIOrganizationsNameBillingCreditsGetOKBalancesItem to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "name":
+			if err := func() error {
+				s.Name.Reset()
+				if err := s.Name.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"name\"")
+			}
+		case "type":
+			requiredBitSet[0] |= 1 << 1
+			if err := func() error {
+				if err := s.Type.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"type\"")
+			}
+		case "balanceUsd":
+			requiredBitSet[0] |= 1 << 2
+			if err := func() error {
+				v, err := d.Float64()
+				s.BalanceUsd = float64(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"balanceUsd\"")
+			}
+		case "expiresAt":
+			if err := func() error {
+				s.ExpiresAt.Reset()
+				if err := s.ExpiresAt.Decode(d, json.DecodeDateTime); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"expiresAt\"")
+			}
+		default:
+			return errors.Errorf("unexpected field %q", k)
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIOrganizationsNameBillingCreditsGetOKBalancesItem")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000110,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIOrganizationsNameBillingCreditsGetOKBalancesItem) {
+					name = jsonFieldsNameOfAPIOrganizationsNameBillingCreditsGetOKBalancesItem[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIOrganizationsNameBillingCreditsGetOKBalancesItem) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIOrganizationsNameBillingCreditsGetOKBalancesItem) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes APIOrganizationsNameBillingCreditsGetOKBalancesItemType as json.
+func (s APIOrganizationsNameBillingCreditsGetOKBalancesItemType) Encode(e *jx.Encoder) {
+	e.Str(string(s))
+}
+
+// Decode decodes APIOrganizationsNameBillingCreditsGetOKBalancesItemType from json.
+func (s *APIOrganizationsNameBillingCreditsGetOKBalancesItemType) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIOrganizationsNameBillingCreditsGetOKBalancesItemType to nil")
+	}
+	v, err := d.StrBytes()
+	if err != nil {
+		return err
+	}
+	// Try to use constant string.
+	switch APIOrganizationsNameBillingCreditsGetOKBalancesItemType(v) {
+	case APIOrganizationsNameBillingCreditsGetOKBalancesItemTypeIncluded:
+		*s = APIOrganizationsNameBillingCreditsGetOKBalancesItemTypeIncluded
+	case APIOrganizationsNameBillingCreditsGetOKBalancesItemTypePurchased:
+		*s = APIOrganizationsNameBillingCreditsGetOKBalancesItemTypePurchased
+	case APIOrganizationsNameBillingCreditsGetOKBalancesItemTypeGranted:
+		*s = APIOrganizationsNameBillingCreditsGetOKBalancesItemTypeGranted
+	default:
+		*s = APIOrganizationsNameBillingCreditsGetOKBalancesItemType(v)
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s APIOrganizationsNameBillingCreditsGetOKBalancesItemType) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIOrganizationsNameBillingCreditsGetOKBalancesItemType) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes APIOrganizationsNameBillingCreditsGetOKBillingMode as json.
+func (s APIOrganizationsNameBillingCreditsGetOKBillingMode) Encode(e *jx.Encoder) {
+	e.Str(string(s))
+}
+
+// Decode decodes APIOrganizationsNameBillingCreditsGetOKBillingMode from json.
+func (s *APIOrganizationsNameBillingCreditsGetOKBillingMode) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIOrganizationsNameBillingCreditsGetOKBillingMode to nil")
+	}
+	v, err := d.StrBytes()
+	if err != nil {
+		return err
+	}
+	// Try to use constant string.
+	switch APIOrganizationsNameBillingCreditsGetOKBillingMode(v) {
+	case APIOrganizationsNameBillingCreditsGetOKBillingModePostpaid:
+		*s = APIOrganizationsNameBillingCreditsGetOKBillingModePostpaid
+	case APIOrganizationsNameBillingCreditsGetOKBillingModePrepaid:
+		*s = APIOrganizationsNameBillingCreditsGetOKBillingModePrepaid
+	default:
+		*s = APIOrganizationsNameBillingCreditsGetOKBillingMode(v)
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s APIOrganizationsNameBillingCreditsGetOKBillingMode) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIOrganizationsNameBillingCreditsGetOKBillingMode) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("url")
+		json.EncodeURI(e, s.URL)
+	}
+}
+
+var jsonFieldsNameOfAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK = [1]string{
+	0: "url",
+}
+
+// Decode decodes APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK from json.
+func (s *APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "url":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := json.DecodeURI(d)
+				s.URL = v
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"url\"")
+			}
+		default:
+			return errors.Errorf("unexpected field %q", k)
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK) {
+					name = jsonFieldsNameOfAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("amountUsd")
+		e.Int(s.AmountUsd)
+	}
+}
+
+var jsonFieldsNameOfAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq = [1]string{
+	0: "amountUsd",
+}
+
+// Decode decodes APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq from json.
+func (s *APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "amountUsd":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.Int()
+				s.AmountUsd = int(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"amountUsd\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) {
+					name = jsonFieldsNameOfAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -114737,6 +115298,16 @@ func (s *APIPapersPaperIdGetOKLinkedModelsItem) encodeFields(e *jx.Encoder) {
 		e.ArrEnd()
 	}
 	{
+		if s.OpenRouterProviders != nil {
+			e.FieldStart("openRouterProviders")
+			e.ArrStart()
+			for _, elem := range s.OpenRouterProviders {
+				e.Str(elem)
+			}
+			e.ArrEnd()
+		}
+	}
+	{
 		e.FieldStart("isLikedByUser")
 		e.Bool(s.IsLikedByUser)
 	}
@@ -114800,23 +115371,24 @@ func (s *APIPapersPaperIdGetOKLinkedModelsItem) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfAPIPapersPaperIdGetOKLinkedModelsItem = [16]string{
+var jsonFieldsNameOfAPIPapersPaperIdGetOKLinkedModelsItem = [17]string{
 	0:  "author",
 	1:  "downloads",
 	2:  "id",
 	3:  "availableInferenceProviders",
-	4:  "isLikedByUser",
-	5:  "lastModified",
-	6:  "likes",
-	7:  "pipeline_tag",
-	8:  "private",
-	9:  "repoType",
-	10: "gated",
-	11: "resourceGroup",
-	12: "numParameters",
-	13: "authorData",
-	14: "widgetOutputUrls",
-	15: "isPreRelease",
+	4:  "openRouterProviders",
+	5:  "isLikedByUser",
+	6:  "lastModified",
+	7:  "likes",
+	8:  "pipeline_tag",
+	9:  "private",
+	10: "repoType",
+	11: "gated",
+	12: "resourceGroup",
+	13: "numParameters",
+	14: "authorData",
+	15: "widgetOutputUrls",
+	16: "isPreRelease",
 }
 
 // Decode decodes APIPapersPaperIdGetOKLinkedModelsItem from json.
@@ -114824,7 +115396,7 @@ func (s *APIPapersPaperIdGetOKLinkedModelsItem) Decode(d *jx.Decoder) error {
 	if s == nil {
 		return errors.New("invalid: unable to decode APIPapersPaperIdGetOKLinkedModelsItem to nil")
 	}
-	var requiredBitSet [2]uint8
+	var requiredBitSet [3]uint8
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
 		switch string(k) {
@@ -114882,8 +115454,27 @@ func (s *APIPapersPaperIdGetOKLinkedModelsItem) Decode(d *jx.Decoder) error {
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"availableInferenceProviders\"")
 			}
+		case "openRouterProviders":
+			if err := func() error {
+				s.OpenRouterProviders = make([]string, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem string
+					v, err := d.Str()
+					elem = string(v)
+					if err != nil {
+						return err
+					}
+					s.OpenRouterProviders = append(s.OpenRouterProviders, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"openRouterProviders\"")
+			}
 		case "isLikedByUser":
-			requiredBitSet[0] |= 1 << 4
+			requiredBitSet[0] |= 1 << 5
 			if err := func() error {
 				v, err := d.Bool()
 				s.IsLikedByUser = bool(v)
@@ -114895,7 +115486,7 @@ func (s *APIPapersPaperIdGetOKLinkedModelsItem) Decode(d *jx.Decoder) error {
 				return errors.Wrap(err, "decode field \"isLikedByUser\"")
 			}
 		case "lastModified":
-			requiredBitSet[0] |= 1 << 5
+			requiredBitSet[0] |= 1 << 6
 			if err := func() error {
 				v, err := json.DecodeDateTime(d)
 				s.LastModified = v
@@ -114907,7 +115498,7 @@ func (s *APIPapersPaperIdGetOKLinkedModelsItem) Decode(d *jx.Decoder) error {
 				return errors.Wrap(err, "decode field \"lastModified\"")
 			}
 		case "likes":
-			requiredBitSet[0] |= 1 << 6
+			requiredBitSet[0] |= 1 << 7
 			if err := func() error {
 				v, err := d.Float64()
 				s.Likes = float64(v)
@@ -114929,7 +115520,7 @@ func (s *APIPapersPaperIdGetOKLinkedModelsItem) Decode(d *jx.Decoder) error {
 				return errors.Wrap(err, "decode field \"pipeline_tag\"")
 			}
 		case "private":
-			requiredBitSet[1] |= 1 << 0
+			requiredBitSet[1] |= 1 << 1
 			if err := func() error {
 				v, err := d.Bool()
 				s.Private = bool(v)
@@ -114941,7 +115532,7 @@ func (s *APIPapersPaperIdGetOKLinkedModelsItem) Decode(d *jx.Decoder) error {
 				return errors.Wrap(err, "decode field \"private\"")
 			}
 		case "repoType":
-			requiredBitSet[1] |= 1 << 1
+			requiredBitSet[1] |= 1 << 2
 			if err := func() error {
 				v, err := d.Str()
 				s.RepoType = string(v)
@@ -114953,7 +115544,7 @@ func (s *APIPapersPaperIdGetOKLinkedModelsItem) Decode(d *jx.Decoder) error {
 				return errors.Wrap(err, "decode field \"repoType\"")
 			}
 		case "gated":
-			requiredBitSet[1] |= 1 << 2
+			requiredBitSet[1] |= 1 << 3
 			if err := func() error {
 				if err := s.Gated.Decode(d); err != nil {
 					return err
@@ -115030,9 +115621,10 @@ func (s *APIPapersPaperIdGetOKLinkedModelsItem) Decode(d *jx.Decoder) error {
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
-	for i, mask := range [2]uint8{
-		0b01111111,
-		0b00000111,
+	for i, mask := range [3]uint8{
+		0b11101111,
+		0b00001110,
+		0b00000000,
 	} {
 		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
 			// Mask only required fields and check equality to mask using XOR.
@@ -150242,6 +150834,563 @@ func (s *APIScheduledJobsNamespaceJobIdSchedulePostReq) UnmarshalJSON(data []byt
 }
 
 // Encode implements json.Marshaler.
+func (s *APISettingsBillingCreditsGetOK) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APISettingsBillingCreditsGetOK) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("balanceUsd")
+		e.Float64(s.BalanceUsd)
+	}
+	{
+		e.FieldStart("billingMode")
+		s.BillingMode.Encode(e)
+	}
+	{
+		e.FieldStart("balances")
+		e.ArrStart()
+		for _, elem := range s.Balances {
+			elem.Encode(e)
+		}
+		e.ArrEnd()
+	}
+}
+
+var jsonFieldsNameOfAPISettingsBillingCreditsGetOK = [3]string{
+	0: "balanceUsd",
+	1: "billingMode",
+	2: "balances",
+}
+
+// Decode decodes APISettingsBillingCreditsGetOK from json.
+func (s *APISettingsBillingCreditsGetOK) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APISettingsBillingCreditsGetOK to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "balanceUsd":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.Float64()
+				s.BalanceUsd = float64(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"balanceUsd\"")
+			}
+		case "billingMode":
+			requiredBitSet[0] |= 1 << 1
+			if err := func() error {
+				if err := s.BillingMode.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"billingMode\"")
+			}
+		case "balances":
+			requiredBitSet[0] |= 1 << 2
+			if err := func() error {
+				s.Balances = make([]APISettingsBillingCreditsGetOKBalancesItem, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem APISettingsBillingCreditsGetOKBalancesItem
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.Balances = append(s.Balances, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"balances\"")
+			}
+		default:
+			return errors.Errorf("unexpected field %q", k)
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APISettingsBillingCreditsGetOK")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000111,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPISettingsBillingCreditsGetOK) {
+					name = jsonFieldsNameOfAPISettingsBillingCreditsGetOK[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APISettingsBillingCreditsGetOK) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APISettingsBillingCreditsGetOK) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APISettingsBillingCreditsGetOKBalancesItem) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APISettingsBillingCreditsGetOKBalancesItem) encodeFields(e *jx.Encoder) {
+	{
+		if s.Name.Set {
+			e.FieldStart("name")
+			s.Name.Encode(e)
+		}
+	}
+	{
+		e.FieldStart("type")
+		s.Type.Encode(e)
+	}
+	{
+		e.FieldStart("balanceUsd")
+		e.Float64(s.BalanceUsd)
+	}
+	{
+		if s.ExpiresAt.Set {
+			e.FieldStart("expiresAt")
+			s.ExpiresAt.Encode(e, json.EncodeDateTime)
+		}
+	}
+}
+
+var jsonFieldsNameOfAPISettingsBillingCreditsGetOKBalancesItem = [4]string{
+	0: "name",
+	1: "type",
+	2: "balanceUsd",
+	3: "expiresAt",
+}
+
+// Decode decodes APISettingsBillingCreditsGetOKBalancesItem from json.
+func (s *APISettingsBillingCreditsGetOKBalancesItem) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APISettingsBillingCreditsGetOKBalancesItem to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "name":
+			if err := func() error {
+				s.Name.Reset()
+				if err := s.Name.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"name\"")
+			}
+		case "type":
+			requiredBitSet[0] |= 1 << 1
+			if err := func() error {
+				if err := s.Type.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"type\"")
+			}
+		case "balanceUsd":
+			requiredBitSet[0] |= 1 << 2
+			if err := func() error {
+				v, err := d.Float64()
+				s.BalanceUsd = float64(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"balanceUsd\"")
+			}
+		case "expiresAt":
+			if err := func() error {
+				s.ExpiresAt.Reset()
+				if err := s.ExpiresAt.Decode(d, json.DecodeDateTime); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"expiresAt\"")
+			}
+		default:
+			return errors.Errorf("unexpected field %q", k)
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APISettingsBillingCreditsGetOKBalancesItem")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000110,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPISettingsBillingCreditsGetOKBalancesItem) {
+					name = jsonFieldsNameOfAPISettingsBillingCreditsGetOKBalancesItem[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APISettingsBillingCreditsGetOKBalancesItem) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APISettingsBillingCreditsGetOKBalancesItem) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes APISettingsBillingCreditsGetOKBalancesItemType as json.
+func (s APISettingsBillingCreditsGetOKBalancesItemType) Encode(e *jx.Encoder) {
+	e.Str(string(s))
+}
+
+// Decode decodes APISettingsBillingCreditsGetOKBalancesItemType from json.
+func (s *APISettingsBillingCreditsGetOKBalancesItemType) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APISettingsBillingCreditsGetOKBalancesItemType to nil")
+	}
+	v, err := d.StrBytes()
+	if err != nil {
+		return err
+	}
+	// Try to use constant string.
+	switch APISettingsBillingCreditsGetOKBalancesItemType(v) {
+	case APISettingsBillingCreditsGetOKBalancesItemTypeIncluded:
+		*s = APISettingsBillingCreditsGetOKBalancesItemTypeIncluded
+	case APISettingsBillingCreditsGetOKBalancesItemTypePurchased:
+		*s = APISettingsBillingCreditsGetOKBalancesItemTypePurchased
+	case APISettingsBillingCreditsGetOKBalancesItemTypeGranted:
+		*s = APISettingsBillingCreditsGetOKBalancesItemTypeGranted
+	default:
+		*s = APISettingsBillingCreditsGetOKBalancesItemType(v)
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s APISettingsBillingCreditsGetOKBalancesItemType) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APISettingsBillingCreditsGetOKBalancesItemType) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes APISettingsBillingCreditsGetOKBillingMode as json.
+func (s APISettingsBillingCreditsGetOKBillingMode) Encode(e *jx.Encoder) {
+	e.Str(string(s))
+}
+
+// Decode decodes APISettingsBillingCreditsGetOKBillingMode from json.
+func (s *APISettingsBillingCreditsGetOKBillingMode) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APISettingsBillingCreditsGetOKBillingMode to nil")
+	}
+	v, err := d.StrBytes()
+	if err != nil {
+		return err
+	}
+	// Try to use constant string.
+	switch APISettingsBillingCreditsGetOKBillingMode(v) {
+	case APISettingsBillingCreditsGetOKBillingModePostpaid:
+		*s = APISettingsBillingCreditsGetOKBillingModePostpaid
+	case APISettingsBillingCreditsGetOKBillingModePrepaid:
+		*s = APISettingsBillingCreditsGetOKBillingModePrepaid
+	default:
+		*s = APISettingsBillingCreditsGetOKBillingMode(v)
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s APISettingsBillingCreditsGetOKBillingMode) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APISettingsBillingCreditsGetOKBillingMode) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APISettingsBillingPrepaidCreditsPurchaseLinkPostOK) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APISettingsBillingPrepaidCreditsPurchaseLinkPostOK) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("url")
+		json.EncodeURI(e, s.URL)
+	}
+}
+
+var jsonFieldsNameOfAPISettingsBillingPrepaidCreditsPurchaseLinkPostOK = [1]string{
+	0: "url",
+}
+
+// Decode decodes APISettingsBillingPrepaidCreditsPurchaseLinkPostOK from json.
+func (s *APISettingsBillingPrepaidCreditsPurchaseLinkPostOK) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APISettingsBillingPrepaidCreditsPurchaseLinkPostOK to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "url":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := json.DecodeURI(d)
+				s.URL = v
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"url\"")
+			}
+		default:
+			return errors.Errorf("unexpected field %q", k)
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APISettingsBillingPrepaidCreditsPurchaseLinkPostOK")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPISettingsBillingPrepaidCreditsPurchaseLinkPostOK) {
+					name = jsonFieldsNameOfAPISettingsBillingPrepaidCreditsPurchaseLinkPostOK[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APISettingsBillingPrepaidCreditsPurchaseLinkPostOK) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APISettingsBillingPrepaidCreditsPurchaseLinkPostOK) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APISettingsBillingPrepaidCreditsPurchaseLinkPostReq) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APISettingsBillingPrepaidCreditsPurchaseLinkPostReq) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("amountUsd")
+		e.Int(s.AmountUsd)
+	}
+}
+
+var jsonFieldsNameOfAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq = [1]string{
+	0: "amountUsd",
+}
+
+// Decode decodes APISettingsBillingPrepaidCreditsPurchaseLinkPostReq from json.
+func (s *APISettingsBillingPrepaidCreditsPurchaseLinkPostReq) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APISettingsBillingPrepaidCreditsPurchaseLinkPostReq to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "amountUsd":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.Int()
+				s.AmountUsd = int(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"amountUsd\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APISettingsBillingPrepaidCreditsPurchaseLinkPostReq")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq) {
+					name = jsonFieldsNameOfAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APISettingsBillingPrepaidCreditsPurchaseLinkPostReq) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APISettingsBillingPrepaidCreditsPurchaseLinkPostReq) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
 func (s *APISettingsBillingUsageByInferenceSessionGetOK) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
@@ -180419,6 +181568,39 @@ func (s *OptAPIOrganizationsNameAuditLogExportGetOKItemTokenRole) UnmarshalJSON(
 	return s.Decode(d)
 }
 
+// Encode encodes APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq as json.
+func (o OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) Encode(e *jx.Encoder) {
+	if !o.Set {
+		return
+	}
+	o.Value.Encode(e)
+}
+
+// Decode decodes APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq from json.
+func (o *OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) Decode(d *jx.Decoder) error {
+	if o == nil {
+		return errors.New("invalid: unable to decode OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq to nil")
+	}
+	o.Set = true
+	if err := o.Value.Decode(d); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
 // Encode encodes APIOrganizationsNameMembersGetOKItemRole as json.
 func (o OptAPIOrganizationsNameMembersGetOKItemRole) Encode(e *jx.Encoder) {
 	if !o.Set {
@@ -188108,6 +189290,39 @@ func (s OptAPIScheduledJobsNamespaceJobIdSchedulePostReq) MarshalJSON() ([]byte,
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *OptAPIScheduledJobsNamespaceJobIdSchedulePostReq) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes APISettingsBillingPrepaidCreditsPurchaseLinkPostReq as json.
+func (o OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq) Encode(e *jx.Encoder) {
+	if !o.Set {
+		return
+	}
+	o.Value.Encode(e)
+}
+
+// Decode decodes APISettingsBillingPrepaidCreditsPurchaseLinkPostReq from json.
+func (o *OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq) Decode(d *jx.Decoder) error {
+	if o == nil {
+		return errors.New("invalid: unable to decode OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq to nil")
+	}
+	o.Set = true
+	if err := o.Value.Decode(d); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
