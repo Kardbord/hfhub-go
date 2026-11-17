@@ -6619,6 +6619,78 @@ func TestAPIOrganizationsNameAvatarGetOK_EncodeDecode(t *testing.T) {
 	var typ2 APIOrganizationsNameAvatarGetOK
 	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
 }
+func TestAPIOrganizationsNameBillingCreditsGetOK_EncodeDecode(t *testing.T) {
+	var typ APIOrganizationsNameBillingCreditsGetOK
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APIOrganizationsNameBillingCreditsGetOK
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
+func TestAPIOrganizationsNameBillingCreditsGetOKBalancesItem_EncodeDecode(t *testing.T) {
+	var typ APIOrganizationsNameBillingCreditsGetOKBalancesItem
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APIOrganizationsNameBillingCreditsGetOKBalancesItem
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
+func TestAPIOrganizationsNameBillingCreditsGetOKBalancesItemType_EncodeDecode(t *testing.T) {
+	var typ APIOrganizationsNameBillingCreditsGetOKBalancesItemType
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APIOrganizationsNameBillingCreditsGetOKBalancesItemType
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
+func TestAPIOrganizationsNameBillingCreditsGetOKBillingMode_EncodeDecode(t *testing.T) {
+	var typ APIOrganizationsNameBillingCreditsGetOKBillingMode
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APIOrganizationsNameBillingCreditsGetOKBillingMode
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
+func TestAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK_EncodeDecode(t *testing.T) {
+	var typ APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
+func TestAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq_EncodeDecode(t *testing.T) {
+	var typ APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
 func TestAPIOrganizationsNameBillingUsageByInferenceSessionGetOK_EncodeDecode(t *testing.T) {
 	var typ APIOrganizationsNameBillingUsageByInferenceSessionGetOK
 	typ.SetFake()
@@ -14099,6 +14171,78 @@ func TestAPIScheduledJobsNamespaceJobIdSchedulePostReq_EncodeDecode(t *testing.T
 	require.True(t, std.Valid(data), "Encoded: %s", data)
 
 	var typ2 APIScheduledJobsNamespaceJobIdSchedulePostReq
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
+func TestAPISettingsBillingCreditsGetOK_EncodeDecode(t *testing.T) {
+	var typ APISettingsBillingCreditsGetOK
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APISettingsBillingCreditsGetOK
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
+func TestAPISettingsBillingCreditsGetOKBalancesItem_EncodeDecode(t *testing.T) {
+	var typ APISettingsBillingCreditsGetOKBalancesItem
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APISettingsBillingCreditsGetOKBalancesItem
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
+func TestAPISettingsBillingCreditsGetOKBalancesItemType_EncodeDecode(t *testing.T) {
+	var typ APISettingsBillingCreditsGetOKBalancesItemType
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APISettingsBillingCreditsGetOKBalancesItemType
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
+func TestAPISettingsBillingCreditsGetOKBillingMode_EncodeDecode(t *testing.T) {
+	var typ APISettingsBillingCreditsGetOKBillingMode
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APISettingsBillingCreditsGetOKBillingMode
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
+func TestAPISettingsBillingPrepaidCreditsPurchaseLinkPostOK_EncodeDecode(t *testing.T) {
+	var typ APISettingsBillingPrepaidCreditsPurchaseLinkPostOK
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APISettingsBillingPrepaidCreditsPurchaseLinkPostOK
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
+func TestAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq_EncodeDecode(t *testing.T) {
+	var typ APISettingsBillingPrepaidCreditsPurchaseLinkPostReq
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APISettingsBillingPrepaidCreditsPurchaseLinkPostReq
 	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
 }
 func TestAPISettingsBillingUsageByInferenceSessionGetOK_EncodeDecode(t *testing.T) {

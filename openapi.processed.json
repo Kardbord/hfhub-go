@@ -5062,6 +5062,7 @@
                           "org.token_approval.authorization_request.denied",
                           "org.audit_log.export",
                           "org.repo_analytics.export",
+                          "org.blog_analytics.export",
                           "repo.add_secrets",
                           "repo.remove_secrets",
                           "repo.add_secret",
@@ -5113,6 +5114,7 @@
                           "org.service_account.delete",
                           "org.service_account.token.create",
                           "org.service_account.token.delete",
+                          "org.service_account.token.invalidate",
                           "org.service_account.token.rotate",
                           "org.service_account.token.update",
                           "org.service_account.token.s3_credential.create",
@@ -22144,6 +22146,280 @@
             "position": "before"
           }
         ]
+      }
+    },
+    "/api/organizations/{name}/billing/credits": {
+      "get": {
+        "description": "Get the org's credits balance, with each purchased, granted and monthly included balance and its expiry date",
+        "summary": "Get org credits",
+        "tags": [
+          "orgs"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "balanceUsd": {
+                      "type": "number",
+                      "description": "Total credits balance, in USD"
+                    },
+                    "billingMode": {
+                      "type": "string",
+                      "enum": [
+                        "postpaid",
+                        "prepaid"
+                      ],
+                      "description": "`prepaid` accounts can only use their credits, `postpaid` ones are billed for usage beyond them"
+                    },
+                    "balances": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "included",
+                              "purchased",
+                              "granted"
+                            ]
+                          },
+                          "balanceUsd": {
+                            "type": "number"
+                          },
+                          "expiresAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "balanceUsd"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "balanceUsd",
+                    "billingMode",
+                    "balances"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "description": "Credits balance"
+          }
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/organizations/{name}/billing/prepaid-credits/purchase-link": {
+      "post": {
+        "description": "Get a link to the org billing page with a credits purchase prefilled, also sent to the requesting user by email. Nothing is charged until they confirm the purchase on that page.",
+        "summary": "Credits purchase link",
+        "tags": [
+          "orgs"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {
+                  "amountUsd": {
+                    "type": "integer",
+                    "minimum": 5,
+                    "maximum": 5000
+                  }
+                },
+                "required": [
+                  "amountUsd"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "Billing page link that opens the prefilled purchase, to share with the user"
+                    }
+                  },
+                  "required": [
+                    "url"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "description": "Credits purchase link"
+          }
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/settings/billing/credits": {
+      "get": {
+        "description": "Get the user's credits balance, with each purchased, granted and monthly included balance and its expiry date",
+        "summary": "Get credits",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "balanceUsd": {
+                      "type": "number",
+                      "description": "Total credits balance, in USD"
+                    },
+                    "billingMode": {
+                      "type": "string",
+                      "enum": [
+                        "postpaid",
+                        "prepaid"
+                      ],
+                      "description": "`prepaid` accounts can only use their credits, `postpaid` ones are billed for usage beyond them"
+                    },
+                    "balances": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "included",
+                              "purchased",
+                              "granted"
+                            ]
+                          },
+                          "balanceUsd": {
+                            "type": "number"
+                          },
+                          "expiresAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "balanceUsd"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "balanceUsd",
+                    "billingMode",
+                    "balances"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "description": "Credits balance"
+          }
+        }
+      }
+    },
+    "/api/settings/billing/prepaid-credits/purchase-link": {
+      "post": {
+        "description": "Get a link to the billing page with a credits purchase prefilled, also sent to the user by email. Nothing is charged until the user confirms the purchase on that page.",
+        "summary": "Credits purchase link",
+        "tags": [
+          "users"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {
+                  "amountUsd": {
+                    "type": "integer",
+                    "minimum": 5,
+                    "maximum": 5000
+                  }
+                },
+                "required": [
+                  "amountUsd"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "Billing page link that opens the prefilled purchase, to share with the user"
+                    }
+                  },
+                  "required": [
+                    "url"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "description": "Credits purchase link"
+          }
+        }
       }
     },
     "/api/settings/billing/usage-by-inference-session": {
@@ -46835,6 +47111,12 @@
                                       "additionalProperties": false
                                     }
                                   },
+                                  "openRouterProviders": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
                                   "isLikedByUser": {
                                     "type": "boolean"
                                   },
@@ -53321,6 +53603,12 @@
                               "additionalProperties": false
                             }
                           },
+                          "openRouterProviders": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
                           "isLikedByUser": {
                             "type": "boolean"
                           },
@@ -58151,6 +58439,12 @@
                                   "additionalProperties": false
                                 }
                               },
+                              "openRouterProviders": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
                               "isLikedByUser": {
                                 "type": "boolean"
                               },
@@ -60721,6 +61015,12 @@
                                         "isModelAuthor"
                                       ],
                                       "additionalProperties": false
+                                    }
+                                  },
+                                  "openRouterProviders": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
                                     }
                                   },
                                   "isLikedByUser": {
@@ -63134,6 +63434,12 @@
                                   "additionalProperties": false
                                 }
                               },
+                              "openRouterProviders": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
                               "isLikedByUser": {
                                 "type": "boolean"
                               },
@@ -65696,6 +66002,12 @@
                                         "isModelAuthor"
                                       ],
                                       "additionalProperties": false
+                                    }
+                                  },
+                                  "openRouterProviders": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
                                     }
                                   },
                                   "isLikedByUser": {
@@ -68144,6 +68456,12 @@
                                   "additionalProperties": false
                                 }
                               },
+                              "openRouterProviders": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
                               "isLikedByUser": {
                                 "type": "boolean"
                               },
@@ -70589,6 +70907,12 @@
                                     "isModelAuthor"
                                   ],
                                   "additionalProperties": false
+                                }
+                              },
+                              "openRouterProviders": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
                                 }
                               },
                               "isLikedByUser": {
@@ -73049,6 +73373,12 @@
                                   "additionalProperties": false
                                 }
                               },
+                              "openRouterProviders": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
                               "isLikedByUser": {
                                 "type": "boolean"
                               },
@@ -75444,6 +75774,12 @@
                                           "isModelAuthor"
                                         ],
                                         "additionalProperties": false
+                                      }
+                                    },
+                                    "openRouterProviders": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
                                       }
                                     },
                                     "isLikedByUser": {

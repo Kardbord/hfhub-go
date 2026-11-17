@@ -33731,6 +33731,7 @@ const (
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgTokenApprovalAuthorizationRequestDenied     APIOrganizationsNameAuditLogExportGetOKItemType = "org.token_approval.authorization_request.denied"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgAuditLogExport                              APIOrganizationsNameAuditLogExportGetOKItemType = "org.audit_log.export"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgRepoAnalyticsExport                         APIOrganizationsNameAuditLogExportGetOKItemType = "org.repo_analytics.export"
+	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgBlogAnalyticsExport                         APIOrganizationsNameAuditLogExportGetOKItemType = "org.blog_analytics.export"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeRepoAddSecrets                                 APIOrganizationsNameAuditLogExportGetOKItemType = "repo.add_secrets"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeRepoRemoveSecrets                              APIOrganizationsNameAuditLogExportGetOKItemType = "repo.remove_secrets"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeRepoAddSecret                                  APIOrganizationsNameAuditLogExportGetOKItemType = "repo.add_secret"
@@ -33782,6 +33783,7 @@ const (
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountDelete                        APIOrganizationsNameAuditLogExportGetOKItemType = "org.service_account.delete"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenCreate                   APIOrganizationsNameAuditLogExportGetOKItemType = "org.service_account.token.create"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenDelete                   APIOrganizationsNameAuditLogExportGetOKItemType = "org.service_account.token.delete"
+	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenInvalidate               APIOrganizationsNameAuditLogExportGetOKItemType = "org.service_account.token.invalidate"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenRotate                   APIOrganizationsNameAuditLogExportGetOKItemType = "org.service_account.token.rotate"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenUpdate                   APIOrganizationsNameAuditLogExportGetOKItemType = "org.service_account.token.update"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenS3CredentialCreate       APIOrganizationsNameAuditLogExportGetOKItemType = "org.service_account.token.s3_credential.create"
@@ -33868,6 +33870,7 @@ func (APIOrganizationsNameAuditLogExportGetOKItemType) AllValues() []APIOrganiza
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgTokenApprovalAuthorizationRequestDenied,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgAuditLogExport,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgRepoAnalyticsExport,
+		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgBlogAnalyticsExport,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeRepoAddSecrets,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeRepoRemoveSecrets,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeRepoAddSecret,
@@ -33919,6 +33922,7 @@ func (APIOrganizationsNameAuditLogExportGetOKItemType) AllValues() []APIOrganiza
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountDelete,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenCreate,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenDelete,
+		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenInvalidate,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenRotate,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenUpdate,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenS3CredentialCreate,
@@ -34075,6 +34079,8 @@ func (s APIOrganizationsNameAuditLogExportGetOKItemType) MarshalText() ([]byte, 
 		return []byte(s), nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgRepoAnalyticsExport:
 		return []byte(s), nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgBlogAnalyticsExport:
+		return []byte(s), nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeRepoAddSecrets:
 		return []byte(s), nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeRepoRemoveSecrets:
@@ -34176,6 +34182,8 @@ func (s APIOrganizationsNameAuditLogExportGetOKItemType) MarshalText() ([]byte, 
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenCreate:
 		return []byte(s), nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenDelete:
+		return []byte(s), nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenInvalidate:
 		return []byte(s), nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenRotate:
 		return []byte(s), nil
@@ -34416,6 +34424,9 @@ func (s *APIOrganizationsNameAuditLogExportGetOKItemType) UnmarshalText(data []b
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgRepoAnalyticsExport:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgRepoAnalyticsExport
 		return nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgBlogAnalyticsExport:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgBlogAnalyticsExport
+		return nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeRepoAddSecrets:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeRepoAddSecrets
 		return nil
@@ -34569,6 +34580,9 @@ func (s *APIOrganizationsNameAuditLogExportGetOKItemType) UnmarshalText(data []b
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenDelete:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenDelete
 		return nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenInvalidate:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenInvalidate
+		return nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenRotate:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenRotate
 		return nil
@@ -34622,6 +34636,210 @@ func (s *APIOrganizationsNameAvatarGetOK) GetAvatarUrl() url.URL {
 // SetAvatarUrl sets the value of AvatarUrl.
 func (s *APIOrganizationsNameAvatarGetOK) SetAvatarUrl(val url.URL) {
 	s.AvatarUrl = val
+}
+
+type APIOrganizationsNameBillingCreditsGetOK struct {
+	// Total credits balance, in USD.
+	BalanceUsd float64 `json:"balanceUsd"`
+	// `prepaid` accounts can only use their credits, `postpaid` ones are billed for usage beyond them.
+	BillingMode APIOrganizationsNameBillingCreditsGetOKBillingMode    `json:"billingMode"`
+	Balances    []APIOrganizationsNameBillingCreditsGetOKBalancesItem `json:"balances"`
+}
+
+// GetBalanceUsd returns the value of BalanceUsd.
+func (s *APIOrganizationsNameBillingCreditsGetOK) GetBalanceUsd() float64 {
+	return s.BalanceUsd
+}
+
+// GetBillingMode returns the value of BillingMode.
+func (s *APIOrganizationsNameBillingCreditsGetOK) GetBillingMode() APIOrganizationsNameBillingCreditsGetOKBillingMode {
+	return s.BillingMode
+}
+
+// GetBalances returns the value of Balances.
+func (s *APIOrganizationsNameBillingCreditsGetOK) GetBalances() []APIOrganizationsNameBillingCreditsGetOKBalancesItem {
+	return s.Balances
+}
+
+// SetBalanceUsd sets the value of BalanceUsd.
+func (s *APIOrganizationsNameBillingCreditsGetOK) SetBalanceUsd(val float64) {
+	s.BalanceUsd = val
+}
+
+// SetBillingMode sets the value of BillingMode.
+func (s *APIOrganizationsNameBillingCreditsGetOK) SetBillingMode(val APIOrganizationsNameBillingCreditsGetOKBillingMode) {
+	s.BillingMode = val
+}
+
+// SetBalances sets the value of Balances.
+func (s *APIOrganizationsNameBillingCreditsGetOK) SetBalances(val []APIOrganizationsNameBillingCreditsGetOKBalancesItem) {
+	s.Balances = val
+}
+
+type APIOrganizationsNameBillingCreditsGetOKBalancesItem struct {
+	Name       OptString                                               `json:"name"`
+	Type       APIOrganizationsNameBillingCreditsGetOKBalancesItemType `json:"type"`
+	BalanceUsd float64                                                 `json:"balanceUsd"`
+	ExpiresAt  OptDateTime                                             `json:"expiresAt"`
+}
+
+// GetName returns the value of Name.
+func (s *APIOrganizationsNameBillingCreditsGetOKBalancesItem) GetName() OptString {
+	return s.Name
+}
+
+// GetType returns the value of Type.
+func (s *APIOrganizationsNameBillingCreditsGetOKBalancesItem) GetType() APIOrganizationsNameBillingCreditsGetOKBalancesItemType {
+	return s.Type
+}
+
+// GetBalanceUsd returns the value of BalanceUsd.
+func (s *APIOrganizationsNameBillingCreditsGetOKBalancesItem) GetBalanceUsd() float64 {
+	return s.BalanceUsd
+}
+
+// GetExpiresAt returns the value of ExpiresAt.
+func (s *APIOrganizationsNameBillingCreditsGetOKBalancesItem) GetExpiresAt() OptDateTime {
+	return s.ExpiresAt
+}
+
+// SetName sets the value of Name.
+func (s *APIOrganizationsNameBillingCreditsGetOKBalancesItem) SetName(val OptString) {
+	s.Name = val
+}
+
+// SetType sets the value of Type.
+func (s *APIOrganizationsNameBillingCreditsGetOKBalancesItem) SetType(val APIOrganizationsNameBillingCreditsGetOKBalancesItemType) {
+	s.Type = val
+}
+
+// SetBalanceUsd sets the value of BalanceUsd.
+func (s *APIOrganizationsNameBillingCreditsGetOKBalancesItem) SetBalanceUsd(val float64) {
+	s.BalanceUsd = val
+}
+
+// SetExpiresAt sets the value of ExpiresAt.
+func (s *APIOrganizationsNameBillingCreditsGetOKBalancesItem) SetExpiresAt(val OptDateTime) {
+	s.ExpiresAt = val
+}
+
+type APIOrganizationsNameBillingCreditsGetOKBalancesItemType string
+
+const (
+	APIOrganizationsNameBillingCreditsGetOKBalancesItemTypeIncluded  APIOrganizationsNameBillingCreditsGetOKBalancesItemType = "included"
+	APIOrganizationsNameBillingCreditsGetOKBalancesItemTypePurchased APIOrganizationsNameBillingCreditsGetOKBalancesItemType = "purchased"
+	APIOrganizationsNameBillingCreditsGetOKBalancesItemTypeGranted   APIOrganizationsNameBillingCreditsGetOKBalancesItemType = "granted"
+)
+
+// AllValues returns all APIOrganizationsNameBillingCreditsGetOKBalancesItemType values.
+func (APIOrganizationsNameBillingCreditsGetOKBalancesItemType) AllValues() []APIOrganizationsNameBillingCreditsGetOKBalancesItemType {
+	return []APIOrganizationsNameBillingCreditsGetOKBalancesItemType{
+		APIOrganizationsNameBillingCreditsGetOKBalancesItemTypeIncluded,
+		APIOrganizationsNameBillingCreditsGetOKBalancesItemTypePurchased,
+		APIOrganizationsNameBillingCreditsGetOKBalancesItemTypeGranted,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s APIOrganizationsNameBillingCreditsGetOKBalancesItemType) MarshalText() ([]byte, error) {
+	switch s {
+	case APIOrganizationsNameBillingCreditsGetOKBalancesItemTypeIncluded:
+		return []byte(s), nil
+	case APIOrganizationsNameBillingCreditsGetOKBalancesItemTypePurchased:
+		return []byte(s), nil
+	case APIOrganizationsNameBillingCreditsGetOKBalancesItemTypeGranted:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *APIOrganizationsNameBillingCreditsGetOKBalancesItemType) UnmarshalText(data []byte) error {
+	switch APIOrganizationsNameBillingCreditsGetOKBalancesItemType(data) {
+	case APIOrganizationsNameBillingCreditsGetOKBalancesItemTypeIncluded:
+		*s = APIOrganizationsNameBillingCreditsGetOKBalancesItemTypeIncluded
+		return nil
+	case APIOrganizationsNameBillingCreditsGetOKBalancesItemTypePurchased:
+		*s = APIOrganizationsNameBillingCreditsGetOKBalancesItemTypePurchased
+		return nil
+	case APIOrganizationsNameBillingCreditsGetOKBalancesItemTypeGranted:
+		*s = APIOrganizationsNameBillingCreditsGetOKBalancesItemTypeGranted
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
+// `prepaid` accounts can only use their credits, `postpaid` ones are billed for usage beyond them.
+type APIOrganizationsNameBillingCreditsGetOKBillingMode string
+
+const (
+	APIOrganizationsNameBillingCreditsGetOKBillingModePostpaid APIOrganizationsNameBillingCreditsGetOKBillingMode = "postpaid"
+	APIOrganizationsNameBillingCreditsGetOKBillingModePrepaid  APIOrganizationsNameBillingCreditsGetOKBillingMode = "prepaid"
+)
+
+// AllValues returns all APIOrganizationsNameBillingCreditsGetOKBillingMode values.
+func (APIOrganizationsNameBillingCreditsGetOKBillingMode) AllValues() []APIOrganizationsNameBillingCreditsGetOKBillingMode {
+	return []APIOrganizationsNameBillingCreditsGetOKBillingMode{
+		APIOrganizationsNameBillingCreditsGetOKBillingModePostpaid,
+		APIOrganizationsNameBillingCreditsGetOKBillingModePrepaid,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s APIOrganizationsNameBillingCreditsGetOKBillingMode) MarshalText() ([]byte, error) {
+	switch s {
+	case APIOrganizationsNameBillingCreditsGetOKBillingModePostpaid:
+		return []byte(s), nil
+	case APIOrganizationsNameBillingCreditsGetOKBillingModePrepaid:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *APIOrganizationsNameBillingCreditsGetOKBillingMode) UnmarshalText(data []byte) error {
+	switch APIOrganizationsNameBillingCreditsGetOKBillingMode(data) {
+	case APIOrganizationsNameBillingCreditsGetOKBillingModePostpaid:
+		*s = APIOrganizationsNameBillingCreditsGetOKBillingModePostpaid
+		return nil
+	case APIOrganizationsNameBillingCreditsGetOKBillingModePrepaid:
+		*s = APIOrganizationsNameBillingCreditsGetOKBillingModePrepaid
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
+type APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK struct {
+	// Billing page link that opens the prefilled purchase, to share with the user.
+	URL url.URL `json:"url"`
+}
+
+// GetURL returns the value of URL.
+func (s *APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK) GetURL() url.URL {
+	return s.URL
+}
+
+// SetURL sets the value of URL.
+func (s *APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostOK) SetURL(val url.URL) {
+	s.URL = val
+}
+
+type APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq struct {
+	AmountUsd int `json:"amountUsd"`
+}
+
+// GetAmountUsd returns the value of AmountUsd.
+func (s *APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) GetAmountUsd() int {
+	return s.AmountUsd
+}
+
+// SetAmountUsd sets the value of AmountUsd.
+func (s *APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) SetAmountUsd(val int) {
+	s.AmountUsd = val
 }
 
 type APIOrganizationsNameBillingUsageByInferenceSessionGetOK struct {
@@ -55977,6 +56195,7 @@ type APIPapersPaperIdGetOKLinkedModelsItem struct {
 	Downloads                   float64                                                                `json:"downloads"`
 	ID                          string                                                                 `json:"id"`
 	AvailableInferenceProviders []APIPapersPaperIdGetOKLinkedModelsItemAvailableInferenceProvidersItem `json:"availableInferenceProviders"`
+	OpenRouterProviders         []string                                                               `json:"openRouterProviders"`
 	IsLikedByUser               bool                                                                   `json:"isLikedByUser"`
 	LastModified                time.Time                                                              `json:"lastModified"`
 	Likes                       float64                                                                `json:"likes"`
@@ -56009,6 +56228,11 @@ func (s *APIPapersPaperIdGetOKLinkedModelsItem) GetID() string {
 // GetAvailableInferenceProviders returns the value of AvailableInferenceProviders.
 func (s *APIPapersPaperIdGetOKLinkedModelsItem) GetAvailableInferenceProviders() []APIPapersPaperIdGetOKLinkedModelsItemAvailableInferenceProvidersItem {
 	return s.AvailableInferenceProviders
+}
+
+// GetOpenRouterProviders returns the value of OpenRouterProviders.
+func (s *APIPapersPaperIdGetOKLinkedModelsItem) GetOpenRouterProviders() []string {
+	return s.OpenRouterProviders
 }
 
 // GetIsLikedByUser returns the value of IsLikedByUser.
@@ -56089,6 +56313,11 @@ func (s *APIPapersPaperIdGetOKLinkedModelsItem) SetID(val string) {
 // SetAvailableInferenceProviders sets the value of AvailableInferenceProviders.
 func (s *APIPapersPaperIdGetOKLinkedModelsItem) SetAvailableInferenceProviders(val []APIPapersPaperIdGetOKLinkedModelsItemAvailableInferenceProvidersItem) {
 	s.AvailableInferenceProviders = val
+}
+
+// SetOpenRouterProviders sets the value of OpenRouterProviders.
+func (s *APIPapersPaperIdGetOKLinkedModelsItem) SetOpenRouterProviders(val []string) {
+	s.OpenRouterProviders = val
 }
 
 // SetIsLikedByUser sets the value of IsLikedByUser.
@@ -74401,6 +74630,210 @@ func (s *APIScheduledJobsNamespaceJobIdSchedulePostReq) GetSchedule() string {
 // SetSchedule sets the value of Schedule.
 func (s *APIScheduledJobsNamespaceJobIdSchedulePostReq) SetSchedule(val string) {
 	s.Schedule = val
+}
+
+type APISettingsBillingCreditsGetOK struct {
+	// Total credits balance, in USD.
+	BalanceUsd float64 `json:"balanceUsd"`
+	// `prepaid` accounts can only use their credits, `postpaid` ones are billed for usage beyond them.
+	BillingMode APISettingsBillingCreditsGetOKBillingMode    `json:"billingMode"`
+	Balances    []APISettingsBillingCreditsGetOKBalancesItem `json:"balances"`
+}
+
+// GetBalanceUsd returns the value of BalanceUsd.
+func (s *APISettingsBillingCreditsGetOK) GetBalanceUsd() float64 {
+	return s.BalanceUsd
+}
+
+// GetBillingMode returns the value of BillingMode.
+func (s *APISettingsBillingCreditsGetOK) GetBillingMode() APISettingsBillingCreditsGetOKBillingMode {
+	return s.BillingMode
+}
+
+// GetBalances returns the value of Balances.
+func (s *APISettingsBillingCreditsGetOK) GetBalances() []APISettingsBillingCreditsGetOKBalancesItem {
+	return s.Balances
+}
+
+// SetBalanceUsd sets the value of BalanceUsd.
+func (s *APISettingsBillingCreditsGetOK) SetBalanceUsd(val float64) {
+	s.BalanceUsd = val
+}
+
+// SetBillingMode sets the value of BillingMode.
+func (s *APISettingsBillingCreditsGetOK) SetBillingMode(val APISettingsBillingCreditsGetOKBillingMode) {
+	s.BillingMode = val
+}
+
+// SetBalances sets the value of Balances.
+func (s *APISettingsBillingCreditsGetOK) SetBalances(val []APISettingsBillingCreditsGetOKBalancesItem) {
+	s.Balances = val
+}
+
+type APISettingsBillingCreditsGetOKBalancesItem struct {
+	Name       OptString                                      `json:"name"`
+	Type       APISettingsBillingCreditsGetOKBalancesItemType `json:"type"`
+	BalanceUsd float64                                        `json:"balanceUsd"`
+	ExpiresAt  OptDateTime                                    `json:"expiresAt"`
+}
+
+// GetName returns the value of Name.
+func (s *APISettingsBillingCreditsGetOKBalancesItem) GetName() OptString {
+	return s.Name
+}
+
+// GetType returns the value of Type.
+func (s *APISettingsBillingCreditsGetOKBalancesItem) GetType() APISettingsBillingCreditsGetOKBalancesItemType {
+	return s.Type
+}
+
+// GetBalanceUsd returns the value of BalanceUsd.
+func (s *APISettingsBillingCreditsGetOKBalancesItem) GetBalanceUsd() float64 {
+	return s.BalanceUsd
+}
+
+// GetExpiresAt returns the value of ExpiresAt.
+func (s *APISettingsBillingCreditsGetOKBalancesItem) GetExpiresAt() OptDateTime {
+	return s.ExpiresAt
+}
+
+// SetName sets the value of Name.
+func (s *APISettingsBillingCreditsGetOKBalancesItem) SetName(val OptString) {
+	s.Name = val
+}
+
+// SetType sets the value of Type.
+func (s *APISettingsBillingCreditsGetOKBalancesItem) SetType(val APISettingsBillingCreditsGetOKBalancesItemType) {
+	s.Type = val
+}
+
+// SetBalanceUsd sets the value of BalanceUsd.
+func (s *APISettingsBillingCreditsGetOKBalancesItem) SetBalanceUsd(val float64) {
+	s.BalanceUsd = val
+}
+
+// SetExpiresAt sets the value of ExpiresAt.
+func (s *APISettingsBillingCreditsGetOKBalancesItem) SetExpiresAt(val OptDateTime) {
+	s.ExpiresAt = val
+}
+
+type APISettingsBillingCreditsGetOKBalancesItemType string
+
+const (
+	APISettingsBillingCreditsGetOKBalancesItemTypeIncluded  APISettingsBillingCreditsGetOKBalancesItemType = "included"
+	APISettingsBillingCreditsGetOKBalancesItemTypePurchased APISettingsBillingCreditsGetOKBalancesItemType = "purchased"
+	APISettingsBillingCreditsGetOKBalancesItemTypeGranted   APISettingsBillingCreditsGetOKBalancesItemType = "granted"
+)
+
+// AllValues returns all APISettingsBillingCreditsGetOKBalancesItemType values.
+func (APISettingsBillingCreditsGetOKBalancesItemType) AllValues() []APISettingsBillingCreditsGetOKBalancesItemType {
+	return []APISettingsBillingCreditsGetOKBalancesItemType{
+		APISettingsBillingCreditsGetOKBalancesItemTypeIncluded,
+		APISettingsBillingCreditsGetOKBalancesItemTypePurchased,
+		APISettingsBillingCreditsGetOKBalancesItemTypeGranted,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s APISettingsBillingCreditsGetOKBalancesItemType) MarshalText() ([]byte, error) {
+	switch s {
+	case APISettingsBillingCreditsGetOKBalancesItemTypeIncluded:
+		return []byte(s), nil
+	case APISettingsBillingCreditsGetOKBalancesItemTypePurchased:
+		return []byte(s), nil
+	case APISettingsBillingCreditsGetOKBalancesItemTypeGranted:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *APISettingsBillingCreditsGetOKBalancesItemType) UnmarshalText(data []byte) error {
+	switch APISettingsBillingCreditsGetOKBalancesItemType(data) {
+	case APISettingsBillingCreditsGetOKBalancesItemTypeIncluded:
+		*s = APISettingsBillingCreditsGetOKBalancesItemTypeIncluded
+		return nil
+	case APISettingsBillingCreditsGetOKBalancesItemTypePurchased:
+		*s = APISettingsBillingCreditsGetOKBalancesItemTypePurchased
+		return nil
+	case APISettingsBillingCreditsGetOKBalancesItemTypeGranted:
+		*s = APISettingsBillingCreditsGetOKBalancesItemTypeGranted
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
+// `prepaid` accounts can only use their credits, `postpaid` ones are billed for usage beyond them.
+type APISettingsBillingCreditsGetOKBillingMode string
+
+const (
+	APISettingsBillingCreditsGetOKBillingModePostpaid APISettingsBillingCreditsGetOKBillingMode = "postpaid"
+	APISettingsBillingCreditsGetOKBillingModePrepaid  APISettingsBillingCreditsGetOKBillingMode = "prepaid"
+)
+
+// AllValues returns all APISettingsBillingCreditsGetOKBillingMode values.
+func (APISettingsBillingCreditsGetOKBillingMode) AllValues() []APISettingsBillingCreditsGetOKBillingMode {
+	return []APISettingsBillingCreditsGetOKBillingMode{
+		APISettingsBillingCreditsGetOKBillingModePostpaid,
+		APISettingsBillingCreditsGetOKBillingModePrepaid,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s APISettingsBillingCreditsGetOKBillingMode) MarshalText() ([]byte, error) {
+	switch s {
+	case APISettingsBillingCreditsGetOKBillingModePostpaid:
+		return []byte(s), nil
+	case APISettingsBillingCreditsGetOKBillingModePrepaid:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *APISettingsBillingCreditsGetOKBillingMode) UnmarshalText(data []byte) error {
+	switch APISettingsBillingCreditsGetOKBillingMode(data) {
+	case APISettingsBillingCreditsGetOKBillingModePostpaid:
+		*s = APISettingsBillingCreditsGetOKBillingModePostpaid
+		return nil
+	case APISettingsBillingCreditsGetOKBillingModePrepaid:
+		*s = APISettingsBillingCreditsGetOKBillingModePrepaid
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
+type APISettingsBillingPrepaidCreditsPurchaseLinkPostOK struct {
+	// Billing page link that opens the prefilled purchase, to share with the user.
+	URL url.URL `json:"url"`
+}
+
+// GetURL returns the value of URL.
+func (s *APISettingsBillingPrepaidCreditsPurchaseLinkPostOK) GetURL() url.URL {
+	return s.URL
+}
+
+// SetURL sets the value of URL.
+func (s *APISettingsBillingPrepaidCreditsPurchaseLinkPostOK) SetURL(val url.URL) {
+	s.URL = val
+}
+
+type APISettingsBillingPrepaidCreditsPurchaseLinkPostReq struct {
+	AmountUsd int `json:"amountUsd"`
+}
+
+// GetAmountUsd returns the value of AmountUsd.
+func (s *APISettingsBillingPrepaidCreditsPurchaseLinkPostReq) GetAmountUsd() int {
+	return s.AmountUsd
+}
+
+// SetAmountUsd sets the value of AmountUsd.
+func (s *APISettingsBillingPrepaidCreditsPurchaseLinkPostReq) SetAmountUsd(val int) {
+	s.AmountUsd = val
 }
 
 type APISettingsBillingUsageByInferenceSessionGetOK struct {
@@ -95245,6 +95678,52 @@ func (o OptAPIOrganizationsNameAuditLogExportGetOKItemTokenRole) Or(d APIOrganiz
 	return d
 }
 
+// NewOptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq returns new OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq with value set to v.
+func NewOptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq(v APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq {
+	return OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq is optional APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq.
+type OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq struct {
+	Value APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq
+	Set   bool
+}
+
+// IsSet returns true if OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq was set.
+func (o OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) Reset() {
+	var v APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) SetTo(v APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) Get() (v APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptAPIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) Or(d APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq) APIOrganizationsNameBillingPrepaidCreditsPurchaseLinkPostReq {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // NewOptAPIOrganizationsNameMembersGetOKItemRole returns new OptAPIOrganizationsNameMembersGetOKItemRole with value set to v.
 func NewOptAPIOrganizationsNameMembersGetOKItemRole(v APIOrganizationsNameMembersGetOKItemRole) OptAPIOrganizationsNameMembersGetOKItemRole {
 	return OptAPIOrganizationsNameMembersGetOKItemRole{
@@ -106577,6 +107056,52 @@ func (o OptAPIScheduledJobsNamespaceJobIdSchedulePostReq) Get() (v APIScheduledJ
 
 // Or returns value if set, or given parameter if does not.
 func (o OptAPIScheduledJobsNamespaceJobIdSchedulePostReq) Or(d APIScheduledJobsNamespaceJobIdSchedulePostReq) APIScheduledJobsNamespaceJobIdSchedulePostReq {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq returns new OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq with value set to v.
+func NewOptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq(v APISettingsBillingPrepaidCreditsPurchaseLinkPostReq) OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq {
+	return OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq is optional APISettingsBillingPrepaidCreditsPurchaseLinkPostReq.
+type OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq struct {
+	Value APISettingsBillingPrepaidCreditsPurchaseLinkPostReq
+	Set   bool
+}
+
+// IsSet returns true if OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq was set.
+func (o OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq) Reset() {
+	var v APISettingsBillingPrepaidCreditsPurchaseLinkPostReq
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq) SetTo(v APISettingsBillingPrepaidCreditsPurchaseLinkPostReq) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq) Get() (v APISettingsBillingPrepaidCreditsPurchaseLinkPostReq, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptAPISettingsBillingPrepaidCreditsPurchaseLinkPostReq) Or(d APISettingsBillingPrepaidCreditsPurchaseLinkPostReq) APISettingsBillingPrepaidCreditsPurchaseLinkPostReq {
 	if v, ok := o.Get(); ok {
 		return v
 	}
