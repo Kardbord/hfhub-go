@@ -33671,6 +33671,7 @@ const (
 	APIOrganizationsNameAuditLogExportGetOKItemTypeBillingGcpRemove                               APIOrganizationsNameAuditLogExportGetOKItemType = "billing.gcp_remove"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeBillingMarketplaceApprove                      APIOrganizationsNameAuditLogExportGetOKItemType = "billing.marketplace_approve"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeBillingCancelSubscription                      APIOrganizationsNameAuditLogExportGetOKItemType = "billing.cancel_subscription"
+	APIOrganizationsNameAuditLogExportGetOKItemTypeBillingEndSubscription                         APIOrganizationsNameAuditLogExportGetOKItemType = "billing.end_subscription"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeBillingRenewSubscription                       APIOrganizationsNameAuditLogExportGetOKItemType = "billing.renew_subscription"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeBillingStartSubscription                       APIOrganizationsNameAuditLogExportGetOKItemType = "billing.start_subscription"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeBillingUnCancelSubscription                    APIOrganizationsNameAuditLogExportGetOKItemType = "billing.un_cancel_subscription"
@@ -33788,6 +33789,8 @@ const (
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenUpdate                   APIOrganizationsNameAuditLogExportGetOKItemType = "org.service_account.token.update"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenS3CredentialCreate       APIOrganizationsNameAuditLogExportGetOKItemType = "org.service_account.token.s3_credential.create"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenS3CredentialDelete       APIOrganizationsNameAuditLogExportGetOKItemType = "org.service_account.token.s3_credential.delete"
+	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTrustedPublisherCreate        APIOrganizationsNameAuditLogExportGetOKItemType = "org.service_account.trusted_publisher.create"
+	APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTrustedPublisherDelete        APIOrganizationsNameAuditLogExportGetOKItemType = "org.service_account.trusted_publisher.delete"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthToken                                     APIOrganizationsNameAuditLogExportGetOKItemType = "oauth.token"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppCreate                                 APIOrganizationsNameAuditLogExportGetOKItemType = "oauth.app.create"
 	APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppUpdate                                 APIOrganizationsNameAuditLogExportGetOKItemType = "oauth.app.update"
@@ -33810,6 +33813,7 @@ func (APIOrganizationsNameAuditLogExportGetOKItemType) AllValues() []APIOrganiza
 		APIOrganizationsNameAuditLogExportGetOKItemTypeBillingGcpRemove,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeBillingMarketplaceApprove,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeBillingCancelSubscription,
+		APIOrganizationsNameAuditLogExportGetOKItemTypeBillingEndSubscription,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeBillingRenewSubscription,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeBillingStartSubscription,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeBillingUnCancelSubscription,
@@ -33927,6 +33931,8 @@ func (APIOrganizationsNameAuditLogExportGetOKItemType) AllValues() []APIOrganiza
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenUpdate,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenS3CredentialCreate,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenS3CredentialDelete,
+		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTrustedPublisherCreate,
+		APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTrustedPublisherDelete,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthToken,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppCreate,
 		APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppUpdate,
@@ -33958,6 +33964,8 @@ func (s APIOrganizationsNameAuditLogExportGetOKItemType) MarshalText() ([]byte, 
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeBillingMarketplaceApprove:
 		return []byte(s), nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeBillingCancelSubscription:
+		return []byte(s), nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeBillingEndSubscription:
 		return []byte(s), nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeBillingRenewSubscription:
 		return []byte(s), nil
@@ -34193,6 +34201,10 @@ func (s APIOrganizationsNameAuditLogExportGetOKItemType) MarshalText() ([]byte, 
 		return []byte(s), nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenS3CredentialDelete:
 		return []byte(s), nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTrustedPublisherCreate:
+		return []byte(s), nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTrustedPublisherDelete:
+		return []byte(s), nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthToken:
 		return []byte(s), nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppCreate:
@@ -34243,6 +34255,9 @@ func (s *APIOrganizationsNameAuditLogExportGetOKItemType) UnmarshalText(data []b
 		return nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeBillingCancelSubscription:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeBillingCancelSubscription
+		return nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeBillingEndSubscription:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeBillingEndSubscription
 		return nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeBillingRenewSubscription:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeBillingRenewSubscription
@@ -34594,6 +34609,12 @@ func (s *APIOrganizationsNameAuditLogExportGetOKItemType) UnmarshalText(data []b
 		return nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenS3CredentialDelete:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenS3CredentialDelete
+		return nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTrustedPublisherCreate:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTrustedPublisherCreate
+		return nil
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTrustedPublisherDelete:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTrustedPublisherDelete
 		return nil
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthToken:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthToken
@@ -45431,21 +45452,23 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOK) SetAccessToke
 
 type APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem struct {
 	// A hex string of 24 characters representing an ObjectId.
-	ID                  string                                                                                        `json:"_id"`
-	DisplayName         string                                                                                        `json:"displayName"`
-	CreatedAt           time.Time                                                                                     `json:"createdAt"`
-	LastUsedAt          OptDateTime                                                                                   `json:"lastUsedAt"`
-	Expiration          OptDateTime                                                                                   `json:"expiration"`
-	Role                APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemRole                  `json:"role"`
-	Permissions         []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemPermissionsItem     `json:"permissions"`
-	RepoIds             []string                                                                                      `json:"repoIds"`
-	RepoPermissions     []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemRepoPermissionsItem `json:"repoPermissions"`
-	UserPermissions     []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItem `json:"userPermissions"`
-	EndpointPatterns    []string                                                                                      `json:"endpointPatterns"`
-	Last4               OptString                                                                                     `json:"last4"`
-	SkipNetworkSecurity OptBool                                                                                       `json:"skipNetworkSecurity"`
-	CanReadGatedRepos   OptBool                                                                                       `json:"canReadGatedRepos"`
-	S3AccessKey         OptString                                                                                     `json:"s3AccessKey"`
+	ID                       string                                                                                                 `json:"_id"`
+	DisplayName              string                                                                                                 `json:"displayName"`
+	CreatedAt                time.Time                                                                                              `json:"createdAt"`
+	LastUsedAt               OptDateTime                                                                                            `json:"lastUsedAt"`
+	Expiration               OptDateTime                                                                                            `json:"expiration"`
+	Role                     APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemRole                           `json:"role"`
+	Permissions              []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemPermissionsItem              `json:"permissions"`
+	RepoIds                  []string                                                                                               `json:"repoIds"`
+	RepoPermissions          []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemRepoPermissionsItem          `json:"repoPermissions"`
+	ResourceGroupIds         []string                                                                                               `json:"resourceGroupIds"`
+	ResourceGroupPermissions []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem `json:"resourceGroupPermissions"`
+	UserPermissions          []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItem          `json:"userPermissions"`
+	EndpointPatterns         []string                                                                                               `json:"endpointPatterns"`
+	Last4                    OptString                                                                                              `json:"last4"`
+	SkipNetworkSecurity      OptBool                                                                                                `json:"skipNetworkSecurity"`
+	CanReadGatedRepos        OptBool                                                                                                `json:"canReadGatedRepos"`
+	S3AccessKey              OptString                                                                                              `json:"s3AccessKey"`
 }
 
 // GetID returns the value of ID.
@@ -45491,6 +45514,16 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 // GetRepoPermissions returns the value of RepoPermissions.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem) GetRepoPermissions() []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemRepoPermissionsItem {
 	return s.RepoPermissions
+}
+
+// GetResourceGroupIds returns the value of ResourceGroupIds.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem) GetResourceGroupIds() []string {
+	return s.ResourceGroupIds
+}
+
+// GetResourceGroupPermissions returns the value of ResourceGroupPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem) GetResourceGroupPermissions() []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem {
+	return s.ResourceGroupPermissions
 }
 
 // GetUserPermissions returns the value of UserPermissions.
@@ -45566,6 +45599,16 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 // SetRepoPermissions sets the value of RepoPermissions.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem) SetRepoPermissions(val []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemRepoPermissionsItem) {
 	s.RepoPermissions = val
+}
+
+// SetResourceGroupIds sets the value of ResourceGroupIds.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem) SetResourceGroupIds(val []string) {
+	s.ResourceGroupIds = val
+}
+
+// SetResourceGroupPermissions sets the value of ResourceGroupPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem) SetResourceGroupPermissions(val []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem) {
+	s.ResourceGroupPermissions = val
 }
 
 // SetUserPermissions sets the value of UserPermissions.
@@ -45771,6 +45814,47 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 	}
 }
 
+type APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem string
+
+const (
+	APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItemRepoContentRead APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem = "repo.content.read"
+	APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItemRepoWrite       APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem = "repo.write"
+)
+
+// AllValues returns all APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem values.
+func (APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem) AllValues() []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem {
+	return []APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem{
+		APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItemRepoContentRead,
+		APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItemRepoWrite,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem) MarshalText() ([]byte, error) {
+	switch s {
+	case APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItemRepoContentRead:
+		return []byte(s), nil
+	case APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItemRepoWrite:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem) UnmarshalText(data []byte) error {
+	switch APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem(data) {
+	case APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItemRepoContentRead:
+		*s = APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItemRepoContentRead
+		return nil
+	case APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItemRepoWrite:
+		*s = APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItemRepoWrite
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
 type APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemRole string
 
 const (
@@ -45880,16 +45964,18 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreated) S
 }
 
 type APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenInfo struct {
-	ID                  string   `json:"_id"`
-	DisplayName         string   `json:"displayName"`
-	CreatedAt           string   `json:"createdAt"`
-	Permissions         []string `json:"permissions"`
-	RepoIds             []string `json:"repoIds"`
-	RepoPermissions     []string `json:"repoPermissions"`
-	UserPermissions     []string `json:"userPermissions"`
-	EndpointPatterns    []string `json:"endpointPatterns"`
-	SkipNetworkSecurity bool     `json:"skipNetworkSecurity"`
-	CanReadGatedRepos   bool     `json:"canReadGatedRepos"`
+	ID                       string   `json:"_id"`
+	DisplayName              string   `json:"displayName"`
+	CreatedAt                string   `json:"createdAt"`
+	Permissions              []string `json:"permissions"`
+	RepoIds                  []string `json:"repoIds"`
+	RepoPermissions          []string `json:"repoPermissions"`
+	ResourceGroupIds         []string `json:"resourceGroupIds"`
+	ResourceGroupPermissions []string `json:"resourceGroupPermissions"`
+	UserPermissions          []string `json:"userPermissions"`
+	EndpointPatterns         []string `json:"endpointPatterns"`
+	SkipNetworkSecurity      bool     `json:"skipNetworkSecurity"`
+	CanReadGatedRepos        bool     `json:"canReadGatedRepos"`
 }
 
 // GetID returns the value of ID.
@@ -45920,6 +46006,16 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTok
 // GetRepoPermissions returns the value of RepoPermissions.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenInfo) GetRepoPermissions() []string {
 	return s.RepoPermissions
+}
+
+// GetResourceGroupIds returns the value of ResourceGroupIds.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenInfo) GetResourceGroupIds() []string {
+	return s.ResourceGroupIds
+}
+
+// GetResourceGroupPermissions returns the value of ResourceGroupPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenInfo) GetResourceGroupPermissions() []string {
+	return s.ResourceGroupPermissions
 }
 
 // GetUserPermissions returns the value of UserPermissions.
@@ -45972,6 +46068,16 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTok
 	s.RepoPermissions = val
 }
 
+// SetResourceGroupIds sets the value of ResourceGroupIds.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenInfo) SetResourceGroupIds(val []string) {
+	s.ResourceGroupIds = val
+}
+
+// SetResourceGroupPermissions sets the value of ResourceGroupPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenInfo) SetResourceGroupPermissions(val []string) {
+	s.ResourceGroupPermissions = val
+}
+
 // SetUserPermissions sets the value of UserPermissions.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenInfo) SetUserPermissions(val []string) {
 	s.UserPermissions = val
@@ -45998,10 +46104,15 @@ type APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq struct {
 	// Org-wide permissions for this token.
 	Permissions []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqPermissionsItem `json:"permissions"`
 	// Repositories to grant `repoPermissions` on. Can be repositories owned by the organization or any
-	// public repository. These override the org-wide permissions.
+	// public repository. These override the org-wide and resource-group permissions.
 	RepoIds []string `json:"repoIds"`
 	// Permissions granted on the selected `repoIds`.
 	RepoPermissions []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqRepoPermissionsItem `json:"repoPermissions"`
+	// Resource groups of the organization to grant `resourceGroupPermissions` on. Applies to every
+	// repository currently or later in those resource groups, and overrides the org-wide permissions.
+	ResourceGroupIds []string `json:"resourceGroupIds"`
+	// Permissions granted on the repositories of the selected `resourceGroupIds`.
+	ResourceGroupPermissions []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem `json:"resourceGroupPermissions"`
 	// Permissions on the service account itself.
 	UserPermissions []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem `json:"userPermissions"`
 	// Inference endpoint name patterns (wildcards allowed, e.g. `gpt2-*`) restricting the token's org-wide
@@ -46032,6 +46143,16 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) GetRe
 // GetRepoPermissions returns the value of RepoPermissions.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) GetRepoPermissions() []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqRepoPermissionsItem {
 	return s.RepoPermissions
+}
+
+// GetResourceGroupIds returns the value of ResourceGroupIds.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) GetResourceGroupIds() []string {
+	return s.ResourceGroupIds
+}
+
+// GetResourceGroupPermissions returns the value of ResourceGroupPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) GetResourceGroupPermissions() []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem {
+	return s.ResourceGroupPermissions
 }
 
 // GetUserPermissions returns the value of UserPermissions.
@@ -46072,6 +46193,16 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) SetRe
 // SetRepoPermissions sets the value of RepoPermissions.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) SetRepoPermissions(val []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqRepoPermissionsItem) {
 	s.RepoPermissions = val
+}
+
+// SetResourceGroupIds sets the value of ResourceGroupIds.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) SetResourceGroupIds(val []string) {
+	s.ResourceGroupIds = val
+}
+
+// SetResourceGroupPermissions sets the value of ResourceGroupPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) SetResourceGroupPermissions(val []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem) {
+	s.ResourceGroupPermissions = val
 }
 
 // SetUserPermissions sets the value of UserPermissions.
@@ -46267,6 +46398,47 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqRepoPer
 	}
 }
 
+type APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem string
+
+const (
+	APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItemRepoContentRead APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem = "repo.content.read"
+	APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItemRepoWrite       APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem = "repo.write"
+)
+
+// AllValues returns all APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem values.
+func (APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem) AllValues() []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem {
+	return []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem{
+		APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItemRepoContentRead,
+		APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItemRepoWrite,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem) MarshalText() ([]byte, error) {
+	switch s {
+	case APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItemRepoContentRead:
+		return []byte(s), nil
+	case APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItemRepoWrite:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem) UnmarshalText(data []byte) error {
+	switch APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem(data) {
+	case APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItemRepoContentRead:
+		*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItemRepoContentRead
+		return nil
+	case APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItemRepoWrite:
+		*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItemRepoWrite
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
 type APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem string
 
 const (
@@ -46302,15 +46474,17 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPer
 }
 
 type APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK struct {
-	ID                  string   `json:"_id"`
-	DisplayName         string   `json:"displayName"`
-	Permissions         []string `json:"permissions"`
-	RepoIds             []string `json:"repoIds"`
-	RepoPermissions     []string `json:"repoPermissions"`
-	UserPermissions     []string `json:"userPermissions"`
-	EndpointPatterns    []string `json:"endpointPatterns"`
-	SkipNetworkSecurity bool     `json:"skipNetworkSecurity"`
-	CanReadGatedRepos   bool     `json:"canReadGatedRepos"`
+	ID                       string   `json:"_id"`
+	DisplayName              string   `json:"displayName"`
+	Permissions              []string `json:"permissions"`
+	RepoIds                  []string `json:"repoIds"`
+	RepoPermissions          []string `json:"repoPermissions"`
+	ResourceGroupIds         []string `json:"resourceGroupIds"`
+	ResourceGroupPermissions []string `json:"resourceGroupPermissions"`
+	UserPermissions          []string `json:"userPermissions"`
+	EndpointPatterns         []string `json:"endpointPatterns"`
+	SkipNetworkSecurity      bool     `json:"skipNetworkSecurity"`
+	CanReadGatedRepos        bool     `json:"canReadGatedRepos"`
 }
 
 // GetID returns the value of ID.
@@ -46336,6 +46510,16 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK
 // GetRepoPermissions returns the value of RepoPermissions.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK) GetRepoPermissions() []string {
 	return s.RepoPermissions
+}
+
+// GetResourceGroupIds returns the value of ResourceGroupIds.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK) GetResourceGroupIds() []string {
+	return s.ResourceGroupIds
+}
+
+// GetResourceGroupPermissions returns the value of ResourceGroupPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK) GetResourceGroupPermissions() []string {
+	return s.ResourceGroupPermissions
 }
 
 // GetUserPermissions returns the value of UserPermissions.
@@ -46383,6 +46567,16 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK
 	s.RepoPermissions = val
 }
 
+// SetResourceGroupIds sets the value of ResourceGroupIds.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK) SetResourceGroupIds(val []string) {
+	s.ResourceGroupIds = val
+}
+
+// SetResourceGroupPermissions sets the value of ResourceGroupPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK) SetResourceGroupPermissions(val []string) {
+	s.ResourceGroupPermissions = val
+}
+
 // SetUserPermissions sets the value of UserPermissions.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK) SetUserPermissions(val []string) {
 	s.UserPermissions = val
@@ -46409,10 +46603,15 @@ type APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq st
 	// Org-wide permissions for this token.
 	Permissions []APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqPermissionsItem `json:"permissions"`
 	// Repositories to grant `repoPermissions` on. Can be repositories owned by the organization or any
-	// public repository. These override the org-wide permissions.
+	// public repository. These override the org-wide and resource-group permissions.
 	RepoIds []string `json:"repoIds"`
 	// Permissions granted on the selected `repoIds`.
 	RepoPermissions []APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqRepoPermissionsItem `json:"repoPermissions"`
+	// Resource groups of the organization to grant `resourceGroupPermissions` on. Applies to every
+	// repository currently or later in those resource groups, and overrides the org-wide permissions.
+	ResourceGroupIds []string `json:"resourceGroupIds"`
+	// Permissions granted on the repositories of the selected `resourceGroupIds`.
+	ResourceGroupPermissions []APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem `json:"resourceGroupPermissions"`
 	// Permissions on the service account itself.
 	UserPermissions []APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItem `json:"userPermissions"`
 	// Inference endpoint name patterns (wildcards allowed, e.g. `gpt2-*`) restricting the token's org-wide
@@ -46443,6 +46642,16 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchRe
 // GetRepoPermissions returns the value of RepoPermissions.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq) GetRepoPermissions() []APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqRepoPermissionsItem {
 	return s.RepoPermissions
+}
+
+// GetResourceGroupIds returns the value of ResourceGroupIds.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq) GetResourceGroupIds() []string {
+	return s.ResourceGroupIds
+}
+
+// GetResourceGroupPermissions returns the value of ResourceGroupPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq) GetResourceGroupPermissions() []APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem {
+	return s.ResourceGroupPermissions
 }
 
 // GetUserPermissions returns the value of UserPermissions.
@@ -46483,6 +46692,16 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchRe
 // SetRepoPermissions sets the value of RepoPermissions.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq) SetRepoPermissions(val []APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqRepoPermissionsItem) {
 	s.RepoPermissions = val
+}
+
+// SetResourceGroupIds sets the value of ResourceGroupIds.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq) SetResourceGroupIds(val []string) {
+	s.ResourceGroupIds = val
+}
+
+// SetResourceGroupPermissions sets the value of ResourceGroupPermissions.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq) SetResourceGroupPermissions(val []APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem) {
+	s.ResourceGroupPermissions = val
 }
 
 // SetUserPermissions sets the value of UserPermissions.
@@ -46672,6 +46891,47 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchRe
 		return nil
 	case APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqRepoPermissionsItemRepoWrite:
 		*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqRepoPermissionsItemRepoWrite
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
+type APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem string
+
+const (
+	APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItemRepoContentRead APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem = "repo.content.read"
+	APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItemRepoWrite       APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem = "repo.write"
+)
+
+// AllValues returns all APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem values.
+func (APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem) AllValues() []APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem {
+	return []APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem{
+		APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItemRepoContentRead,
+		APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItemRepoWrite,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem) MarshalText() ([]byte, error) {
+	switch s {
+	case APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItemRepoContentRead:
+		return []byte(s), nil
+	case APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItemRepoWrite:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem) UnmarshalText(data []byte) error {
+	switch APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem(data) {
+	case APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItemRepoContentRead:
+		*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItemRepoContentRead
+		return nil
+	case APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItemRepoWrite:
+		*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItemRepoWrite
 		return nil
 	default:
 		return errors.Errorf("invalid value: %q", data)

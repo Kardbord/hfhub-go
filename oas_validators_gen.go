@@ -17916,6 +17916,8 @@ func (s APIOrganizationsNameAuditLogExportGetOKItemType) Validate() error {
 		return nil
 	case "billing.cancel_subscription":
 		return nil
+	case "billing.end_subscription":
+		return nil
 	case "billing.renew_subscription":
 		return nil
 	case "billing.start_subscription":
@@ -18149,6 +18151,10 @@ func (s APIOrganizationsNameAuditLogExportGetOKItemType) Validate() error {
 	case "org.service_account.token.s3_credential.create":
 		return nil
 	case "org.service_account.token.s3_credential.delete":
+		return nil
+	case "org.service_account.trusted_publisher.create":
+		return nil
+	case "org.service_account.trusted_publisher.delete":
 		return nil
 	case "oauth.token":
 		return nil
@@ -26291,6 +26297,74 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 		})
 	}
 	if err := func() error {
+		if s.ResourceGroupIds == nil {
+			return errors.New("nil is invalid value")
+		}
+		var failures []validate.FieldError
+		for i, elem := range s.ResourceGroupIds {
+			if err := func() error {
+				if err := (validate.String{
+					MinLength:     24,
+					MinLengthSet:  true,
+					MaxLength:     24,
+					MaxLengthSet:  true,
+					Email:         false,
+					Hostname:      false,
+					Regex:         regexMap["^[0-9a-f]{24}$"],
+					MinNumeric:    0,
+					MinNumericSet: false,
+					MaxNumeric:    0,
+					MaxNumericSet: false,
+				}).Validate(string(elem)); err != nil {
+					return errors.Wrap(err, "string")
+				}
+				return nil
+			}(); err != nil {
+				failures = append(failures, validate.FieldError{
+					Name:  fmt.Sprintf("[%d]", i),
+					Error: err,
+				})
+			}
+		}
+		if len(failures) > 0 {
+			return &validate.Error{Fields: failures}
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "resourceGroupIds",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		if s.ResourceGroupPermissions == nil {
+			return errors.New("nil is invalid value")
+		}
+		var failures []validate.FieldError
+		for i, elem := range s.ResourceGroupPermissions {
+			if err := func() error {
+				if err := elem.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				failures = append(failures, validate.FieldError{
+					Name:  fmt.Sprintf("[%d]", i),
+					Error: err,
+				})
+			}
+		}
+		if len(failures) > 0 {
+			return &validate.Error{Fields: failures}
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "resourceGroupPermissions",
+			Error: err,
+		})
+	}
+	if err := func() error {
 		if s.UserPermissions == nil {
 			return errors.New("nil is invalid value")
 		}
@@ -26383,6 +26457,17 @@ func (s APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem
 	}
 }
 
+func (s APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem) Validate() error {
+	switch s {
+	case "repo.content.read":
+		return nil
+	case "repo.write":
+		return nil
+	default:
+		return errors.Errorf("invalid value: %v", s)
+	}
+}
+
 func (s APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemRole) Validate() error {
 	switch s {
 	case "read":
@@ -26453,6 +26538,28 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTok
 	}(); err != nil {
 		failures = append(failures, validate.FieldError{
 			Name:  "repoPermissions",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		if s.ResourceGroupIds == nil {
+			return errors.New("nil is invalid value")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "resourceGroupIds",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		if s.ResourceGroupPermissions == nil {
+			return errors.New("nil is invalid value")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "resourceGroupPermissions",
 			Error: err,
 		})
 	}
@@ -26609,6 +26716,68 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) Valid
 	}
 	if err := func() error {
 		var failures []validate.FieldError
+		for i, elem := range s.ResourceGroupIds {
+			if err := func() error {
+				if err := (validate.String{
+					MinLength:     24,
+					MinLengthSet:  true,
+					MaxLength:     24,
+					MaxLengthSet:  true,
+					Email:         false,
+					Hostname:      false,
+					Regex:         regexMap["^[0-9a-fA-F]{24}$"],
+					MinNumeric:    0,
+					MinNumericSet: false,
+					MaxNumeric:    0,
+					MaxNumericSet: false,
+				}).Validate(string(elem)); err != nil {
+					return errors.Wrap(err, "string")
+				}
+				return nil
+			}(); err != nil {
+				failures = append(failures, validate.FieldError{
+					Name:  fmt.Sprintf("[%d]", i),
+					Error: err,
+				})
+			}
+		}
+		if len(failures) > 0 {
+			return &validate.Error{Fields: failures}
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "resourceGroupIds",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		var failures []validate.FieldError
+		for i, elem := range s.ResourceGroupPermissions {
+			if err := func() error {
+				if err := elem.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				failures = append(failures, validate.FieldError{
+					Name:  fmt.Sprintf("[%d]", i),
+					Error: err,
+				})
+			}
+		}
+		if len(failures) > 0 {
+			return &validate.Error{Fields: failures}
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "resourceGroupPermissions",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		var failures []validate.FieldError
 		for i, elem := range s.UserPermissions {
 			if err := func() error {
 				if err := elem.Validate(); err != nil {
@@ -26734,6 +26903,17 @@ func (s APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqRepoPerm
 	}
 }
 
+func (s APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem) Validate() error {
+	switch s {
+	case "repo.content.read":
+		return nil
+	case "repo.write":
+		return nil
+	default:
+		return errors.Errorf("invalid value: %v", s)
+	}
+}
+
 func (s APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem) Validate() error {
 	switch s {
 	case "user.gated-repos-requests.write":
@@ -26779,6 +26959,28 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK
 	}(); err != nil {
 		failures = append(failures, validate.FieldError{
 			Name:  "repoPermissions",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		if s.ResourceGroupIds == nil {
+			return errors.New("nil is invalid value")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "resourceGroupIds",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		if s.ResourceGroupPermissions == nil {
+			return errors.New("nil is invalid value")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "resourceGroupPermissions",
 			Error: err,
 		})
 	}
@@ -26935,6 +27137,68 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchRe
 	}
 	if err := func() error {
 		var failures []validate.FieldError
+		for i, elem := range s.ResourceGroupIds {
+			if err := func() error {
+				if err := (validate.String{
+					MinLength:     24,
+					MinLengthSet:  true,
+					MaxLength:     24,
+					MaxLengthSet:  true,
+					Email:         false,
+					Hostname:      false,
+					Regex:         regexMap["^[0-9a-fA-F]{24}$"],
+					MinNumeric:    0,
+					MinNumericSet: false,
+					MaxNumeric:    0,
+					MaxNumericSet: false,
+				}).Validate(string(elem)); err != nil {
+					return errors.Wrap(err, "string")
+				}
+				return nil
+			}(); err != nil {
+				failures = append(failures, validate.FieldError{
+					Name:  fmt.Sprintf("[%d]", i),
+					Error: err,
+				})
+			}
+		}
+		if len(failures) > 0 {
+			return &validate.Error{Fields: failures}
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "resourceGroupIds",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		var failures []validate.FieldError
+		for i, elem := range s.ResourceGroupPermissions {
+			if err := func() error {
+				if err := elem.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				failures = append(failures, validate.FieldError{
+					Name:  fmt.Sprintf("[%d]", i),
+					Error: err,
+				})
+			}
+		}
+		if len(failures) > 0 {
+			return &validate.Error{Fields: failures}
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "resourceGroupPermissions",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		var failures []validate.FieldError
 		for i, elem := range s.UserPermissions {
 			if err := func() error {
 				if err := elem.Validate(); err != nil {
@@ -27050,6 +27314,17 @@ func (s APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq
 }
 
 func (s APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqRepoPermissionsItem) Validate() error {
+	switch s {
+	case "repo.content.read":
+		return nil
+	case "repo.write":
+		return nil
+	default:
+		return errors.Errorf("invalid value: %v", s)
+	}
+}
+
+func (s APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem) Validate() error {
 	switch s {
 	case "repo.content.read":
 		return nil

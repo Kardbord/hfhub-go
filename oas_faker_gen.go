@@ -17076,6 +17076,30 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 	}
 	{
 		{
+			s.ResourceGroupIds = nil
+			for i := 0; i < 0; i++ {
+				var elem string
+				{
+					elem = "string"
+				}
+				s.ResourceGroupIds = append(s.ResourceGroupIds, elem)
+			}
+		}
+	}
+	{
+		{
+			s.ResourceGroupPermissions = nil
+			for i := 0; i < 0; i++ {
+				var elem APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem
+				{
+					elem.SetFake()
+				}
+				s.ResourceGroupPermissions = append(s.ResourceGroupPermissions, elem)
+			}
+		}
+	}
+	{
+		{
 			s.UserPermissions = nil
 			for i := 0; i < 0; i++ {
 				var elem APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItem
@@ -17128,6 +17152,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 // SetFake set fake values.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemRepoPermissionsItem) SetFake() {
 	*s = APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemRepoPermissionsItemRepoContentRead
+}
+
+// SetFake set fake values.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem) SetFake() {
+	*s = APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItemRepoContentRead
 }
 
 // SetFake set fake values.
@@ -17204,6 +17233,30 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTok
 					elem = "string"
 				}
 				s.RepoPermissions = append(s.RepoPermissions, elem)
+			}
+		}
+	}
+	{
+		{
+			s.ResourceGroupIds = nil
+			for i := 0; i < 0; i++ {
+				var elem string
+				{
+					elem = "string"
+				}
+				s.ResourceGroupIds = append(s.ResourceGroupIds, elem)
+			}
+		}
+	}
+	{
+		{
+			s.ResourceGroupPermissions = nil
+			for i := 0; i < 0; i++ {
+				var elem string
+				{
+					elem = "string"
+				}
+				s.ResourceGroupPermissions = append(s.ResourceGroupPermissions, elem)
 			}
 		}
 	}
@@ -17288,6 +17341,30 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) SetFa
 	}
 	{
 		{
+			s.ResourceGroupIds = nil
+			for i := 0; i < 0; i++ {
+				var elem string
+				{
+					elem = "string"
+				}
+				s.ResourceGroupIds = append(s.ResourceGroupIds, elem)
+			}
+		}
+	}
+	{
+		{
+			s.ResourceGroupPermissions = nil
+			for i := 0; i < 0; i++ {
+				var elem APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem
+				{
+					elem.SetFake()
+				}
+				s.ResourceGroupPermissions = append(s.ResourceGroupPermissions, elem)
+			}
+		}
+	}
+	{
+		{
 			s.UserPermissions = nil
 			for i := 0; i < 0; i++ {
 				var elem APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem
@@ -17330,6 +17407,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqPermiss
 // SetFake set fake values.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqRepoPermissionsItem) SetFake() {
 	*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqRepoPermissionsItemRepoContentRead
+}
+
+// SetFake set fake values.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem) SetFake() {
+	*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItemRepoContentRead
 }
 
 // SetFake set fake values.
@@ -17382,6 +17464,30 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK
 					elem = "string"
 				}
 				s.RepoPermissions = append(s.RepoPermissions, elem)
+			}
+		}
+	}
+	{
+		{
+			s.ResourceGroupIds = nil
+			for i := 0; i < 0; i++ {
+				var elem string
+				{
+					elem = "string"
+				}
+				s.ResourceGroupIds = append(s.ResourceGroupIds, elem)
+			}
+		}
+	}
+	{
+		{
+			s.ResourceGroupPermissions = nil
+			for i := 0; i < 0; i++ {
+				var elem string
+				{
+					elem = "string"
+				}
+				s.ResourceGroupPermissions = append(s.ResourceGroupPermissions, elem)
 			}
 		}
 	}
@@ -17466,6 +17572,30 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchRe
 	}
 	{
 		{
+			s.ResourceGroupIds = nil
+			for i := 0; i < 0; i++ {
+				var elem string
+				{
+					elem = "string"
+				}
+				s.ResourceGroupIds = append(s.ResourceGroupIds, elem)
+			}
+		}
+	}
+	{
+		{
+			s.ResourceGroupPermissions = nil
+			for i := 0; i < 0; i++ {
+				var elem APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem
+				{
+					elem.SetFake()
+				}
+				s.ResourceGroupPermissions = append(s.ResourceGroupPermissions, elem)
+			}
+		}
+	}
+	{
+		{
 			s.UserPermissions = nil
 			for i := 0; i < 0; i++ {
 				var elem APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItem
@@ -17508,6 +17638,11 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchRe
 // SetFake set fake values.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqRepoPermissionsItem) SetFake() {
 	*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqRepoPermissionsItemRepoContentRead
+}
+
+// SetFake set fake values.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem) SetFake() {
+	*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItemRepoContentRead
 }
 
 // SetFake set fake values.
