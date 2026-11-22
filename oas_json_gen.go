@@ -68319,6 +68319,8 @@ func (s *APIOrganizationsNameAuditLogExportGetOKItemType) Decode(d *jx.Decoder) 
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeBillingMarketplaceApprove
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeBillingCancelSubscription:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeBillingCancelSubscription
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeBillingEndSubscription:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeBillingEndSubscription
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeBillingRenewSubscription:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeBillingRenewSubscription
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeBillingStartSubscription:
@@ -68553,6 +68555,10 @@ func (s *APIOrganizationsNameAuditLogExportGetOKItemType) Decode(d *jx.Decoder) 
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenS3CredentialCreate
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenS3CredentialDelete:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTokenS3CredentialDelete
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTrustedPublisherCreate:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTrustedPublisherCreate
+	case APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTrustedPublisherDelete:
+		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOrgServiceAccountTrustedPublisherDelete
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthToken:
 		*s = APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthToken
 	case APIOrganizationsNameAuditLogExportGetOKItemTypeOAuthAppCreate:
@@ -96369,6 +96375,22 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 		e.ArrEnd()
 	}
 	{
+		e.FieldStart("resourceGroupIds")
+		e.ArrStart()
+		for _, elem := range s.ResourceGroupIds {
+			e.Str(elem)
+		}
+		e.ArrEnd()
+	}
+	{
+		e.FieldStart("resourceGroupPermissions")
+		e.ArrStart()
+		for _, elem := range s.ResourceGroupPermissions {
+			elem.Encode(e)
+		}
+		e.ArrEnd()
+	}
+	{
 		e.FieldStart("userPermissions")
 		e.ArrStart()
 		for _, elem := range s.UserPermissions {
@@ -96410,7 +96432,7 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 	}
 }
 
-var jsonFieldsNameOfAPIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem = [15]string{
+var jsonFieldsNameOfAPIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem = [17]string{
 	0:  "_id",
 	1:  "displayName",
 	2:  "createdAt",
@@ -96420,12 +96442,14 @@ var jsonFieldsNameOfAPIOrganizationsNameServiceAccountsServiceAccountIdGetOKAcce
 	6:  "permissions",
 	7:  "repoIds",
 	8:  "repoPermissions",
-	9:  "userPermissions",
-	10: "endpointPatterns",
-	11: "last4",
-	12: "skipNetworkSecurity",
-	13: "canReadGatedRepos",
-	14: "s3AccessKey",
+	9:  "resourceGroupIds",
+	10: "resourceGroupPermissions",
+	11: "userPermissions",
+	12: "endpointPatterns",
+	13: "last4",
+	14: "skipNetworkSecurity",
+	15: "canReadGatedRepos",
+	16: "s3AccessKey",
 }
 
 // Decode decodes APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem from json.
@@ -96433,7 +96457,7 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 	if s == nil {
 		return errors.New("invalid: unable to decode APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem to nil")
 	}
-	var requiredBitSet [2]uint8
+	var requiredBitSet [3]uint8
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
 		switch string(k) {
@@ -96559,8 +96583,46 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"repoPermissions\"")
 			}
-		case "userPermissions":
+		case "resourceGroupIds":
 			requiredBitSet[1] |= 1 << 1
+			if err := func() error {
+				s.ResourceGroupIds = make([]string, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem string
+					v, err := d.Str()
+					elem = string(v)
+					if err != nil {
+						return err
+					}
+					s.ResourceGroupIds = append(s.ResourceGroupIds, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"resourceGroupIds\"")
+			}
+		case "resourceGroupPermissions":
+			requiredBitSet[1] |= 1 << 2
+			if err := func() error {
+				s.ResourceGroupPermissions = make([]APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.ResourceGroupPermissions = append(s.ResourceGroupPermissions, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"resourceGroupPermissions\"")
+			}
+		case "userPermissions":
+			requiredBitSet[1] |= 1 << 3
 			if err := func() error {
 				s.UserPermissions = make([]APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemUserPermissionsItem, 0)
 				if err := d.Arr(func(d *jx.Decoder) error {
@@ -96578,7 +96640,7 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 				return errors.Wrap(err, "decode field \"userPermissions\"")
 			}
 		case "endpointPatterns":
-			requiredBitSet[1] |= 1 << 2
+			requiredBitSet[1] |= 1 << 4
 			if err := func() error {
 				s.EndpointPatterns = make([]string, 0)
 				if err := d.Arr(func(d *jx.Decoder) error {
@@ -96646,9 +96708,10 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
-	for i, mask := range [2]uint8{
+	for i, mask := range [3]uint8{
 		0b11100111,
-		0b00000111,
+		0b00011111,
+		0b00000000,
 	} {
 		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
 			// Mask only required fields and check equality to mask using XOR.
@@ -96796,6 +96859,46 @@ func (s APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItem
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemRepoPermissionsItem) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem as json.
+func (s APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem) Encode(e *jx.Encoder) {
+	e.Str(string(s))
+}
+
+// Decode decodes APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem from json.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem to nil")
+	}
+	v, err := d.StrBytes()
+	if err != nil {
+		return err
+	}
+	// Try to use constant string.
+	switch APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem(v) {
+	case APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItemRepoContentRead:
+		*s = APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItemRepoContentRead
+	case APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItemRepoWrite:
+		*s = APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItemRepoWrite
+	default:
+		*s = APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem(v)
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -97039,6 +97142,22 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTok
 		e.ArrEnd()
 	}
 	{
+		e.FieldStart("resourceGroupIds")
+		e.ArrStart()
+		for _, elem := range s.ResourceGroupIds {
+			e.Str(elem)
+		}
+		e.ArrEnd()
+	}
+	{
+		e.FieldStart("resourceGroupPermissions")
+		e.ArrStart()
+		for _, elem := range s.ResourceGroupPermissions {
+			e.Str(elem)
+		}
+		e.ArrEnd()
+	}
+	{
 		e.FieldStart("userPermissions")
 		e.ArrStart()
 		for _, elem := range s.UserPermissions {
@@ -97064,17 +97183,19 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTok
 	}
 }
 
-var jsonFieldsNameOfAPIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenInfo = [10]string{
-	0: "_id",
-	1: "displayName",
-	2: "createdAt",
-	3: "permissions",
-	4: "repoIds",
-	5: "repoPermissions",
-	6: "userPermissions",
-	7: "endpointPatterns",
-	8: "skipNetworkSecurity",
-	9: "canReadGatedRepos",
+var jsonFieldsNameOfAPIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenInfo = [12]string{
+	0:  "_id",
+	1:  "displayName",
+	2:  "createdAt",
+	3:  "permissions",
+	4:  "repoIds",
+	5:  "repoPermissions",
+	6:  "resourceGroupIds",
+	7:  "resourceGroupPermissions",
+	8:  "userPermissions",
+	9:  "endpointPatterns",
+	10: "skipNetworkSecurity",
+	11: "canReadGatedRepos",
 }
 
 // Decode decodes APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTokenInfo from json.
@@ -97181,8 +97302,48 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTok
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"repoPermissions\"")
 			}
-		case "userPermissions":
+		case "resourceGroupIds":
 			requiredBitSet[0] |= 1 << 6
+			if err := func() error {
+				s.ResourceGroupIds = make([]string, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem string
+					v, err := d.Str()
+					elem = string(v)
+					if err != nil {
+						return err
+					}
+					s.ResourceGroupIds = append(s.ResourceGroupIds, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"resourceGroupIds\"")
+			}
+		case "resourceGroupPermissions":
+			requiredBitSet[0] |= 1 << 7
+			if err := func() error {
+				s.ResourceGroupPermissions = make([]string, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem string
+					v, err := d.Str()
+					elem = string(v)
+					if err != nil {
+						return err
+					}
+					s.ResourceGroupPermissions = append(s.ResourceGroupPermissions, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"resourceGroupPermissions\"")
+			}
+		case "userPermissions":
+			requiredBitSet[1] |= 1 << 0
 			if err := func() error {
 				s.UserPermissions = make([]string, 0)
 				if err := d.Arr(func(d *jx.Decoder) error {
@@ -97202,7 +97363,7 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTok
 				return errors.Wrap(err, "decode field \"userPermissions\"")
 			}
 		case "endpointPatterns":
-			requiredBitSet[0] |= 1 << 7
+			requiredBitSet[1] |= 1 << 1
 			if err := func() error {
 				s.EndpointPatterns = make([]string, 0)
 				if err := d.Arr(func(d *jx.Decoder) error {
@@ -97222,7 +97383,7 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTok
 				return errors.Wrap(err, "decode field \"endpointPatterns\"")
 			}
 		case "skipNetworkSecurity":
-			requiredBitSet[1] |= 1 << 0
+			requiredBitSet[1] |= 1 << 2
 			if err := func() error {
 				v, err := d.Bool()
 				s.SkipNetworkSecurity = bool(v)
@@ -97234,7 +97395,7 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTok
 				return errors.Wrap(err, "decode field \"skipNetworkSecurity\"")
 			}
 		case "canReadGatedRepos":
-			requiredBitSet[1] |= 1 << 1
+			requiredBitSet[1] |= 1 << 3
 			if err := func() error {
 				v, err := d.Bool()
 				s.CanReadGatedRepos = bool(v)
@@ -97256,7 +97417,7 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostCreatedTok
 	var failures []validate.FieldError
 	for i, mask := range [2]uint8{
 		0b11110111,
-		0b00000011,
+		0b00001111,
 	} {
 		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
 			// Mask only required fields and check equality to mask using XOR.
@@ -97348,6 +97509,26 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) encod
 		}
 	}
 	{
+		if s.ResourceGroupIds != nil {
+			e.FieldStart("resourceGroupIds")
+			e.ArrStart()
+			for _, elem := range s.ResourceGroupIds {
+				e.Str(elem)
+			}
+			e.ArrEnd()
+		}
+	}
+	{
+		if s.ResourceGroupPermissions != nil {
+			e.FieldStart("resourceGroupPermissions")
+			e.ArrStart()
+			for _, elem := range s.ResourceGroupPermissions {
+				elem.Encode(e)
+			}
+			e.ArrEnd()
+		}
+	}
+	{
 		if s.UserPermissions != nil {
 			e.FieldStart("userPermissions")
 			e.ArrStart()
@@ -97381,15 +97562,17 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) encod
 	}
 }
 
-var jsonFieldsNameOfAPIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq = [8]string{
+var jsonFieldsNameOfAPIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq = [10]string{
 	0: "displayName",
 	1: "permissions",
 	2: "repoIds",
 	3: "repoPermissions",
-	4: "userPermissions",
-	5: "endpointPatterns",
-	6: "skipNetworkSecurity",
-	7: "canReadGatedRepos",
+	4: "resourceGroupIds",
+	5: "resourceGroupPermissions",
+	6: "userPermissions",
+	7: "endpointPatterns",
+	8: "skipNetworkSecurity",
+	9: "canReadGatedRepos",
 }
 
 // Decode decodes APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq from json.
@@ -97463,6 +97646,42 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) Decod
 				return nil
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"repoPermissions\"")
+			}
+		case "resourceGroupIds":
+			if err := func() error {
+				s.ResourceGroupIds = make([]string, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem string
+					v, err := d.Str()
+					elem = string(v)
+					if err != nil {
+						return err
+					}
+					s.ResourceGroupIds = append(s.ResourceGroupIds, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"resourceGroupIds\"")
+			}
+		case "resourceGroupPermissions":
+			if err := func() error {
+				s.ResourceGroupPermissions = make([]APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.ResourceGroupPermissions = append(s.ResourceGroupPermissions, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"resourceGroupPermissions\"")
 			}
 		case "userPermissions":
 			if err := func() error {
@@ -97650,6 +97869,46 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqRepoPer
 	return s.Decode(d)
 }
 
+// Encode encodes APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem as json.
+func (s APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem) Encode(e *jx.Encoder) {
+	e.Str(string(s))
+}
+
+// Decode decodes APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem from json.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem to nil")
+	}
+	v, err := d.StrBytes()
+	if err != nil {
+		return err
+	}
+	// Try to use constant string.
+	switch APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem(v) {
+	case APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItemRepoContentRead:
+		*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItemRepoContentRead
+	case APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItemRepoWrite:
+		*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItemRepoWrite
+	default:
+		*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem(v)
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
 // Encode encodes APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem as json.
 func (s APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem) Encode(e *jx.Encoder) {
 	e.Str(string(s))
@@ -97730,6 +97989,22 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK
 		e.ArrEnd()
 	}
 	{
+		e.FieldStart("resourceGroupIds")
+		e.ArrStart()
+		for _, elem := range s.ResourceGroupIds {
+			e.Str(elem)
+		}
+		e.ArrEnd()
+	}
+	{
+		e.FieldStart("resourceGroupPermissions")
+		e.ArrStart()
+		for _, elem := range s.ResourceGroupPermissions {
+			e.Str(elem)
+		}
+		e.ArrEnd()
+	}
+	{
 		e.FieldStart("userPermissions")
 		e.ArrStart()
 		for _, elem := range s.UserPermissions {
@@ -97755,16 +98030,18 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK
 	}
 }
 
-var jsonFieldsNameOfAPIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK = [9]string{
-	0: "_id",
-	1: "displayName",
-	2: "permissions",
-	3: "repoIds",
-	4: "repoPermissions",
-	5: "userPermissions",
-	6: "endpointPatterns",
-	7: "skipNetworkSecurity",
-	8: "canReadGatedRepos",
+var jsonFieldsNameOfAPIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK = [11]string{
+	0:  "_id",
+	1:  "displayName",
+	2:  "permissions",
+	3:  "repoIds",
+	4:  "repoPermissions",
+	5:  "resourceGroupIds",
+	6:  "resourceGroupPermissions",
+	7:  "userPermissions",
+	8:  "endpointPatterns",
+	9:  "skipNetworkSecurity",
+	10: "canReadGatedRepos",
 }
 
 // Decode decodes APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK from json.
@@ -97860,8 +98137,48 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"repoPermissions\"")
 			}
-		case "userPermissions":
+		case "resourceGroupIds":
 			requiredBitSet[0] |= 1 << 5
+			if err := func() error {
+				s.ResourceGroupIds = make([]string, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem string
+					v, err := d.Str()
+					elem = string(v)
+					if err != nil {
+						return err
+					}
+					s.ResourceGroupIds = append(s.ResourceGroupIds, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"resourceGroupIds\"")
+			}
+		case "resourceGroupPermissions":
+			requiredBitSet[0] |= 1 << 6
+			if err := func() error {
+				s.ResourceGroupPermissions = make([]string, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem string
+					v, err := d.Str()
+					elem = string(v)
+					if err != nil {
+						return err
+					}
+					s.ResourceGroupPermissions = append(s.ResourceGroupPermissions, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"resourceGroupPermissions\"")
+			}
+		case "userPermissions":
+			requiredBitSet[0] |= 1 << 7
 			if err := func() error {
 				s.UserPermissions = make([]string, 0)
 				if err := d.Arr(func(d *jx.Decoder) error {
@@ -97881,7 +98198,7 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK
 				return errors.Wrap(err, "decode field \"userPermissions\"")
 			}
 		case "endpointPatterns":
-			requiredBitSet[0] |= 1 << 6
+			requiredBitSet[1] |= 1 << 0
 			if err := func() error {
 				s.EndpointPatterns = make([]string, 0)
 				if err := d.Arr(func(d *jx.Decoder) error {
@@ -97901,7 +98218,7 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK
 				return errors.Wrap(err, "decode field \"endpointPatterns\"")
 			}
 		case "skipNetworkSecurity":
-			requiredBitSet[0] |= 1 << 7
+			requiredBitSet[1] |= 1 << 1
 			if err := func() error {
 				v, err := d.Bool()
 				s.SkipNetworkSecurity = bool(v)
@@ -97913,7 +98230,7 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK
 				return errors.Wrap(err, "decode field \"skipNetworkSecurity\"")
 			}
 		case "canReadGatedRepos":
-			requiredBitSet[1] |= 1 << 0
+			requiredBitSet[1] |= 1 << 2
 			if err := func() error {
 				v, err := d.Bool()
 				s.CanReadGatedRepos = bool(v)
@@ -97935,7 +98252,7 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchOK
 	var failures []validate.FieldError
 	for i, mask := range [2]uint8{
 		0b11111111,
-		0b00000001,
+		0b00000111,
 	} {
 		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
 			// Mask only required fields and check equality to mask using XOR.
@@ -98027,6 +98344,26 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchRe
 		}
 	}
 	{
+		if s.ResourceGroupIds != nil {
+			e.FieldStart("resourceGroupIds")
+			e.ArrStart()
+			for _, elem := range s.ResourceGroupIds {
+				e.Str(elem)
+			}
+			e.ArrEnd()
+		}
+	}
+	{
+		if s.ResourceGroupPermissions != nil {
+			e.FieldStart("resourceGroupPermissions")
+			e.ArrStart()
+			for _, elem := range s.ResourceGroupPermissions {
+				elem.Encode(e)
+			}
+			e.ArrEnd()
+		}
+	}
+	{
 		if s.UserPermissions != nil {
 			e.FieldStart("userPermissions")
 			e.ArrStart()
@@ -98060,15 +98397,17 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchRe
 	}
 }
 
-var jsonFieldsNameOfAPIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq = [8]string{
+var jsonFieldsNameOfAPIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq = [10]string{
 	0: "displayName",
 	1: "permissions",
 	2: "repoIds",
 	3: "repoPermissions",
-	4: "userPermissions",
-	5: "endpointPatterns",
-	6: "skipNetworkSecurity",
-	7: "canReadGatedRepos",
+	4: "resourceGroupIds",
+	5: "resourceGroupPermissions",
+	6: "userPermissions",
+	7: "endpointPatterns",
+	8: "skipNetworkSecurity",
+	9: "canReadGatedRepos",
 }
 
 // Decode decodes APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq from json.
@@ -98141,6 +98480,42 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchRe
 				return nil
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"repoPermissions\"")
+			}
+		case "resourceGroupIds":
+			if err := func() error {
+				s.ResourceGroupIds = make([]string, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem string
+					v, err := d.Str()
+					elem = string(v)
+					if err != nil {
+						return err
+					}
+					s.ResourceGroupIds = append(s.ResourceGroupIds, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"resourceGroupIds\"")
+			}
+		case "resourceGroupPermissions":
+			if err := func() error {
+				s.ResourceGroupPermissions = make([]APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.ResourceGroupPermissions = append(s.ResourceGroupPermissions, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"resourceGroupPermissions\"")
 			}
 		case "userPermissions":
 			if err := func() error {
@@ -98324,6 +98699,46 @@ func (s APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReq
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqRepoPermissionsItem) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem as json.
+func (s APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem) Encode(e *jx.Encoder) {
+	e.Str(string(s))
+}
+
+// Decode decodes APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem from json.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem to nil")
+	}
+	v, err := d.StrBytes()
+	if err != nil {
+		return err
+	}
+	// Try to use constant string.
+	switch APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem(v) {
+	case APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItemRepoContentRead:
+		*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItemRepoContentRead
+	case APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItemRepoWrite:
+		*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItemRepoWrite
+	default:
+		*s = APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem(v)
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }

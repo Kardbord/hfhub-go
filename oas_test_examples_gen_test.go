@@ -9439,6 +9439,18 @@ func TestAPIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensIte
 	var typ2 APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemRepoPermissionsItem
 	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
 }
+func TestAPIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem_EncodeDecode(t *testing.T) {
+	var typ APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemResourceGroupPermissionsItem
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
 func TestAPIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemRole_EncodeDecode(t *testing.T) {
 	var typ APIOrganizationsNameServiceAccountsServiceAccountIdGetOKAccessTokensItemRole
 	typ.SetFake()
@@ -9523,6 +9535,18 @@ func TestAPIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqRepoPer
 	var typ2 APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqRepoPermissionsItem
 	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
 }
+func TestAPIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem_EncodeDecode(t *testing.T) {
+	var typ APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
 func TestAPIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem_EncodeDecode(t *testing.T) {
 	var typ APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem
 	typ.SetFake()
@@ -9581,6 +9605,18 @@ func TestAPIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchRe
 	require.True(t, std.Valid(data), "Encoded: %s", data)
 
 	var typ2 APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqRepoPermissionsItem
+	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
+}
+func TestAPIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem_EncodeDecode(t *testing.T) {
+	var typ APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem
+	typ.SetFake()
+
+	e := jx.Encoder{}
+	typ.Encode(&e)
+	data := e.Bytes()
+	require.True(t, std.Valid(data), "Encoded: %s", data)
+
+	var typ2 APIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqResourceGroupPermissionsItem
 	require.NoError(t, typ2.Decode(jx.DecodeBytes(data)))
 }
 func TestAPIOrganizationsNameServiceAccountsServiceAccountIdTokensTokenIdPatchReqUserPermissionsItem_EncodeDecode(t *testing.T) {

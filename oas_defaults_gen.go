@@ -65,6 +65,10 @@ func (s *APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReq) setDe
 		s.RepoPermissions = defaultVal0
 	}
 	{
+		var defaultVal0 []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqResourceGroupPermissionsItem
+		s.ResourceGroupPermissions = defaultVal0
+	}
+	{
 		var defaultVal0 []APIOrganizationsNameServiceAccountsServiceAccountIdTokensPostReqUserPermissionsItem
 		s.UserPermissions = defaultVal0
 	}
