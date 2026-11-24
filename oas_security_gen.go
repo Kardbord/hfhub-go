@@ -161,7 +161,6 @@ var operationRolesBearerAuth = map[string][]string{
 	APIPapersIndexPostOperation:                                                         []string{},
 	APIPapersPaperIdCommentCommentIdReplyPostOperation:                                  []string{},
 	APIPapersPaperIdCommentPostOperation:                                                []string{},
-	APIPapersPaperIdGetOperation:                                                        []string{},
 	APIPapersPaperIdLinksPostOperation:                                                  []string{},
 	APIPapersPaperIdMediaPostOperation:                                                  []string{},
 	APIPostsUsernamePostSlugCommentCommentIdReplyPostOperation:                          []string{},

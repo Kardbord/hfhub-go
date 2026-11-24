@@ -150,7 +150,6 @@ const (
 	APIPapersIndexPostOperation                                                         OperationName = "APIPapersIndexPost"
 	APIPapersPaperIdCommentCommentIdReplyPostOperation                                  OperationName = "APIPapersPaperIdCommentCommentIdReplyPost"
 	APIPapersPaperIdCommentPostOperation                                                OperationName = "APIPapersPaperIdCommentPost"
-	APIPapersPaperIdGetOperation                                                        OperationName = "APIPapersPaperIdGet"
 	APIPapersPaperIdLinksPostOperation                                                  OperationName = "APIPapersPaperIdLinksPost"
 	APIPapersPaperIdMediaPostOperation                                                  OperationName = "APIPapersPaperIdMediaPost"
 	APIPostsUsernamePostSlugCommentCommentIdReplyPostOperation                          OperationName = "APIPostsUsernamePostSlugCommentCommentIdReplyPost"
