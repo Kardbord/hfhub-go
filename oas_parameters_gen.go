@@ -974,11 +974,6 @@ type APIPapersPaperIdCommentPostParams struct {
 	PaperId string
 }
 
-// APIPapersPaperIdGetParams is parameters of GET /api/papers/{paperId} operation.
-type APIPapersPaperIdGetParams struct {
-	PaperId string
-}
-
 // APIPapersPaperIdLinksPostParams is parameters of POST /api/papers/{paperId}/links operation.
 type APIPapersPaperIdLinksPostParams struct {
 	PaperId string
